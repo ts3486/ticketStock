@@ -1,0 +1,17 @@
+web3: 
+web3. js is a collection of libraries that allow you to interact with a local or remote ethereum node 
+using HTTP, IPC or WebSocket. ... js as well as providing an API reference documentation with examples.
+
+
+minting: 
+Minting basically refers to the process of turning digital art 
+into a part of the Ethereum blockchain as a public ledger. The digital art 
+would be tamper-proof and immune to any modifications.
+
+
+web3: 
+changes a web browser to a blockchain browser. 
+
+
+
+no updates during render.

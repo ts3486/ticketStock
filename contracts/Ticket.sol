@@ -13,6 +13,7 @@ contract Ticket is ERC721Full {
     //in real life scenario the public should be changed to sth more restrictive, like owner
     function mint(string memory _ticket) public {
 
+        //check if ticket exists
         require(!_ticketExists[_ticket]);
 
         //Add ticket 
@@ -21,15 +22,21 @@ contract Ticket is ERC721Full {
         //Call the mint funciton
         _mint(msg.sender, _id);
 
-        //check if ticket id exists?
+        //set ticketExists to true for the specific ticket
         _ticketExists[_ticket] = true;
 
-        //Track the ticket
-
     }
+
+    // function addTicket(){
+
+    // };
+
+    // function deleteTicket(){
+
+    // }; 
 }
 
 
-//minting: Minting basically refers to the process of turning digital art 
-//into a part of the Ethereum blockchain as a public ledger. The digital art 
+//minting: Minting basically refers to the process of turning digital assets
+//into a part of the Ethereum blockchain as a public ledger. The digital asset owernship
 //would be tamper-proof and immune to any modifications.

@@ -1,0 +1,8 @@
+query AllEvents {
+  allEvents {
+    id
+    name
+    image
+    desc
+  }
+}

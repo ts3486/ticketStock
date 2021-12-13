@@ -1,0 +1,3 @@
+mutation AddEvent($name: String!, $image: String!, $desc: String!, $ticket: String!) {
+  addEvent(name: $name, image: $image, desc: $desc, ticket: $ticket)
+}

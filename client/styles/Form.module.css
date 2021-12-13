@@ -1,0 +1,19 @@
+.add {
+  display: flex;
+  justify-content: center;
+}
+
+.formBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: lavender;
+  height: 60%;
+  width: 50%;
+  margin: 50px;
+  padding: 40px;
+}
+
+.submitButton {
+  margin-top: 30px !important;
+}

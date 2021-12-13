@@ -1,0 +1,8 @@
+query GetEvent($id: String!) {
+  getEvent(id: $id) {
+    id
+    name
+    image
+    desc
+  }
+}

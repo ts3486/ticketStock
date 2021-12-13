@@ -1,0 +1,17 @@
+.home {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.section {
+  margin: 50px;
+}
+
+.tcontainer {
+  width: 800px;
+  margin: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}

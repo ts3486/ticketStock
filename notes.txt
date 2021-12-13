@@ -13,5 +13,34 @@ web3:
 changes a web browser to a blockchain browser. 
 
 
+gas: Unit of transaction fee. Transaction fee is calculated in gas, then paid for in Ether. 
+gasLimit: The maximum amount that a uses is willing to pay for a transaction. 
+gasPrice: The amount of Gwei that the user is willing to spend on each unit of Gas.
 
-no updates during render.
+Ganache gasLimit, gasPrice:
+gasLimit: total amount of gas that can fit in one blockchain.
+For truffle:
+gasPrice is the unit of gas for deploying contracts and performing transactions.
+gas (gasLimit) is the limit of gas that the EVM can use for deploying contract deployment contracts. 
+
+*It's important to differentiate contract & block (in this case ganache local bc) gasLimits/Prices 
+
+
+truffle compile&migrate: 
+compile: initially compiles all contracts, then compiles only contracts with changes. 
+migrate: pushes the contracts to the ethereum blockchain.
+
+Errors: 
+
+VM Exceptions:
+-
+-
+-
+
+Doesn't return values. Run out of gas?
+literally no values. Client does not read from truffle develop , but truffle console.
+
+Next.js Props:
+getStaticPaths
+
+getServerProps

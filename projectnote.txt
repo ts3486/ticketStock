@@ -1,0 +1,29 @@
+TicketStock: 
+Blockchain ticketing app. Returns a small amount of tokens or money for ticket possesion. 
+
+Features: 
+
+1. User Account
+2. Produce ticket NFTs and add to wallet
+3. Return tokens based on ticket possetion.
+
+
+User: 
+- Account info
+- possessed tickets
+
+
+2. Produce ticket NFTs and add to wallet
+
+ex) buy ticket button => add ticket id to possession. (ticket NFT will be stored in eth wallet)
+
+3. Recognize ticket possession and return tokens based on that. 
+- store ticket NFT on accounts. (I'll have to deploy)
+- Store token balance on contracts/accounts.
+- token generation system for artists.
+
+
+NEXT FEATURE: 
+
+1. User can mint and add ticket to NFT. 
+- Login => Event/Ticket add page becomes available => add Event/Ticket to user info & mint ticket => show possession of tickets in MyPage;

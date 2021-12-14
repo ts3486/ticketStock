@@ -30,7 +30,7 @@ const Register = () => {
           <Input
             id="email"
             aria-describedby="email"
-            onChange={(e) => {
+            onChange={(e: any) => {
               setEmail(e.target.value);
             }}
           />
@@ -41,7 +41,7 @@ const Register = () => {
           <Input
             id="pw"
             aria-describedby="pw"
-            onChange={(e) => {
+            onChange={(e: any) => {
               setPassword(e.target.value);
             }}
           />

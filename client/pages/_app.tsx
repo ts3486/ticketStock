@@ -21,7 +21,6 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
     graphQLErrors.map(({ message, path, locations }) => {
       console.log(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`);
       console.log(locations);
-      //previously "alert()"
     });
   }
 
@@ -114,15 +113,15 @@ export default class TicketStock extends App {
 
   componentDidMount() {
     //token authentication
-    fetch("http://localhost:5000/refresh_token", {
-      method: "POST",
-      credentials: "include",
-    }).then(async (x) => {
-      const { accessToken } = await x.json();
-      setAccessToken(accessToken);
-      this.setState({ loading: false });
-      console.log(accessToken);
-    });
+    // fetch("http://localhost:5000/refresh_token", {
+    //   method: "POST",
+    //   credentials: "include",
+    // }).then(async (x) => {
+    //   const { accessToken } = await x.json();
+    //   setAccessToken(accessToken);
+    //   this.setState({ loading: false });
+    //   console.log(accessToken);
+    // });
   }
 
   render() {

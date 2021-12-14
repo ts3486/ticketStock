@@ -11,7 +11,7 @@ interface Event {
   desc: string;
 }
 
-const Home = ({ drizzle, drizzleState, _events }: any) => {
+const Index = ({ drizzle, drizzleState, _events }: any) => {
   return (
     <div className={homeStyles.contentContainer}>
       <h1>Events</h1>
@@ -27,7 +27,7 @@ const Home = ({ drizzle, drizzleState, _events }: any) => {
   );
 };
 
-export default Home;
+export default Index;
 
 export const getStaticProps = async () => {
   const { error, data } = await client.query({

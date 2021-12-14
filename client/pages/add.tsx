@@ -28,7 +28,7 @@ const addEvent: React.FC = ({ drizzle }: any) => {
   const [authRedirect] = useAuthRedirectMutation();
 
   useEffect(() => {
-    // authRedirect();
+    authRedirect();
   }, []);
 
   const handleTicketData = (data: Ticket) => {

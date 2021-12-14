@@ -28,7 +28,7 @@ const addEvent: React.FC = ({ drizzle }: any) => {
   const [authRedirect] = useAuthRedirectMutation();
 
   useEffect(() => {
-    authRedirect();
+    // authRedirect();  Want to redirect to login page if no login token.
   }, []);
 
   const handleTicketData = (data: Ticket) => {

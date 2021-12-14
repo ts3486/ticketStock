@@ -114,8 +114,9 @@ export class UserResolver {
   }
 
   @Mutation(() => Boolean)
-  authRedirect(@Ctx() { res }: MyContext, context: MyContext) {
+  authRedirect(@Ctx() context: MyContext, { res }: MyContext) {
     const authorization = context.req.headers["authorization"];
+    console.log(authorization);
 
     if (!authorization) {
       console.log("unauthorized: redirecting to login page...");

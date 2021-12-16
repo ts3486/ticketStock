@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Input } from "@material-ui/core";
 import { TextField } from "@mui/material";
-import DesktopDatePicker from "@mui/lab/DesktopDatePicker";
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
+import LocalizationProvider from "@mui/lab/LocalizationProvider";
+import DatePicker from "@mui/lab/DatePicker";
 
 interface Props {
   ticketData: (ticket: { name: string; image: string; file: File; date: Date; price: string }) => void;
@@ -60,13 +62,14 @@ const TicketSubmitform: React.FC<Props> = (props) => {
             }}
           />
 
-          <DesktopDatePicker
-            label="Date desktop"
-            inputFormat="MM/dd/yyyy"
-            value={date}
-            onChange={(e: any) => setDate(e.target.value)}
-            renderInput={(params) => <TextField {...params} />}
-          />
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <DatePicker
+              label="Date desktop"
+              value={date}
+              onChange={(e: any) => setDate(e.target.value)}
+              renderInput={(params) => <TextField {...params} />}
+            />
+          </LocalizationProvider>
 
           <TextField
             autoFocus

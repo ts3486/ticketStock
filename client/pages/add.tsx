@@ -122,8 +122,8 @@ const addEvent: React.FC = ({ drizzle }: any) => {
           <Input id="desc" aria-describedby="desc" onChange={(e) => setDesc(e.target.value)} />
           <FormHelperText id="desc"></FormHelperText>
         </FormControl>
-        {/* 
-        <TicketSubmitForm ticketData={(data) => handleTicketData(data)} /> */}
+
+        <TicketSubmitForm ticketData={(data) => handleTicketData(data)} />
 
         <Button className={formStyles.submitButton} variant="contained" onClick={onSubmit} color="primary">
           Submit

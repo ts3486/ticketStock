@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useAuthRedirectMutation } from "../generated/graphql";
 import app from "../firebase";
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { useAddEventMutation } from "../generated/graphql";
+import { useAddEventMutation, useAddTicketMutation } from "../generated/graphql";
 import formStyles from "../styles/Form.module.css";
 import { FormControl, InputLabel, Input, FormHelperText, Button, Box } from "@material-ui/core";
 import TicketSubmitForm from "../components/Ticket/TicketSubmitForm";
@@ -19,12 +19,13 @@ const addEvent: React.FC = ({ drizzle }: any) => {
   const [name, setName] = useState("");
   const [image, setImage] = useState("");
   const [file, setFile] = useState<File>({} as File);
-  const [ticket] = useState("");
-  const [ticketData, setTicketData] = useState<Ticket>();
+  const [ticket] = useState<Ticket>({} as Ticket);
+  const [ticketData, setTicketData] = useState<Ticket>({} as Ticket);
   const [ticketFile, setTicketFile] = useState<File>({} as File);
   const [progress, setProgress] = useState(0);
   const [desc, setDesc] = useState("");
   const [addEvent] = useAddEventMutation();
+  const [addTicket] = useAddTicketMutation();
   const [authRedirect] = useAuthRedirectMutation();
 
   useEffect(() => {
@@ -34,6 +35,8 @@ const addEvent: React.FC = ({ drizzle }: any) => {
   const handleTicketData = (data: Ticket) => {
     setTicketData(data);
     setTicketFile(data.file);
+
+    addTicket(ticketData);
   };
 
   //firebase function
@@ -79,7 +82,7 @@ const addEvent: React.FC = ({ drizzle }: any) => {
         name: name,
         image: image,
         desc: desc,
-        ticket: ticket,
+        tickets: ticket,
       },
     });
 
@@ -126,7 +129,7 @@ const addEvent: React.FC = ({ drizzle }: any) => {
         <TicketSubmitForm ticketData={(data) => handleTicketData(data)} />
 
         <Button className={formStyles.submitButton} variant="contained" onClick={onSubmit} color="primary">
-          Submit
+          Create Event
         </Button>
       </Box>
     </div>

@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany } from "typeorm";
-import { ObjectType, Field, Int, InputType } from "type-graphql";
+import { ObjectType, InputType, Field, Int } from "type-graphql";
 import { User } from "./User";
 import { Event } from "./Event";
 
@@ -17,6 +17,14 @@ export class Ticket extends BaseEntity {
   @Field()
   image: string;
 
+  @Column({ type: "longblob" })
+  @Field()
+  file: string;
+
+  @Column({ type: "int" })
+  @Field(() => Int)
+  price: number;
+
   @Column(() => Date)
   @Field()
   date: Date;
@@ -25,7 +33,7 @@ export class Ticket extends BaseEntity {
   @Field(() => User)
   user: User;
 
-  @OneToMany(() => Event, (event) => event.tickets)
+  @OneToMany(() => Event, (event) => event.ticket)
   @Field(() => Event)
   event: Event;
 }
@@ -38,6 +46,12 @@ export class TicketInput implements Partial<Ticket> {
   @Field()
   image: string;
 
+  @Field()
+  file: string;
+
+  @Field(() => Int)
+  price: number;
+  
   @Field()
   date: Date;
 }

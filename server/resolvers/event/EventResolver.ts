@@ -1,6 +1,6 @@
 import { Resolver, Query, Mutation, Arg, Ctx } from "type-graphql";
 //Account
-import { Event, EventInput } from "../../entities/Event";
+import { Event } from "../../entities/Event";
 import { User } from "../../entities/User";
 import { Ticket, TicketInput } from "../../entities/Ticket";
 import { MyContext } from "../auth/MyContext";
@@ -31,7 +31,7 @@ export class EventResolver {
     @Arg("name") name: string,
     @Arg("image") image: string,
     @Arg("desc") desc: string,
-    @Arg("tickets") tickets: TicketInput
+    @Arg("tickets") ticket: TicketInput
   ) {
     const authorization = context.req.headers["authorization"];
 
@@ -43,7 +43,7 @@ export class EventResolver {
       const token = authorization.split(" ")[1];
       const payload: any = verify(token, process.env.ACCESS_TOKEN_SECRET!);
 
-      Event.create({ name, image, desc, tickets }).save();
+      Event.create({ name, image, desc, ticket }).save();
       console.log("event added");
 
       return true;
@@ -54,7 +54,7 @@ export class EventResolver {
   }
 
   @Mutation(() => Boolean)
-  async addTicket(@Ctx() context: MyContext, @Arg("tickets") tickets: TicketInput) {
+  async addTicket(@Ctx() context: MyContext, @Arg("tickets") ticket: TicketInput) {
     const authorization = context.req.headers["authorization"];
 
     if (!authorization) {
@@ -72,7 +72,7 @@ export class EventResolver {
         .where("User.id = :id", { id: payload.userId })
         .getRawMany();
 
-      const newTicketArray = ticketArray.concat(tickets);
+      const newTicketArray = ticketArray.concat(ticket);
 
       User.update(payload.userId, {
         tickets: newTicketArray,

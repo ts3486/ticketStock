@@ -23,7 +23,7 @@ export class Event extends BaseEntity {
 
   @ManyToOne(() => Ticket, (ticket) => ticket.event)
   @Field(() => Ticket)
-  tickets: Ticket;
+  ticket: Ticket;
 
   // @Field()
   // @ManyToOne

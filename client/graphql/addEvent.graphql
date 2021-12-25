@@ -1,3 +1,11 @@
-mutation AddEvent($name: String!, $image: String!, $desc: String!, $ticket: String!) {
-  addEvent(name: $name, image: $image, desc: $desc, ticket: $ticket)
+interface Ticket {
+  name: string
+  image: string
+  file: File
+  date: DateTime
+  price: number
+}
+
+mutation AddEvent($name: String!, $image: String!, $desc: String!, $tickets: Ticket!) {
+  addEvent(name: $name, image: $image, desc: $desc, tickets: $tickets)
 }

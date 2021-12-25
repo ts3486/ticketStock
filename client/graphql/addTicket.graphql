@@ -1,0 +1,11 @@
+interface Ticket {
+  name: string
+  image: string
+  file: File
+  date: DateTime
+  price: number
+}
+
+mutation AddTicket($ticket: Ticket!) {
+  addTicket(ticket: $ticket)
+}

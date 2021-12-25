@@ -13,15 +13,17 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  /** The javascript `Date` as string. Type represents date and time as the ISO Date string. */
+  DateTime: any;
 };
 
 export type Event = {
   __typename?: 'Event';
-  desc: Scalars['String'];
   id: Scalars['Int'];
-  image: Scalars['String'];
   name: Scalars['String'];
-  ticket: Scalars['String'];
+  image: Scalars['String'];
+  desc: Scalars['String'];
+  tickets: Ticket;
 };
 
 export type LoginResponse = {
@@ -32,32 +34,13 @@ export type LoginResponse = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  addEvent: Scalars['Boolean'];
-  authRedirect: Scalars['Boolean'];
-  login: LoginResponse;
   logout: Scalars['Boolean'];
-  register: Scalars['Boolean'];
   revokeRefreshTokensForUser: Scalars['Boolean'];
-};
-
-
-export type MutationAddEventArgs = {
-  desc: Scalars['String'];
-  image: Scalars['String'];
-  name: Scalars['String'];
-  ticket: Scalars['String'];
-};
-
-
-export type MutationLoginArgs = {
-  email: Scalars['String'];
-  password: Scalars['String'];
-};
-
-
-export type MutationRegisterArgs = {
-  email: Scalars['String'];
-  password: Scalars['String'];
+  login: LoginResponse;
+  register: Scalars['Boolean'];
+  authRedirect: Scalars['Boolean'];
+  addEvent: Scalars['Boolean'];
+  addTicket: Scalars['Boolean'];
 };
 
 
@@ -65,13 +48,38 @@ export type MutationRevokeRefreshTokensForUserArgs = {
   userId: Scalars['Int'];
 };
 
+
+export type MutationLoginArgs = {
+  password: Scalars['String'];
+  email: Scalars['String'];
+};
+
+
+export type MutationRegisterArgs = {
+  password: Scalars['String'];
+  email: Scalars['String'];
+};
+
+
+export type MutationAddEventArgs = {
+  tickets: TicketInput;
+  desc: Scalars['String'];
+  image: Scalars['String'];
+  name: Scalars['String'];
+};
+
+
+export type MutationAddTicketArgs = {
+  tickets: TicketInput;
+};
+
 export type Query = {
   __typename?: 'Query';
-  allEvents: Array<Event>;
-  getEvent: Event;
   hello: Scalars['String'];
-  me?: Maybe<User>;
   users: Array<User>;
+  me?: Maybe<User>;
+  getEvent: Event;
+  allEvents: Array<Event>;
 };
 
 
@@ -79,21 +87,45 @@ export type QueryGetEventArgs = {
   id: Scalars['String'];
 };
 
+export type Ticket = {
+  __typename?: 'Ticket';
+  id: Scalars['Int'];
+  name: Scalars['String'];
+  image: Scalars['String'];
+  date: Scalars['DateTime'];
+  user: User;
+  event: Event;
+};
+
+export type TicketInput = {
+  name: Scalars['String'];
+  image: Scalars['String'];
+  date: Scalars['DateTime'];
+};
+
 export type User = {
   __typename?: 'User';
-  email: Scalars['String'];
   id: Scalars['Int'];
+  email: Scalars['String'];
+  tickets: Array<Ticket>;
 };
 
 export type AddEventMutationVariables = Exact<{
   name: Scalars['String'];
   image: Scalars['String'];
   desc: Scalars['String'];
-  ticket: Scalars['String'];
+  tickets: TicketInput;
 }>;
 
 
 export type AddEventMutation = { __typename?: 'Mutation', addEvent: boolean };
+
+export type AddTicketMutationVariables = Exact<{
+  ticket: TicketInput;
+}>;
+
+
+export type AddTicketMutation = { __typename?: 'Mutation', addTicket: boolean };
 
 export type AllEventsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -145,8 +177,8 @@ export type RegisterMutation = { __typename?: 'Mutation', register: boolean };
 
 
 export const AddEventDocument = gql`
-    mutation AddEvent($name: String!, $image: String!, $desc: String!, $ticket: String!) {
-  addEvent(name: $name, image: $image, desc: $desc, ticket: $ticket)
+    mutation AddEvent($name: String!, $image: String!, $desc: String!, $tickets: TicketInput!) {
+  addEvent(name: $name, image: $image, desc: $desc, tickets: $tickets)
 }
     `;
 export type AddEventMutationFn = Apollo.MutationFunction<AddEventMutation, AddEventMutationVariables>;
@@ -167,7 +199,7 @@ export type AddEventMutationFn = Apollo.MutationFunction<AddEventMutation, AddEv
  *      name: // value for 'name'
  *      image: // value for 'image'
  *      desc: // value for 'desc'
- *      ticket: // value for 'ticket'
+ *      tickets: // value for 'tickets'
  *   },
  * });
  */
@@ -178,6 +210,37 @@ export function useAddEventMutation(baseOptions?: Apollo.MutationHookOptions<Add
 export type AddEventMutationHookResult = ReturnType<typeof useAddEventMutation>;
 export type AddEventMutationResult = Apollo.MutationResult<AddEventMutation>;
 export type AddEventMutationOptions = Apollo.BaseMutationOptions<AddEventMutation, AddEventMutationVariables>;
+export const AddTicketDocument = gql`
+    mutation AddTicket($ticket: TicketInput!) {
+  addTicket(tickets: $ticket)
+}
+    `;
+export type AddTicketMutationFn = Apollo.MutationFunction<AddTicketMutation, AddTicketMutationVariables>;
+
+/**
+ * __useAddTicketMutation__
+ *
+ * To run a mutation, you first call `useAddTicketMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddTicketMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addTicketMutation, { data, loading, error }] = useAddTicketMutation({
+ *   variables: {
+ *      ticket: // value for 'ticket'
+ *   },
+ * });
+ */
+export function useAddTicketMutation(baseOptions?: Apollo.MutationHookOptions<AddTicketMutation, AddTicketMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AddTicketMutation, AddTicketMutationVariables>(AddTicketDocument, options);
+      }
+export type AddTicketMutationHookResult = ReturnType<typeof useAddTicketMutation>;
+export type AddTicketMutationResult = Apollo.MutationResult<AddTicketMutation>;
+export type AddTicketMutationOptions = Apollo.BaseMutationOptions<AddTicketMutation, AddTicketMutationVariables>;
 export const AllEventsDocument = gql`
     query AllEvents {
   allEvents {

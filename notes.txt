@@ -41,6 +41,7 @@ Doesn't return values. Run out of gas?
 literally no values. Client does not read from truffle develop , but truffle console.
 
 Next.js Props:
-getStaticPaths
+getStaticPaths: pre-rendered paths. Quick initial loading, but can't render after initial render. 
+getStaticPaths: pre-rendered dynamic paths. 
 
-getServerProps
+getServerProps: render on request. for ui changes after initial render. 

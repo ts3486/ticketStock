@@ -15,6 +15,8 @@ const { Drizzle } = require("@drizzle/store");
 
 const drizzle = new Drizzle(drizzleOptions);
 
+const cache = new InMemoryCache({});
+
 //Apollo
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors) {
@@ -43,6 +45,8 @@ const requestLink = new ApolloLink(
                 authorization: `bearer ${accessToken}`,
               },
             });
+
+            console.log("header set");
           }
         })
         .then(() => {
@@ -77,6 +81,7 @@ const tRLink = new TokenRefreshLink({
       if (Date.now() >= exp * 1000) {
         return false;
       } else {
+        console.log("user has access");
         return true;
       }
     } catch {
@@ -99,10 +104,17 @@ const tRLink = new TokenRefreshLink({
   },
 });
 
-const link = from([errorLink, requestLink, tRLink, new HttpLink({ uri: "http://localhost:5000/graphql" })]);
+const link = from([
+  errorLink,
+  requestLink,
+  tRLink,
+  new HttpLink({ uri: "http://localhost:5000/graphql", credentials: "include" }),
+  //credentials: "include" important
+]);
 
 export const client = new ApolloClient({
   cache: new InMemoryCache(),
+  credentials: "include",
   link: link,
 });
 
@@ -112,16 +124,15 @@ export default class TicketStock extends App {
   };
 
   componentDidMount() {
-    //token authentication
-    // fetch("http://localhost:5000/refresh_token", {
-    //   method: "POST",
-    //   credentials: "include",
-    // }).then(async (x) => {
-    //   const { accessToken } = await x.json();
-    //   setAccessToken(accessToken);
-    //   this.setState({ loading: false });
-    //   console.log(accessToken);
-    // });
+    // token authentication
+    fetch("http://localhost:5000/refresh_token", {
+      method: "POST",
+      credentials: "include",
+    }).then(async (x) => {
+      const { accessToken } = await x.json();
+      setAccessToken(accessToken);
+      this.setState({ loading: false });
+    });
   }
 
   render() {

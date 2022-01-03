@@ -1,3 +1,4 @@
+import "dotenv/config";
 import express from "express";
 import "reflect-metadata";
 import { ApolloServer } from "apollo-server-express";
@@ -18,6 +19,7 @@ const cors = require("cors");
 
 (async () => {
   const app = express();
+  app.use(cookieParser());
 
   app.use(
     cors({
@@ -27,7 +29,7 @@ const cors = require("cors");
   );
 
   app.post("/refresh_token", async (req, res) => {
-    const token = req.cookies; //jid
+    const token = req.cookies.jid; //jid
     if (!token) {
       return res.send({ ok: false, accessToken: "" });
     }
@@ -62,7 +64,7 @@ const cors = require("cors");
     .then(() => {
       console.log("db connected");
     })
-    .catch((error: any) => {
+    .catch((error) => {
       console.log(error, "db connection error");
     });
 
@@ -72,18 +74,16 @@ const cors = require("cors");
 
   const apolloServer = new ApolloServer({
     schema,
-    context: ({ req, res }: any) => ({ req, res }),
+    context: ({ req, res }) => ({ req, res }),
     introspection: true,
     playground: true,
   });
-
-  app.use(cookieParser());
 
   apolloServer.applyMiddleware({ app, cors: false });
 
   app.listen(5000, () => {
     console.log("Server Running at 5000");
   });
-})().catch((error: any) => {
+})().catch((error) => {
   console.log(error, "error");
 });

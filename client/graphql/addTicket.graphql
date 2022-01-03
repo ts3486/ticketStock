@@ -1,11 +1,10 @@
-interface Ticket {
+input TicketInput {
   name: string
   image: string
-  file: File
   date: DateTime
   price: number
 }
 
-mutation AddTicket($ticket: Ticket!) {
+mutation AddTicket($ticket: TicketInput!) {
   addTicket(ticket: $ticket)
 }

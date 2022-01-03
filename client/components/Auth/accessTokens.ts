@@ -1,4 +1,4 @@
-let accessToken = "";
+let accessToken = "null";
 
 export const setAccessToken = (s: string) => {
   accessToken = s;

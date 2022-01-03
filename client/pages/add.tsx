@@ -7,20 +7,18 @@ import formStyles from "../styles/Form.module.css";
 import { FormControl, InputLabel, Input, FormHelperText, Button, Box } from "@material-ui/core";
 import TicketSubmitForm from "../components/Ticket/TicketSubmitForm";
 
-interface Ticket {
+interface TicketInput {
   name: string;
   image: string;
-  file: File;
+  price: number;
   date: Date;
-  price: string;
 }
 
 const addEvent: React.FC = ({ drizzle }: any) => {
   const [name, setName] = useState("");
   const [image, setImage] = useState("");
   const [file, setFile] = useState<File>({} as File);
-  const [ticket] = useState<Ticket>({} as Ticket);
-  const [ticketData, setTicketData] = useState<Ticket>({} as Ticket);
+  const [ticket, setTicket] = useState<TicketInput>({} as TicketInput);
   const [ticketFile, setTicketFile] = useState<File>({} as File);
   const [progress, setProgress] = useState(0);
   const [desc, setDesc] = useState("");
@@ -32,11 +30,13 @@ const addEvent: React.FC = ({ drizzle }: any) => {
     // authRedirect();  Want to redirect to login page if no login token.
   }, []);
 
-  const handleTicketData = (data: Ticket) => {
-    setTicketData(data);
-    setTicketFile(data.file);
+  const handleTicketData = (ticket: TicketInput) => {
+    setTicket(ticket);
+    console.log(ticket);
+  };
 
-    addTicket(ticketData);
+  const handleTicketFile = (_file: File) => {
+    setTicketFile(_file);
   };
 
   //firebase function
@@ -73,22 +73,31 @@ const addEvent: React.FC = ({ drizzle }: any) => {
 
     //setting gasLimit and gasPrice was crucial.
     contract.methods.mint(ticket).send({ from: drizzle.account, gas: "1000000", gasPrice: "100000" });
+
+    console.log("ticket minted");
   };
 
   const onSubmit = () => {
-    //Send to MySQL
     addEvent({
       variables: {
         name: name,
         image: image,
         desc: desc,
-        tickets: ticket,
+        ticket: ticket,
       },
     });
 
+    // console.log(ticket);
+    // addTicket({
+    //   variables: {
+    //     ticket: ticket,
+    //   },
+    // });
+
     //Send file to firebase storage
-    uploadFile(file);
-    uploadFile(ticketFile);
+    // uploadFile(file);
+    // uploadFile(ticketFile);
+
     mint();
   };
 
@@ -126,7 +135,10 @@ const addEvent: React.FC = ({ drizzle }: any) => {
           <FormHelperText id="desc"></FormHelperText>
         </FormControl>
 
-        <TicketSubmitForm ticketData={(data) => handleTicketData(data)} />
+        <TicketSubmitForm
+          ticketData={(_ticket) => handleTicketData(_ticket)}
+          ticketFile={(_file) => handleTicketFile(_file)}
+        />
 
         <Button className={formStyles.submitButton} variant="contained" onClick={onSubmit} color="primary">
           Create Event

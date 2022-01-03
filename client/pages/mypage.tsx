@@ -10,7 +10,7 @@ const Mypage = ({ drizzle, drizzleState }: any) => {
       <div>
         <h2>User</h2>
 
-        {/* display username, favorite genre of events */}
+        {/* display username, email, events */}
 
         <h2>Tickets</h2>
 

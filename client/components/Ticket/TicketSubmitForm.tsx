@@ -7,7 +7,8 @@ import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DatePicker from "@mui/lab/DatePicker";
 
 interface Props {
-  ticketData: (ticket: { name: string; image: string; file: File; date: Date; price: string }) => void;
+  ticketData: (ticket: { name: string; image: string; date: Date; price: number }) => void;
+  ticketFile: (file: File) => void;
 }
 
 const TicketSubmitform: React.FC<Props> = (props) => {
@@ -16,7 +17,7 @@ const TicketSubmitform: React.FC<Props> = (props) => {
   const [image, setImage] = useState("");
   const [file, setFile] = useState<File>({} as File);
   const [date, setDate] = useState<Date>(new Date("2021-11-18T21:11:54"));
-  const [price, setPrice] = useState("");
+  const [price, setPrice] = useState(0);
   const [addTicket] = useAddTicketMutation();
 
   const handleClickOpen = () => {
@@ -28,9 +29,10 @@ const TicketSubmitform: React.FC<Props> = (props) => {
   };
 
   const onSet = (e: any) => {
-    const data = { name, image, file, date, price };
+    const ticket = { name, image, price, date };
 
-    props.ticketData(data);
+    props.ticketData(ticket);
+    props.ticketFile(file);
     e.preventDefault();
 
     setOpen(false);
@@ -79,7 +81,7 @@ const TicketSubmitform: React.FC<Props> = (props) => {
             label="Price"
             fullWidth
             variant="standard"
-            onChange={(e) => setPrice(e.target.value)}
+            onChange={(e) => setPrice(Number(e.target.value))}
           />
         </DialogContent>
         <DialogActions>

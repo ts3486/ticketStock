@@ -1,11 +1,11 @@
-import { Resolver, Query, Mutation, Arg, Ctx } from "type-graphql";
+import { Resolver, Query, Mutation, Arg, Ctx, UseMiddleware } from "type-graphql";
 //Account
 import { Event } from "../../entities/Event";
 import { User } from "../../entities/User";
 import { Ticket, TicketInput } from "../../entities/Ticket";
 import { MyContext } from "../auth/MyContext";
-import { verify } from "jsonwebtoken";
-import { getRepository } from "typeorm";
+import { getRepository, getConnection } from "typeorm";
+import { isAuth } from "../auth/isAuth";
 
 @Resolver()
 export class EventResolver {
@@ -25,58 +25,44 @@ export class EventResolver {
     return Event.find();
   }
 
-  @Mutation(() => Boolean)
+  @Mutation(() => Boolean, { nullable: true })
+  @UseMiddleware(isAuth)
   async addEvent(
-    @Ctx() context: MyContext,
+    @Ctx() { payload }: MyContext,
     @Arg("name") name: string,
     @Arg("image") image: string,
     @Arg("desc") desc: string,
-    @Arg("tickets") ticket: TicketInput
+    @Arg("ticket") ticket: TicketInput
   ) {
-    const authorization = context.req.headers["authorization"];
-
-    if (!authorization) {
-      return null;
-    }
-
     try {
-      const token = authorization.split(" ")[1];
-      const payload: any = verify(token, process.env.ACCESS_TOKEN_SECRET!);
-
+      //add event to db
       Event.create({ name, image, desc, ticket }).save();
       console.log("event added");
 
-      return true;
-    } catch (err) {
-      console.log(err);
-      return null;
-    }
-  }
+      //add ticket to db
+      Ticket.create(ticket).save();
+      console.log("ticket added");
 
-  @Mutation(() => Boolean)
-  async addTicket(@Ctx() context: MyContext, @Arg("tickets") ticket: TicketInput) {
-    const authorization = context.req.headers["authorization"];
+      //add to user ticket list
 
-    if (!authorization) {
-      return null;
-    }
-
-    try {
-      const token = authorization.split(" ")[1];
-      const payload: any = verify(token, process.env.ACCESS_TOKEN_SECRET!);
-
-      //call current ticket array, then push new ticket to array.
+      //1. get tickets array from User
       const ticketArray = await getRepository(User)
-        .createQueryBuilder("User")
-        .select(["User.tickets"])
-        .where("User.id = :id", { id: payload.userId })
+        .createQueryBuilder("users")
+        .leftJoinAndSelect("users.tickets", "tickets")
+        .where("users.id = :id", { id: payload!.userId })
         .getRawMany();
 
       const newTicketArray = ticketArray.concat(ticket);
 
-      User.update(payload.userId, {
-        tickets: newTicketArray,
-      });
+      console.log(ticketArray, newTicketArray);
+
+      //2. update User
+      // await getConnection().getRepository(User).createQueryBuilder("users");
+      // User.update(payload!.userId, {
+      //   tickets: newTicketArray,
+      // });
+
+      console.log("user ticket info updated");
 
       return true;
     } catch (err) {
@@ -84,19 +70,41 @@ export class EventResolver {
       return null;
     }
   }
+
+  //   @Mutation(() => Boolean, { nullable: true })
+  //   @UseMiddleware(isAuth)
+  //   async addTicket(@Ctx() { payload }: MyContext, @Arg("ticket") ticket: TicketInput) {
+  //     try {
+  //       const name = ticket.name;
+  //       const image = ticket.image;
+  //       const price = ticket.price;
+  //       // const date = ticket.date;
+
+  //       //add ticket to db
+  //       Ticket.create({ name, image, price }).save();
+
+  //       console.log(payload!.userId);
+
+  //       // add ticket to user data
+  //       // call current ticket array, then push new ticket to array.
+  //       const ticketArray = await getRepository(User)
+  //         .createQueryBuilder("user")
+  //         .where("User.id = :id", { id: payload!.userId })
+  //         .select(["User.tickets"])
+  //         .getRawMany();
+
+  //       const newTicketArray = ticketArray.concat(ticket);
+
+  //       User.update(payload!.userId, {
+  //         tickets: newTicketArray,
+  //       });
+
+  //       console.log("ticket added");
+
+  //       return true;
+  //     } catch (err) {
+  //       console.log(err);
+  //       return null;
+  //     }
+  //   }
 }
-
-// const authorization = context.req.headers["authorization"];
-
-// if (!authorization) {
-//   return null;
-// }
-
-// try {
-//   const token = authorization.split(" ")[1];
-//   const payload: any = verify(token, process.env.ACCESS_TOKEN_SECRET!);
-//   return User.findOne(payload.userId);
-// } catch (err) {
-//   console.log(err);
-//   return null;
-// }

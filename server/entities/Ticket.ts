@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToOne, ManyToOne } from "typeorm";
 import { ObjectType, InputType, Field, Int } from "type-graphql";
 import { User } from "./User";
 import { Event } from "./Event";
@@ -17,23 +17,23 @@ export class Ticket extends BaseEntity {
   @Field()
   image: string;
 
-  @Column({ type: "longblob" })
-  @Field()
-  file: string;
+  // @Column({ type: "longblob" })
+  // @Field()
+  // file: string;
 
   @Column({ type: "int" })
   @Field(() => Int)
   price: number;
 
   @Column(() => Date)
-  @Field()
+  @Field({ nullable: true })
   date: Date;
 
-  @OneToMany(() => User, (user) => user.tickets)
+  @ManyToOne(() => User, (user) => user.tickets)
   @Field(() => User)
   user: User;
 
-  @OneToMany(() => Event, (event) => event.ticket)
+  @OneToOne(() => Event, (event) => event.ticket)
   @Field(() => Event)
   event: Event;
 }
@@ -46,12 +46,9 @@ export class TicketInput implements Partial<Ticket> {
   @Field()
   image: string;
 
-  @Field()
-  file: string;
-
   @Field(() => Int)
   price: number;
-  
-  @Field()
+
+  @Field({ nullable: true })
   date: Date;
 }

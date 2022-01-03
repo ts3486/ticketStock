@@ -23,7 +23,8 @@ export type Event = {
   name: Scalars['String'];
   image: Scalars['String'];
   desc: Scalars['String'];
-  tickets: Ticket;
+  user: User;
+  ticket: Ticket;
 };
 
 export type LoginResponse = {
@@ -39,8 +40,8 @@ export type Mutation = {
   login: LoginResponse;
   register: Scalars['Boolean'];
   authRedirect: Scalars['Boolean'];
-  addEvent: Scalars['Boolean'];
-  addTicket: Scalars['Boolean'];
+  addEvent?: Maybe<Scalars['Boolean']>;
+  addTicket?: Maybe<Scalars['Boolean']>;
 };
 
 
@@ -62,7 +63,7 @@ export type MutationRegisterArgs = {
 
 
 export type MutationAddEventArgs = {
-  tickets: TicketInput;
+  ticket: TicketInput;
   desc: Scalars['String'];
   image: Scalars['String'];
   name: Scalars['String'];
@@ -70,12 +71,11 @@ export type MutationAddEventArgs = {
 
 
 export type MutationAddTicketArgs = {
-  tickets: TicketInput;
+  ticket: TicketInput;
 };
 
 export type Query = {
   __typename?: 'Query';
-  hello: Scalars['String'];
   users: Array<User>;
   me?: Maybe<User>;
   getEvent: Event;
@@ -92,6 +92,7 @@ export type Ticket = {
   id: Scalars['Int'];
   name: Scalars['String'];
   image: Scalars['String'];
+  price: Scalars['Int'];
   date: Scalars['DateTime'];
   user: User;
   event: Event;
@@ -100,6 +101,7 @@ export type Ticket = {
 export type TicketInput = {
   name: Scalars['String'];
   image: Scalars['String'];
+  price: Scalars['Int'];
   date: Scalars['DateTime'];
 };
 
@@ -107,6 +109,8 @@ export type User = {
   __typename?: 'User';
   id: Scalars['Int'];
   email: Scalars['String'];
+  password: Scalars['String'];
+  events: Array<Event>;
   tickets: Array<Ticket>;
 };
 
@@ -114,18 +118,18 @@ export type AddEventMutationVariables = Exact<{
   name: Scalars['String'];
   image: Scalars['String'];
   desc: Scalars['String'];
-  tickets: TicketInput;
+  ticket: TicketInput;
 }>;
 
 
-export type AddEventMutation = { __typename?: 'Mutation', addEvent: boolean };
+export type AddEventMutation = { __typename?: 'Mutation', addEvent?: boolean | null | undefined };
 
 export type AddTicketMutationVariables = Exact<{
   ticket: TicketInput;
 }>;
 
 
-export type AddTicketMutation = { __typename?: 'Mutation', addTicket: boolean };
+export type AddTicketMutation = { __typename?: 'Mutation', addTicket?: boolean | null | undefined };
 
 export type AllEventsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -143,11 +147,6 @@ export type GetEventQueryVariables = Exact<{
 
 
 export type GetEventQuery = { __typename?: 'Query', getEvent: { __typename?: 'Event', id: number, name: string, image: string, desc: string } };
-
-export type HelloQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type HelloQuery = { __typename?: 'Query', hello: string };
 
 export type LoginMutationVariables = Exact<{
   email: Scalars['String'];
@@ -177,8 +176,8 @@ export type RegisterMutation = { __typename?: 'Mutation', register: boolean };
 
 
 export const AddEventDocument = gql`
-    mutation AddEvent($name: String!, $image: String!, $desc: String!, $tickets: TicketInput!) {
-  addEvent(name: $name, image: $image, desc: $desc, tickets: $tickets)
+    mutation AddEvent($name: String!, $image: String!, $desc: String!, $ticket: TicketInput!) {
+  addEvent(name: $name, image: $image, desc: $desc, ticket: $ticket)
 }
     `;
 export type AddEventMutationFn = Apollo.MutationFunction<AddEventMutation, AddEventMutationVariables>;
@@ -199,7 +198,7 @@ export type AddEventMutationFn = Apollo.MutationFunction<AddEventMutation, AddEv
  *      name: // value for 'name'
  *      image: // value for 'image'
  *      desc: // value for 'desc'
- *      tickets: // value for 'tickets'
+ *      ticket: // value for 'ticket'
  *   },
  * });
  */
@@ -212,7 +211,7 @@ export type AddEventMutationResult = Apollo.MutationResult<AddEventMutation>;
 export type AddEventMutationOptions = Apollo.BaseMutationOptions<AddEventMutation, AddEventMutationVariables>;
 export const AddTicketDocument = gql`
     mutation AddTicket($ticket: TicketInput!) {
-  addTicket(tickets: $ticket)
+  addTicket(ticket: $ticket)
 }
     `;
 export type AddTicketMutationFn = Apollo.MutationFunction<AddTicketMutation, AddTicketMutationVariables>;
@@ -346,38 +345,6 @@ export function useGetEventLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<G
 export type GetEventQueryHookResult = ReturnType<typeof useGetEventQuery>;
 export type GetEventLazyQueryHookResult = ReturnType<typeof useGetEventLazyQuery>;
 export type GetEventQueryResult = Apollo.QueryResult<GetEventQuery, GetEventQueryVariables>;
-export const HelloDocument = gql`
-    query Hello {
-  hello
-}
-    `;
-
-/**
- * __useHelloQuery__
- *
- * To run a query within a React component, call `useHelloQuery` and pass it any options that fit your needs.
- * When your component renders, `useHelloQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useHelloQuery({
- *   variables: {
- *   },
- * });
- */
-export function useHelloQuery(baseOptions?: Apollo.QueryHookOptions<HelloQuery, HelloQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<HelloQuery, HelloQueryVariables>(HelloDocument, options);
-      }
-export function useHelloLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<HelloQuery, HelloQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<HelloQuery, HelloQueryVariables>(HelloDocument, options);
-        }
-export type HelloQueryHookResult = ReturnType<typeof useHelloQuery>;
-export type HelloLazyQueryHookResult = ReturnType<typeof useHelloLazyQuery>;
-export type HelloQueryResult = Apollo.QueryResult<HelloQuery, HelloQueryVariables>;
 export const LoginDocument = gql`
     mutation Login($email: String!, $password: String!) {
   login(email: $email, password: $password) {

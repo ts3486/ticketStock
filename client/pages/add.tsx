@@ -14,7 +14,7 @@ interface TicketInput {
   date: Date;
 }
 
-const addEvent: React.FC = ({ drizzle }: any) => {
+const addEvent = ({ drizzle }: any) => {
   const [name, setName] = useState("");
   const [image, setImage] = useState("");
   const [file, setFile] = useState<File>({} as File);
@@ -86,13 +86,6 @@ const addEvent: React.FC = ({ drizzle }: any) => {
         ticket: ticket,
       },
     });
-
-    // console.log(ticket);
-    // addTicket({
-    //   variables: {
-    //     ticket: ticket,
-    //   },
-    // });
 
     //Send file to firebase storage
     // uploadFile(file);

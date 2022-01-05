@@ -21,3 +21,19 @@ export const GET_EVENT = gql`
     }
   }
 `;
+
+export const GET_USER = gql`
+  {
+    me {
+      email
+    }
+  }
+`;
+
+// export const GET_TICKETS = gql`
+//   {
+//     me {
+//       email
+//     }
+//   }
+// `;

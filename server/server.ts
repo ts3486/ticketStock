@@ -14,13 +14,11 @@ import { createAccessToken, createRefreshToken } from "./resolvers/auth/auth";
 import { sendRefreshToken } from "./resolvers/auth/sendRefreshToken";
 import { User } from "./entities/User";
 import { EventResolver } from "./resolvers/event/EventResolver";
-
 const cors = require("cors");
 
 (async () => {
   const app = express();
   app.use(cookieParser());
-
   app.use(
     cors({
       origin: "http://localhost:3000",
@@ -28,16 +26,24 @@ const cors = require("cors");
     })
   );
 
+  //token refresh REST requeset
   app.post("/refresh_token", async (req, res) => {
-    const token = req.cookies.jid; //jid
+    const token = req.cookies.jid; //jid is a custom name
+
+    console.log(token);
+
     if (!token) {
+      console.log("token null");
       return res.send({ ok: false, accessToken: "" });
     }
 
     let payload: any = null;
+
     try {
       payload = verify(token, process.env.REFRESH_TOKEN_SECRET!);
+      console.log("refesh token verified");
     } catch (err) {
+      console.log("token error");
       console.log(err);
       return res.send({ ok: false, accessToken: "" });
     }
@@ -47,10 +53,12 @@ const cors = require("cors");
     const user = await User.findOne({ id: payload.userId });
 
     if (!user) {
+      console.log("user null");
       return res.send({ ok: false, accessToken: "" });
     }
 
     if (user.tokenVersion !== payload.tokenVersion) {
+      console.log("invalid user token version");
       return res.send({ ok: false, accessToken: "" });
     }
 

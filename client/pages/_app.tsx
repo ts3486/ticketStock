@@ -6,14 +6,8 @@ import { onError } from "@apollo/client/link/error";
 import { getAccessToken, setAccessToken } from "../components/Auth/accessTokens";
 import { TokenRefreshLink } from "apollo-link-token-refresh";
 import jwtDecode from "jwt-decode";
-import NavBar from "../components/Navbar";
-import drizzleOptions from "../drizzleOptions";
+import Index from "../pages/index";
 import AppStyles from "../styles/App.module.css";
-//Drizzle
-const { DrizzleContext } = require("@drizzle/react-plugin");
-const { Drizzle } = require("@drizzle/store");
-
-const drizzle = new Drizzle(drizzleOptions);
 
 const cache = new InMemoryCache({});
 
@@ -66,10 +60,9 @@ const requestLink = new ApolloLink(
 
 const tRLink = new TokenRefreshLink({
   accessTokenField: "accessToken",
+
   isTokenValidOrUndefined: () => {
     const token = getAccessToken();
-
-    console.log(token);
 
     if (!token) {
       console.log("no token");
@@ -95,9 +88,12 @@ const tRLink = new TokenRefreshLink({
       credentials: "include",
     });
   },
+
   handleFetch: (accessToken) => {
     setAccessToken(accessToken);
+    console.log("handleFetch: " + accessToken);
   },
+
   handleError: (err) => {
     console.warn("Your refresh token is invalid. Try to relogin");
     console.error(err);
@@ -105,69 +101,28 @@ const tRLink = new TokenRefreshLink({
 });
 
 const link = from([
+  tRLink,
   errorLink,
   requestLink,
-  tRLink,
   new HttpLink({ uri: "http://localhost:5000/graphql", credentials: "include" }),
   //credentials: "include" important
 ]);
 
 export const client = new ApolloClient({
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache({}),
   credentials: "include",
   link: link,
 });
 
 export default class TicketStock extends App {
-  state = {
-    loading: false,
-  };
-
-  componentDidMount() {
-    // token authentication
-    fetch("http://localhost:5000/refresh_token", {
-      method: "POST",
-      credentials: "include",
-    }).then(async (x) => {
-      const { accessToken } = await x.json();
-      setAccessToken(accessToken);
-      this.setState({ loading: false });
-    });
-  }
+  componentDidMount() {}
 
   render() {
-    const { Component, pageProps }: AppProps = this.props;
+    // const { Component, pageProps }: AppProps = this.props;
 
     return (
       <ApolloProvider client={client}>
-        <DrizzleContext.Provider drizzle={drizzle}>
-          <NavBar />
-          <DrizzleContext.Consumer>
-            {(drizzleContext: any) => {
-              const { drizzle, drizzleState, initialized } = drizzleContext;
-
-              if (!initialized) {
-                //Improve error ui
-                return "Loading...";
-              }
-
-              {
-                return (
-                  <div className={AppStyles.App}>
-                    <Component {...pageProps} drizzle={drizzle} drizzleState={drizzleState} />
-                  </div>
-                );
-              }
-
-              // for a case where drizzle props are unnecessary.
-              // else {
-              //   <div className={AppStyles.App}>
-              //     <Component {...pageProps}/>
-              //   </div>
-              // }
-            }}
-          </DrizzleContext.Consumer>
-        </DrizzleContext.Provider>
+        <Index />
       </ApolloProvider>
     );
   }

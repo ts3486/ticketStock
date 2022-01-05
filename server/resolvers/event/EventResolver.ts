@@ -70,41 +70,4 @@ export class EventResolver {
       return null;
     }
   }
-
-  //   @Mutation(() => Boolean, { nullable: true })
-  //   @UseMiddleware(isAuth)
-  //   async addTicket(@Ctx() { payload }: MyContext, @Arg("ticket") ticket: TicketInput) {
-  //     try {
-  //       const name = ticket.name;
-  //       const image = ticket.image;
-  //       const price = ticket.price;
-  //       // const date = ticket.date;
-
-  //       //add ticket to db
-  //       Ticket.create({ name, image, price }).save();
-
-  //       console.log(payload!.userId);
-
-  //       // add ticket to user data
-  //       // call current ticket array, then push new ticket to array.
-  //       const ticketArray = await getRepository(User)
-  //         .createQueryBuilder("user")
-  //         .where("User.id = :id", { id: payload!.userId })
-  //         .select(["User.tickets"])
-  //         .getRawMany();
-
-  //       const newTicketArray = ticketArray.concat(ticket);
-
-  //       User.update(payload!.userId, {
-  //         tickets: newTicketArray,
-  //       });
-
-  //       console.log("ticket added");
-
-  //       return true;
-  //     } catch (err) {
-  //       console.log(err);
-  //       return null;
-  //     }
-  //   }
 }

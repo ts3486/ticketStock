@@ -1,43 +1,65 @@
-import React from "react";
-import { client } from "./_app";
-import { ALL_EVENTS } from "../gql/queries";
-import EventItem from "../components/Event/EventCard";
-import homeStyles from "../styles/Home.module.css";
+import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { getAccessToken, setAccessToken } from "../components/Auth/accessTokens";
+import drizzleOptions from "../drizzleOptions";
+import NavBar from "../components/Navbar";
+import Home from "../pages/home";
+import Add from "../pages/add";
+import Login from "../pages/login";
+import Register from "../pages/register";
+import MyPage from "./profile";
 
-interface Event {
-  id: string;
-  name: string;
-  image: string;
-  desc: string;
-}
+//Drizzle
+const { DrizzleContext } = require("@drizzle/react-plugin");
+const { Drizzle } = require("@drizzle/store");
 
-const Index = ({ drizzle, drizzleState, _events }: any) => {
+const drizzle = new Drizzle(drizzleOptions);
+
+const Index: React.FC = () => {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    console.log("refresh request");
+    // token authentication
+    fetch("http://localhost:5000/refresh_token", {
+      method: "POST",
+      credentials: "include",
+    }).then(async (x) => {
+      const { accessToken } = await x.json();
+      setAccessToken(accessToken);
+      setLoading(false);
+    });
+  }, []);
+
   return (
-    <div className={homeStyles.contentContainer}>
-      <h1>Events</h1>
-      <div className={homeStyles.eventContainer}>
-        {_events.map((event: Event) => (
-          <EventItem
-            event={{ id: event.id, name: event.name, image: event.image, description: event.desc }}
-            key={event.id}
-          />
-        ))}
-      </div>
-    </div>
+    <DrizzleContext.Provider drizzle={drizzle}>
+      <DrizzleContext.Consumer>
+        {(drizzleContext: any) => {
+          const { drizzle, drizzleState, initialized } = drizzleContext;
+
+          if (!initialized) {
+            //Improve error ui
+            return "Loading...";
+          }
+
+          {
+            return (
+              <Router>
+                <NavBar />
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/register" element={<Register />} />
+                  <Route path="/profile" element={<MyPage drizzle={drizzle} drizzleState={drizzleState} />} />
+                  <Route path="/add" element={<Add drizzle={drizzle} drizzleState={drizzleState} />} />
+                </Routes>
+              </Router>
+            );
+          }
+        }}
+      </DrizzleContext.Consumer>
+    </DrizzleContext.Provider>
   );
 };
 
 export default Index;
-
-export const getStaticProps = async () => {
-  const { error, data } = await client.query({
-    query: ALL_EVENTS,
-    errorPolicy: "all",
-  });
-
-  return {
-    props: {
-      _events: data.allEvents,
-    },
-  };
-};

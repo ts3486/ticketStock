@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useAuthRedirectMutation } from "../generated/graphql";
 import app from "../firebase";
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { useAddEventMutation, useAddTicketMutation } from "../generated/graphql";
+import { useAddEventMutation, useAuthRedirectMutation } from "../generated/graphql";
 import formStyles from "../styles/Form.module.css";
 import { FormControl, InputLabel, Input, FormHelperText, Button, Box } from "@material-ui/core";
 import TicketSubmitForm from "../components/Ticket/TicketSubmitForm";
@@ -23,8 +22,6 @@ const addEvent = ({ drizzle }: any) => {
   const [progress, setProgress] = useState(0);
   const [desc, setDesc] = useState("");
   const [addEvent] = useAddEventMutation();
-  const [addTicket] = useAddTicketMutation();
-  const [authRedirect] = useAuthRedirectMutation();
 
   useEffect(() => {
     // authRedirect();  Want to redirect to login page if no login token.
@@ -119,9 +116,8 @@ const addEvent = ({ drizzle }: any) => {
               setFile((e.currentTarget as HTMLInputElement).files![0]);
             }}
           />
-          <FormHelperText id="file"></FormHelperText>
+          <FormHelperText id="file">Add file</FormHelperText>
         </FormControl>
-
         <FormControl margin="normal">
           <InputLabel htmlFor="desc">Description</InputLabel>
           <Input id="desc" aria-describedby="desc" onChange={(e) => setDesc(e.target.value)} />

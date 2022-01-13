@@ -30,10 +30,7 @@ const cors = require("cors");
   app.post("/refresh_token", async (req, res) => {
     const token = req.cookies.jid; //jid is a custom name
 
-    console.log(token);
-
     if (!token) {
-      console.log("token null");
       return res.send({ ok: false, accessToken: "" });
     }
 
@@ -41,9 +38,7 @@ const cors = require("cors");
 
     try {
       payload = verify(token, process.env.REFRESH_TOKEN_SECRET!);
-      console.log("refesh token verified");
     } catch (err) {
-      console.log("token error");
       console.log(err);
       return res.send({ ok: false, accessToken: "" });
     }

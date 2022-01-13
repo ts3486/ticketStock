@@ -23,6 +23,7 @@ export type Event = {
   name: Scalars['String'];
   image: Scalars['String'];
   desc: Scalars['String'];
+  date?: Maybe<Scalars['DateTime']>;
   user: User;
   ticket: Ticket;
 };
@@ -41,7 +42,6 @@ export type Mutation = {
   register: Scalars['Boolean'];
   authRedirect: Scalars['Boolean'];
   addEvent?: Maybe<Scalars['Boolean']>;
-  addTicket?: Maybe<Scalars['Boolean']>;
 };
 
 
@@ -69,15 +69,10 @@ export type MutationAddEventArgs = {
   name: Scalars['String'];
 };
 
-
-export type MutationAddTicketArgs = {
-  ticket: TicketInput;
-};
-
 export type Query = {
   __typename?: 'Query';
   users: Array<User>;
-  me?: Maybe<User>;
+  me: User;
   getEvent: Event;
   allEvents: Array<Event>;
 };
@@ -93,7 +88,7 @@ export type Ticket = {
   name: Scalars['String'];
   image: Scalars['String'];
   price: Scalars['Int'];
-  date: Scalars['DateTime'];
+  date?: Maybe<Scalars['DateTime']>;
   user: User;
   event: Event;
 };
@@ -102,7 +97,7 @@ export type TicketInput = {
   name: Scalars['String'];
   image: Scalars['String'];
   price: Scalars['Int'];
-  date: Scalars['DateTime'];
+  date?: InputMaybe<Scalars['DateTime']>;
 };
 
 export type User = {
@@ -123,13 +118,6 @@ export type AddEventMutationVariables = Exact<{
 
 
 export type AddEventMutation = { __typename?: 'Mutation', addEvent?: boolean | null | undefined };
-
-export type AddTicketMutationVariables = Exact<{
-  ticket: TicketInput;
-}>;
-
-
-export type AddTicketMutation = { __typename?: 'Mutation', addTicket?: boolean | null | undefined };
 
 export type AllEventsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -164,7 +152,7 @@ export type LogoutMutation = { __typename?: 'Mutation', logout: boolean };
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: number, email: string } | null | undefined };
+export type MeQuery = { __typename?: 'Query', me: { __typename?: 'User', id: number, email: string } };
 
 export type RegisterMutationVariables = Exact<{
   email: Scalars['String'];
@@ -209,37 +197,6 @@ export function useAddEventMutation(baseOptions?: Apollo.MutationHookOptions<Add
 export type AddEventMutationHookResult = ReturnType<typeof useAddEventMutation>;
 export type AddEventMutationResult = Apollo.MutationResult<AddEventMutation>;
 export type AddEventMutationOptions = Apollo.BaseMutationOptions<AddEventMutation, AddEventMutationVariables>;
-export const AddTicketDocument = gql`
-    mutation AddTicket($ticket: TicketInput!) {
-  addTicket(ticket: $ticket)
-}
-    `;
-export type AddTicketMutationFn = Apollo.MutationFunction<AddTicketMutation, AddTicketMutationVariables>;
-
-/**
- * __useAddTicketMutation__
- *
- * To run a mutation, you first call `useAddTicketMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useAddTicketMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [addTicketMutation, { data, loading, error }] = useAddTicketMutation({
- *   variables: {
- *      ticket: // value for 'ticket'
- *   },
- * });
- */
-export function useAddTicketMutation(baseOptions?: Apollo.MutationHookOptions<AddTicketMutation, AddTicketMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<AddTicketMutation, AddTicketMutationVariables>(AddTicketDocument, options);
-      }
-export type AddTicketMutationHookResult = ReturnType<typeof useAddTicketMutation>;
-export type AddTicketMutationResult = Apollo.MutationResult<AddTicketMutation>;
-export type AddTicketMutationOptions = Apollo.BaseMutationOptions<AddTicketMutation, AddTicketMutationVariables>;
 export const AllEventsDocument = gql`
     query AllEvents {
   allEvents {

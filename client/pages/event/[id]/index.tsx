@@ -4,7 +4,7 @@ import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import { makeStyles } from "@material-ui/core/styles";
 import { Card, CardActionArea, CardActions, CardContent, CardMedia, Button, Typography, Box } from "@material-ui/core";
 import { ALL_EVENTS } from "../../../gql/queries";
-import { client } from "../../_app";
+import { client } from "../../../apollo";
 import { gql } from "@apollo/client";
 
 interface Event {
@@ -118,7 +118,7 @@ export const getStaticPaths = async () => {
   const events = data.allEvents;
 
   const paths = events.map((event: Event["events"]) => ({
-    params: { id: event.id },
+    params: { id: event.id.toString() },
   }));
 
   return {

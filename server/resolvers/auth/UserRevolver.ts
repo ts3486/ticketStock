@@ -23,7 +23,7 @@ export class UserResolver {
     return User.find();
   }
 
-  @Query(() => User, { nullable: true })
+  @Query(() => User)
   @UseMiddleware(isAuth)
   me(@Ctx() { payload }: MyContext) {
     try {

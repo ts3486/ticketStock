@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useAddTicketMutation } from "../../generated/graphql";
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Input } from "@material-ui/core";
 import { TextField } from "@mui/material";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
@@ -18,7 +17,6 @@ const TicketSubmitform: React.FC<Props> = (props) => {
   const [file, setFile] = useState<File>({} as File);
   const [date, setDate] = useState<Date>(new Date("2021-11-18T21:11:54"));
   const [price, setPrice] = useState(0);
-  const [addTicket] = useAddTicketMutation();
 
   const handleClickOpen = () => {
     setOpen(true);

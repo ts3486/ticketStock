@@ -99,11 +99,6 @@ const addEvent = ({ drizzle }: any) => {
           <Input id="name" aria-describedby="name" onChange={(e) => setName(e.target.value)} />
           <FormHelperText id="name"></FormHelperText>
         </FormControl>
-        <FormControl margin="normal">
-          <InputLabel htmlFor="image">Image</InputLabel>
-          <Input id="image" aria-describedby="image" onChange={(e) => setImage(e.target.value)} />
-          <FormHelperText id="image"></FormHelperText>
-        </FormControl>
 
         <FormControl margin="normal">
           <InputLabel htmlFor="file">File</InputLabel>

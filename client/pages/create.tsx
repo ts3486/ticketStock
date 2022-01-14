@@ -13,7 +13,7 @@ interface TicketInput {
   date: Date;
 }
 
-const addEvent = ({ drizzle }: any) => {
+const createEvent = ({ drizzle }: any) => {
   const [name, setName] = useState("");
   const [image, setImage] = useState("");
   const [file, setFile] = useState<File>({} as File);
@@ -132,4 +132,4 @@ const addEvent = ({ drizzle }: any) => {
   );
 };
 
-export default addEvent;
+export default createEvent;

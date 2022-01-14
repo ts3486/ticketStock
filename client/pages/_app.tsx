@@ -5,6 +5,8 @@ import { client } from "../apollo";
 import drizzleOptions from "../drizzleOptions";
 import { AppProps } from "next/dist/shared/lib/router/router";
 import { setAccessToken } from "../components/Auth/accessTokens";
+import { MuiThemeProvider } from "@material-ui/core";
+import { theme } from "../styles/theme";
 import Navbar from "../components/Navbar";
 
 //Drizzle
@@ -54,11 +56,12 @@ export default class TicketStock extends App {
 
               {
                 console.log("initialized");
-
                 return (
                   <div className="App">
-                    <Navbar />
-                    <Component {...pageProps} drizzle={drizzle} drizzleState={drizzleState} />
+                    <MuiThemeProvider theme={theme}>
+                      <Navbar />
+                      <Component {...pageProps} drizzle={drizzle} drizzleState={drizzleState} />
+                    </MuiThemeProvider>
                   </div>
                 );
               }

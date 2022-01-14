@@ -11,7 +11,8 @@ import {
   ListItemText,
   List,
   ClickAwayListener,
-} from "@mui/material";
+} from "@material-ui/core";
+import navbarStyles from "../styles/Navbar.module.css";
 import { Menu as MenuIcon } from "@material-ui/icons";
 
 const NavComponent = () => {
@@ -23,11 +24,40 @@ const NavComponent = () => {
 
   const list = () => (
     <ClickAwayListener onClickAway={clickAway}>
-      <Box sx={{ width: 250, marginTop: 20, display: "flex", justifyContent: "center" }} role="presentation">
-        <List>
-          {["Home", "MyPage", "Events", "Create", "Contact"].map((text) => (
-            <ListItem button component="a" href={"/" + text.toLowerCase()} key={text}>
-              <ListItemText primary={text} />
+      <Box
+        style={{
+          width: 300,
+          height: "100%",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "start",
+          // backgroundColor: "#fff",
+        }}
+        role="presentation">
+        <List
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "start",
+            margin: "20%",
+          }}>
+          {["Home", "MyPage", "Events", "Create", "Contact"].map((text: string) => (
+            <ListItem
+              style={{ display: "flex", justifyContent: "center" }}
+              button
+              component="a"
+              href={"/" + text.toLowerCase()}
+              key={text}>
+              <ListItemText
+                disableTypography
+                style={{ margin: "20%" }}
+                primary={
+                  <Typography style={{ display: "flex", justifyContent: "center", fontSize: "120%" }}>
+                    {text}
+                  </Typography>
+                }
+              />
             </ListItem>
           ))}
         </List>
@@ -36,8 +66,8 @@ const NavComponent = () => {
   );
 
   return (
-    <AppBar position="sticky">
-      <Toolbar>
+    <AppBar color="primary" position="sticky">
+      <Toolbar color="inherit">
         <IconButton edge="start" color="inherit" aria-label="menu" onClick={() => setAnchor(true)}>
           <MenuIcon />
         </IconButton>

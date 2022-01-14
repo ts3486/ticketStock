@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { client } from "../apollo";
 import { ALL_EVENTS, GET_USER } from "../gql/queries";
 import EventItem from "../components/Event/EventCard";
-import homeStyles from "../styles/Home.module.css";
+import indexStyles from "../styles/Index.module.css";
 
 interface Event {
   id: string;
@@ -17,18 +17,16 @@ const Index: React.FC = ({ _events }: any) => {
   useEffect(() => {}, [_events]);
 
   return (
-    <div className="App">
-      <div className={homeStyles.contentContainer}>
-        <h1>Events</h1>
-        <div className={homeStyles.eventContainer}>
-          {_events &&
-            _events.map((event: Event) => (
-              <EventItem
-                event={{ id: event.id, name: event.name, image: event.image, description: event.desc }}
-                key={event.id}
-              />
-            ))}
-        </div>
+    <div className={indexStyles.contentContainer}>
+      <h1>Events</h1>
+      <div className={indexStyles.eventContainer}>
+        {_events &&
+          _events.map((event: Event) => (
+            <EventItem
+              event={{ id: event.id, name: event.name, image: event.image, description: event.desc }}
+              key={event.id}
+            />
+          ))}
       </div>
     </div>
   );

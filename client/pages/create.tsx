@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import app from "../firebase";
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { useAddEventMutation, useAuthRedirectMutation } from "../generated/graphql";
+import { useAddEventMutation } from "../generated/graphql";
 import formStyles from "../styles/Form.module.css";
 import { FormControl, InputLabel, Input, FormHelperText, Button, Box } from "@material-ui/core";
 import TicketSubmitForm from "../components/Ticket/TicketSubmitForm";

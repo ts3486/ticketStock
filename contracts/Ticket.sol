@@ -27,11 +27,7 @@ contract Ticket is ERC721Full {
 
     }
 
-    // function addTicket(){
-
-    // };
-
-    // function deleteTicket(){
+    // function burnTicket(){
 
     // }; 
 }

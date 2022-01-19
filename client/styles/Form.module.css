@@ -12,6 +12,15 @@
   width: 50%;
   margin: 50px;
   padding: 40px;
+  text-align: center;
+}
+
+.ticketContainer {
+  margin-top: 30px;
+}
+
+.ticketButton {
+  margin-top: 30px;
 }
 
 .submitButton {

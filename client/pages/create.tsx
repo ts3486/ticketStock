@@ -3,7 +3,7 @@ import app from "../firebase";
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { useAddEventMutation } from "../generated/graphql";
 import formStyles from "../styles/Form.module.css";
-import { FormControl, InputLabel, Input, FormHelperText, Button, Box } from "@material-ui/core";
+import { FormControl, InputLabel, Input, FormHelperText, Button, Box, Card } from "@mui/material";
 import TicketSubmitForm from "../components/Ticket/TicketSubmitForm";
 
 interface TicketInput {
@@ -93,7 +93,8 @@ const createEvent = ({ drizzle }: any) => {
 
   return (
     <div className={formStyles.add}>
-      <Box className={formStyles.formBox}>
+      <Card className={formStyles.formBox}>
+        <h1>Create your event</h1>
         <FormControl margin="normal">
           <InputLabel htmlFor="name">Event name </InputLabel>
           <Input id="name" aria-describedby="name" onChange={(e) => setName(e.target.value)} />
@@ -101,17 +102,15 @@ const createEvent = ({ drizzle }: any) => {
         </FormControl>
 
         <FormControl margin="normal">
-          <InputLabel htmlFor="file">File</InputLabel>
+          {/* <InputLabel htmlFor="file">File</InputLabel> */}
           <Input
             type="file"
             id="file"
-            aria-describedby="file"
             onChange={(e) => {
               setImage((e.currentTarget as HTMLInputElement).files![0].name);
               setFile((e.currentTarget as HTMLInputElement).files![0]);
             }}
           />
-          <FormHelperText id="file">Add file</FormHelperText>
         </FormControl>
         <FormControl margin="normal">
           <InputLabel htmlFor="desc">Description</InputLabel>
@@ -127,7 +126,7 @@ const createEvent = ({ drizzle }: any) => {
         <Button className={formStyles.submitButton} variant="contained" onClick={onSubmit} color="primary">
           Create Event
         </Button>
-      </Box>
+      </Card>
     </div>
   );
 };

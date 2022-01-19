@@ -10,8 +10,8 @@ import { isAuth } from "../auth/isAuth";
 @Resolver()
 export class EventResolver {
   @Query(() => Event)
-  getEvent(@Arg("id") id: string) {
-    const event = Event.findOne(id);
+  getEvent(@Arg("id") id: number) {
+    const event = Event.findOne(id.toString());
 
     if (!Event) {
       return "event does not exist";

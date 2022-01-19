@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { client } from "../apollo";
 import { ALL_EVENTS, GET_USER } from "../gql/queries";
-import EventItem from "../components/Event/EventCard";
+import EventCard from "../components/Event/EventCard";
 import indexStyles from "../styles/Index.module.css";
 
 interface Event {
@@ -22,7 +22,7 @@ const Index: React.FC = ({ _events }: any) => {
       <div className={indexStyles.eventContainer}>
         {_events &&
           _events.map((event: Event) => (
-            <EventItem
+            <EventCard
               event={{ id: event.id, name: event.name, image: event.image, description: event.desc }}
               key={event.id}
             />

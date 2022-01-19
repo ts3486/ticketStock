@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import mypageStyles from "../styles/Home.module.css";
+import mypageStyles from "../styles/Mypage.module.css";
 import { useMeQuery } from "../generated/graphql";
 import { client } from "../apollo";
 import { ALL_EVENTS, GET_USER } from "../gql/queries";

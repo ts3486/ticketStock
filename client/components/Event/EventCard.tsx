@@ -1,6 +1,6 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import { Card, CardActionArea, CardActions, CardContent, CardMedia, Button, Typography, Link } from "@material-ui/core";
+import { Card, CardActionArea, CardActions, CardContent, CardMedia, Button, Typography, Link } from "@mui/material";
+import indexStyles from "../../styles/Index.module.css";
 
 interface Event {
   event: {
@@ -11,22 +11,11 @@ interface Event {
   };
 }
 
-const useStyles = makeStyles({
-  root: {
-    width: 300,
-  },
-  media: {
-    height: 140,
-  },
-});
-
 const EventItem: React.FC<Event> = (props: Event) => {
-  const classes = useStyles();
-
   return (
-    <Card className={classes.root}>
+    <Card className={indexStyles.eventCard}>
       <CardActionArea href={`/event/${props.event.id}`}>
-        <CardMedia className={classes.media} image={props.event.image} />
+        <CardMedia image={props.event.image} />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
             {props.event.name}
@@ -37,9 +26,9 @@ const EventItem: React.FC<Event> = (props: Event) => {
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button size="small" color="primary">
+        {/* <Button size="small" color="primary">
           <Link href="/event">Tickets</Link>
-        </Button>
+        </Button> */}
         <Button size="small" color="primary">
           <Link href={`/event/${props.event.id}`}>Learn More</Link>
         </Button>

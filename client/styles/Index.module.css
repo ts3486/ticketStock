@@ -1,4 +1,7 @@
 .contentContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   width: 70%;
   margin-left: 15%;
   margin-right: 15%;
@@ -6,6 +9,12 @@
 
 .eventContainer {
   display: flex;
-  width: 70%;
-  justify-content: space-between;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.eventCard {
+  width: 30%;
+  margin: 10px;
 }

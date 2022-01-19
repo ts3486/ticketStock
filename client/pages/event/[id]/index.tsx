@@ -6,6 +6,7 @@ import { Card, CardActionArea, CardActions, CardContent, CardMedia, Button, Typo
 import { ALL_EVENTS } from "../../../gql/queries";
 import { client } from "../../../apollo";
 import { gql } from "@apollo/client";
+import eventStyles from "../../../styles/event.module.css";
 
 interface Event {
   events: {
@@ -18,19 +19,7 @@ interface Event {
   event: string[];
 }
 
-const useStyles = makeStyles({
-  root: {
-    maxWidth: 345,
-    flexDirection: "row",
-  },
-  media: {
-    height: 140,
-  },
-});
-
 const EventPage = ({ event }: any) => {
-  const classes = useStyles();
-
   const [imageURL, setURL] = useState("");
 
   // const storage = getStorage(app);
@@ -64,47 +53,49 @@ const EventPage = ({ event }: any) => {
   //   });
 
   return (
-    <div className="eventpage">
-      <Card className={classes.root}>
-        <CardActionArea href={`/event/${event[1]}`}>
-          <CardMedia className={classes.media} image={event[3]} title="Contemplative Reptile" />
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="h2">
-              {event[2]}
-            </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
-              Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging across all
-              continents except Antarctica
-            </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
-              Date:
-            </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
-              Price:
-            </Typography>
-            {/* <Transaction event={event} /> */}
-          </CardContent>
-        </CardActionArea>
-        <CardActions>
-          <Button size="small" color="primary">
-            Buy
-          </Button>
-          <Button size="small" color="primary">
-            Learn More
-          </Button>
-        </CardActions>
-      </Card>
-      <Box>
-        <Typography gutterBottom variant="h5" component="h2">
-          About this event:
-        </Typography>
-        <Typography gutterBottom variant="h5" component="h2">
-          Links:
-        </Typography>
-        <Typography gutterBottom variant="h5" component="h2">
-          Socials:
-        </Typography>
-      </Box>
+    <div className={eventStyles.container}>
+      <div className={eventStyles.eventContainer}>
+        <Card className={eventStyles.card}>
+          <CardActionArea href={`/event/${event[1]}`}>
+            <CardMedia image={event[3]} title="Contemplative Reptile" />
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="h2">
+                {event[2]}
+              </Typography>
+              <Typography variant="body2" color="textSecondary" component="p">
+                Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging across all
+                continents except Antarctica
+              </Typography>
+              <Typography variant="body2" color="textSecondary" component="p">
+                Date:
+              </Typography>
+              <Typography variant="body2" color="textSecondary" component="p">
+                Price:
+              </Typography>
+              {/* <Transaction event={event} /> */}
+            </CardContent>
+          </CardActionArea>
+          <CardActions>
+            <Button size="small" color="primary">
+              Buy
+            </Button>
+            <Button size="small" color="primary">
+              Learn More
+            </Button>
+          </CardActions>
+        </Card>
+        <Box>
+          <Typography gutterBottom variant="h5" component="h2">
+            About this event:
+          </Typography>
+          <Typography gutterBottom variant="h5" component="h2">
+            Links:
+          </Typography>
+          <Typography gutterBottom variant="h5" component="h2">
+            Socials:
+          </Typography>
+        </Box>
+      </div>
     </div>
   );
 };
@@ -131,7 +122,7 @@ export const getStaticProps = async ({ params }: any) => {
   const { error, data } = await client.query({
     query: gql`
     query {
-      getEvent(id: ${params.id}){
+      getEvent(id: ${params.id.toString()}){
         id,
         name,
         image,
@@ -143,7 +134,7 @@ export const getStaticProps = async ({ params }: any) => {
     errorPolicy: "all",
   });
 
-  const event: string[] = Object.values(data.getEvent);
+  const event = Object.values(data.getEvent);
 
   return {
     props: {

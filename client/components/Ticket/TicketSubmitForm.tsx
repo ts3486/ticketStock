@@ -4,6 +4,7 @@ import { TextField } from "@mui/material";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DatePicker from "@mui/lab/DatePicker";
+import formStyles from "../../styles/Form.module.css";
 
 interface Props {
   ticketData: (ticket: { name: string; image: string; date: Date; price: number }) => void;
@@ -37,9 +38,9 @@ const TicketSubmitform: React.FC<Props> = (props) => {
   };
 
   return (
-    <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        Create Ticket
+    <div className={formStyles.ticketContainer}>
+      <Button className={formStyles.ticketButton} color="primary" variant="contained" onClick={handleClickOpen}>
+        Create A Ticket
       </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Create Ticket</DialogTitle>

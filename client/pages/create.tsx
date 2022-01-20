@@ -3,7 +3,7 @@ import app from "../firebase";
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { useAddEventMutation } from "../generated/graphql";
 import formStyles from "../styles/Form.module.css";
-import { FormControl, InputLabel, Input, FormHelperText, Button, Box, Card } from "@mui/material";
+import { FormControl, InputLabel, Input, FormHelperText, Button, Card } from "@mui/material";
 import TicketSubmitForm from "../components/Ticket/TicketSubmitForm";
 
 interface TicketInput {

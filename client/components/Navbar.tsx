@@ -42,7 +42,7 @@ const NavComponent = () => {
             alignItems: "start",
             margin: "20%",
           }}>
-          {["Home", "MyPage", "Events", "Create", "Contact"].map((text: string) => (
+          {["MyPage", "Create", "Contact"].map((text: string) => (
             <ListItem
               style={{ display: "flex", justifyContent: "center" }}
               button
@@ -77,7 +77,7 @@ const NavComponent = () => {
           </Drawer>
         </React.Fragment>
 
-        <Typography variant="h6" style={{ flex: 1 }}>
+        <Typography variant="h6" style={{ flex: 1 }} onClick={() => (window.location.href = "/")}>
           TicketStock
         </Typography>
 

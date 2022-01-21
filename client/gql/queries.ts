@@ -22,6 +22,18 @@ export const GET_EVENT = gql`
   }
 `;
 
+export const GET_TICKETS = gql`
+  {
+    allTickets {
+      id
+      name
+      image
+      price
+      date
+    }
+  }
+`;
+
 export const GET_USER = gql`
   {
     me {
@@ -30,10 +42,14 @@ export const GET_USER = gql`
   }
 `;
 
-// export const GET_TICKETS = gql`
-//   {
-//     me {
-//       email
-//     }
-//   }
-// `;
+export const GET_UTICKETS = gql`
+  {
+    allTickets {
+      id
+      name
+      image
+      price
+      date
+    }
+  }
+`;

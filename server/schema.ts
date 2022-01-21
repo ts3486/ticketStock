@@ -3,14 +3,16 @@ import { mergeTypeDefs } from "@graphql-tools/merge";
 import { mergeResolvers } from "@graphql-tools/merge";
 import { IResolvers } from "graphql-tools";
 //types
-import { authType } from "./typeDefs/authTypes";
+import { userType } from "./typeDefs/userTypes";
 import { eventType } from "./typeDefs/eventTypes";
+import { ticketType } from "./typeDefs/ticketTypes";
 //resolvers
-import { authResolver } from "./resolvers/auth/authResolver";
+import { UserResolver } from "./resolvers/auth/UserRevolver";
 import { EventResolver } from "./resolvers/event/EventResolver";
+import { TicketResolver } from "./resolvers/ticket/TicketResolver";
 
-const typeDefs = mergeTypeDefs([eventType]);
-const resolvers = mergeResolvers([authResolver, EventResolver]);
+const typeDefs = mergeTypeDefs([userType, eventType, ticketType]);
+const resolvers = mergeResolvers([UserResolver, EventResolver, TicketResolver]);
 
 export const Schema = makeExecutableSchema({
   typeDefs: typeDefs,

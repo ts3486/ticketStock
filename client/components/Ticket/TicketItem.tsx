@@ -4,7 +4,7 @@ import ticketStyles from "../../styles/Ticket.module.css";
 const TicketItem: React.FC<any> = ({ ticketData }) => {
   return (
     <div className={ticketStyles.card}>
-      <h3>{ticketData}</h3>
+      <div>{ticketData}</div>
       <div> Concert name</div>
       <div> Date </div>
     </div>

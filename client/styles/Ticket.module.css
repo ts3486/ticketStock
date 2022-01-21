@@ -7,3 +7,21 @@
   flex-direction: column;
   background-color: antiquewhite;
 }
+
+.title {
+  margin-top: 5%;
+}
+
+.listContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.ticketsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0% 5% 10% 5%;
+}

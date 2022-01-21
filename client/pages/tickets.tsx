@@ -1,20 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { client } from "../apollo";
 import ticketStyles from "../styles/Ticket.module.css";
 import TicketItem from "../components/Ticket/TicketItem";
 import { GET_TICKETS } from "../gql/queries";
 
 const TicketMarket: React.FC<any> = ({ _tickets }: any) => {
-  const [array, setArray] = useState([]);
+  //   const [array, setArray] = useState([]);
 
   console.log(_tickets);
+
+  useEffect(() => {}, [_tickets]);
+
   return (
     <div className={ticketStyles.listContainer}>
-      <h1>TICKET MARKET</h1>
-      <div>
-        {array.map((ticket: any) => {
-          <TicketItem ticketData={ticket} />;
-        })}
+      <h1 className={ticketStyles.title}>TICKET MARKET</h1>
+      <div className={ticketStyles.ticketsContainer}>
+        {_tickets && _tickets.map((ticket: any) => <TicketItem ticket={ticket} key={ticket.id} />)}
       </div>
     </div>
   );

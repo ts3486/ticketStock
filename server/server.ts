@@ -14,6 +14,7 @@ import { createAccessToken, createRefreshToken } from "./resolvers/auth/auth";
 import { sendRefreshToken } from "./resolvers/auth/sendRefreshToken";
 import { User } from "./entities/User";
 import { EventResolver } from "./resolvers/event/EventResolver";
+import { TicketResolver } from "./resolvers/ticket/TicketResolver";
 const cors = require("cors");
 
 (async () => {
@@ -72,7 +73,7 @@ const cors = require("cors");
     });
 
   const schema = await buildSchema({
-    resolvers: [UserResolver, EventResolver],
+    resolvers: [UserResolver, EventResolver, TicketResolver],
   });
 
   const apolloServer = new ApolloServer({

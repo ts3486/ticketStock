@@ -12,7 +12,7 @@ const TicketList: React.FC<any> = ({}) => {
       <h1>LIST</h1>
       <div>
         {array.map((ticket: any) => {
-          <TicketItem ticketData={ticket} />;
+          <TicketItem ticket={ticket} />;
         })}
       </div>
     </div>

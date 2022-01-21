@@ -12,7 +12,6 @@ import {
   List,
   ClickAwayListener,
 } from "@material-ui/core";
-import navbarStyles from "../styles/Navbar.module.css";
 import { Menu as MenuIcon } from "@material-ui/icons";
 
 const NavComponent = () => {

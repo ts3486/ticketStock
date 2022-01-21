@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FormControl, InputLabel, Input, FormHelperText, Button } from "@material-ui/core";
 import { useLoginMutation } from "../generated/graphql";
-import { setAccessToken } from "../components/Auth/accessTokens";
+import { setAccessToken } from "../accessTokens";
 // import styles from "../styles/auth.module.css";
 
 const Login = () => {

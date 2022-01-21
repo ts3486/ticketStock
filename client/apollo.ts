@@ -1,6 +1,6 @@
 import { ApolloClient, InMemoryCache, ApolloProvider, HttpLink, from, ApolloLink, Observable } from "@apollo/client";
 import { onError } from "@apollo/client/link/error";
-import { getAccessToken, setAccessToken } from "./components/Auth/accessTokens";
+import { getAccessToken, setAccessToken } from "./accessTokens";
 import { TokenRefreshLink } from "apollo-link-token-refresh";
 import jwtDecode from "jwt-decode";
 

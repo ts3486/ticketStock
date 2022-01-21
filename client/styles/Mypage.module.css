@@ -1,2 +1,35 @@
-.home {
+.pageContainer {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  background-color: gray;
+  width: 100%;
+  margin: 5%;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 5%;
+  padding: 5%;
+}
+
+.avatar {
+  margin: 5%;
+}
+
+.listContainer {
+  display: flex;
+  align-items: flex-start;
+  height: auto;
+  width: 50%;
+
+  padding: 5%;
+  background-color: antiquewhite;
 }

@@ -4,7 +4,7 @@ import { ApolloProvider } from "@apollo/client";
 import { client } from "../apollo";
 import drizzleOptions from "../drizzleOptions";
 import { AppProps } from "next/dist/shared/lib/router/router";
-import { setAccessToken } from "../components/Auth/accessTokens";
+import { setAccessToken } from "../accessTokens";
 import { MuiThemeProvider } from "@material-ui/core";
 import { theme } from "../styles/theme";
 import Navbar from "../components/Navbar";

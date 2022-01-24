@@ -24,4 +24,15 @@ export class TicketResolver {
       return ticket;
     }
   }
+
+  @Query(() => Event)
+  getUticket(@Arg("username") username: string) {
+    const ticket = Ticket.findOne(username);
+
+    if (!Ticket) {
+      return "ticket does not exist";
+    } else {
+      return ticket;
+    }
+  }
 }

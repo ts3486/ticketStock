@@ -23,6 +23,11 @@ ex) buy ticket button => add ticket id to possession. (ticket NFT will be stored
 - token generation system for artists.
 
 
+3. 
+- Ticket/Event has no userid. Check table joining and entity relationship. 
+- then create function get by id or username. 
+
+
 NEXT FEATURE: 
 
 1. User can mint and add ticket to NFT. 

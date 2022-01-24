@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { client } from "../../apollo";
 import mypageStyles from "../../styles/Mypage.module.css";
 import TicketItem from "../../components/Ticket/TicketItem";
-import { GET_UTICKETS } from "../../gql/queries";
+import { GET_TICKETS, GET_UTICKETS } from "../../gql/queries";
 
-const TicketList: React.FC<any> = ({}) => {
+const TicketList: React.FC<any> = ({ ticket }) => {
   const [array, setArray] = useState([]);
 
   return (
@@ -15,23 +15,24 @@ const TicketList: React.FC<any> = ({}) => {
           <TicketItem ticket={ticket} />;
         })}
       </div>
+      {/* page split */}
     </div>
   );
 };
 
 export default TicketList;
 
-// export const getStaticProps = async () => {
-//   const { error: uticketError, data: uticketData } = await client.query({
-//     query: GET_UTICKETS,
-//     errorPolicy: "all",
-//   });
+export const getStaticProps = async () => {
+  const { error: ticketError, data: ticketData } = await client.query({
+    query: GET_TICKETS,
+    errorPolicy: "all",
+  });
 
-//   const events: Event[] = uticketData.allEvents;
+  const tickets = ticketData.allTickets;
 
-//   return {
-//     props: {
-//       _events: events,
-//     },
-//   };
-// };
+  return {
+    props: {
+      _tickets: tickets,
+    },
+  };
+};

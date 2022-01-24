@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany, JoinColumn } from "typeorm";
 import { ObjectType, Field, Int } from "type-graphql";
 import { Ticket } from "./Ticket";
 import { Event } from "./Event";
@@ -9,6 +9,10 @@ export class User extends BaseEntity {
   @Field(() => Int)
   @PrimaryGeneratedColumn()
   id: number;
+
+  @Field({ nullable: true })
+  @Column("text")
+  username: string;
 
   @Field()
   @Column("text")
@@ -22,10 +26,12 @@ export class User extends BaseEntity {
   tokenVersion: number;
 
   @OneToMany(() => Event, (event) => event.user)
-  @Field(() => [Event])
-  events: [Event];
+  // @Field(() => [Event])
+  @JoinColumn()
+  events: Event[];
 
-  @OneToMany(() => Ticket, (ticket) => ticket.user, { cascade: true })
-  @Field(() => [Ticket])
-  tickets: [Ticket];
+  @OneToMany(() => Ticket, (ticket) => ticket.user, { eager: true })
+  // @Field(() => [Ticket])
+  @JoinColumn()
+  tickets: Ticket[];
 }

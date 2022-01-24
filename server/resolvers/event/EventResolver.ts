@@ -36,33 +36,53 @@ export class EventResolver {
   ) {
     try {
       //add event to db
-      Event.create({ name, image, desc, ticket }).save();
+      // const newEvent = await Event.create({ name, image, desc, ticket }).save();
+      const newEvent = new Event();
+      newEvent.name = name;
+      newEvent.image = image;
+      newEvent.desc = desc;
+      newEvent.userId = parseInt(payload!.userId);
+      newEvent.save();
       console.log("event added");
 
       //add ticket to db
-      Ticket.create(ticket).save();
+      // const newTicket = await Ticket.create(ticket).save();
+      const newTicket = new Ticket();
+      newTicket.name = ticket.name;
+      newTicket.image = ticket.image;
+      newTicket.price = ticket.price;
+      newTicket.userId = parseInt(payload!.userId);
+      console.log(newTicket);
+      newTicket.save();
+
       console.log("ticket added");
 
       //add to user ticket list
+      // 1. get tickets array from User
+      // const user = await getRepository(User)
+      //   .createQueryBuilder("users")
+      //   .leftJoinAndSelect("users.tickets", "ticket")
+      //   .where("users.id = :id", { id: payload!.userId })
+      //   .getOne();
 
-      //1. get tickets array from User
-      const ticketArray = await getRepository(User)
-        .createQueryBuilder("users")
-        .leftJoinAndSelect("users.tickets", "tickets")
-        .where("users.id = :id", { id: payload!.userId })
-        .getRawMany();
+      // if (user != null) {
+      //   const updatedTickets: Ticket[] = user.tickets.concat(newTicket);
 
-      const newTicketArray = ticketArray.concat(ticket);
+      //   console.log(updatedTickets);
 
-      console.log(ticketArray, newTicketArray);
+      // 2. update User
+      // await getRepository(User)
+      //   .createQueryBuilder("users")
+      //   .leftJoinAndSelect("users.tickets", "ticket")
+      //   .update(User)
+      //   .set({ tickets: updatedTickets })
+      //   .where("users.id = :id", { id: payload!.userId })
+      //   .execute();
+      // } else {
+      //   console.log("user null error");
+      // }
 
-      //2. update User
-      // await getConnection().getRepository(User).createQueryBuilder("users");
-      // User.update(payload!.userId, {
-      //   tickets: newTicketArray,
-      // });
-
-      console.log("user ticket info updated");
+      // console.log("user ticket info updated");
 
       return true;
     } catch (err) {

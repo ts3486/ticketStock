@@ -1,8 +1,8 @@
 import React from "react";
 import { useState } from "react";
-import { FormControl, InputLabel, Input, FormHelperText, Button } from "@material-ui/core";
+import { Card, FormControl, InputLabel, Input, FormHelperText, Button } from "@mui/material";
 import { useRegisterMutation } from "../generated/graphql";
-// import styles from "../styles/auth.module.css";
+import registerStyles from "../styles/login.module.css";
 
 const Register = () => {
   const [email, setEmail] = useState("");
@@ -23,8 +23,9 @@ const Register = () => {
   };
 
   return (
-    <div className="posts-page">
-      <div>
+    <div className={registerStyles.container}>
+      <Card className={registerStyles.cardContainer}>
+        <h1 className={registerStyles.title}>Register</h1>
         <FormControl margin="normal">
           <InputLabel htmlFor="email">Email</InputLabel>
           <Input
@@ -48,8 +49,10 @@ const Register = () => {
           <FormHelperText id="pw"></FormHelperText>
         </FormControl>
 
-        <Button onClick={onSubmit}>Register</Button>
-      </div>
+        <Button variant="contained" onClick={onSubmit}>
+          Register
+        </Button>
+      </Card>
     </div>
   );
 };

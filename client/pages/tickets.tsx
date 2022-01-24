@@ -17,6 +17,7 @@ const TicketMarket: React.FC<any> = ({ _tickets }: any) => {
       <div className={ticketStyles.ticketsContainer}>
         {_tickets && _tickets.map((ticket: any) => <TicketItem ticket={ticket} key={ticket.id} />)}
       </div>
+      page split
     </div>
   );
 };

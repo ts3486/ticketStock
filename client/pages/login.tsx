@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { FormControl, InputLabel, Input, FormHelperText, Button } from "@material-ui/core";
+import { Card, FormControl, InputLabel, Input, FormHelperText, Button } from "@mui/material";
 import { useLoginMutation } from "../generated/graphql";
 import { setAccessToken } from "../accessTokens";
-// import styles from "../styles/auth.module.css";
+import loginStyles from "../styles/Login.module.css";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -26,8 +26,9 @@ const Login = () => {
   };
 
   return (
-    <div className="posts-page">
-      <div>
+    <div className={loginStyles.container}>
+      <Card className={loginStyles.cardContainer}>
+        <h1 className={loginStyles.title}>Login</h1>
         <FormControl margin="normal">
           <InputLabel htmlFor="email">Email</InputLabel>
           <Input
@@ -51,8 +52,10 @@ const Login = () => {
           <FormHelperText id="pw"></FormHelperText>
         </FormControl>
 
-        <Button onClick={onSubmit}>Login</Button>
-      </div>
+        <Button variant="contained" onClick={onSubmit}>
+          Login
+        </Button>
+      </Card>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToOne, ManyToOne } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToOne, ManyToOne, JoinColumn } from "typeorm";
 import { ObjectType, InputType, Field, Int } from "type-graphql";
 import { User } from "./User";
 import { Event } from "./Event";
@@ -30,11 +30,13 @@ export class Ticket extends BaseEntity {
   date: Date;
 
   @ManyToOne(() => User, (user) => user.tickets)
-  @Field(() => User)
+  @JoinColumn()
+  // @Field(() => User)
   user: User;
+  userId: number;
 
   @OneToOne(() => Event, (event) => event.ticket)
-  @Field(() => Event)
+  // @Field(() => Event)
   event: Event;
 }
 

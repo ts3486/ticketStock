@@ -1,5 +1,15 @@
 import { gql } from "@apollo/client";
 
+export const ALL_USERS = gql`
+  {
+    users {
+      id
+      username
+      email
+    }
+  }
+`;
+
 export const ALL_EVENTS = gql`
   {
     allEvents {
@@ -37,6 +47,7 @@ export const GET_TICKETS = gql`
 export const GET_USER = gql`
   {
     me {
+      username
       email
     }
   }
@@ -44,7 +55,7 @@ export const GET_USER = gql`
 
 export const GET_UTICKETS = gql`
   {
-    allTickets {
+    getUTickets(username: String) {
       id
       name
       image

@@ -58,6 +58,7 @@ export type MutationLoginArgs = {
 
 export type MutationRegisterArgs = {
   password: Scalars['String'];
+  username: Scalars['String'];
   email: Scalars['String'];
 };
 
@@ -75,11 +76,24 @@ export type Query = {
   me: User;
   getEvent: Event;
   allEvents: Array<Event>;
+  allTickets: Array<Ticket>;
+  getTicket: Event;
+  getUticket: Event;
 };
 
 
 export type QueryGetEventArgs = {
-  id: Scalars['String'];
+  id: Scalars['Float'];
+};
+
+
+export type QueryGetTicketArgs = {
+  id: Scalars['Float'];
+};
+
+
+export type QueryGetUticketArgs = {
+  username: Scalars['String'];
 };
 
 export type Ticket = {
@@ -89,8 +103,6 @@ export type Ticket = {
   image: Scalars['String'];
   price: Scalars['Int'];
   date?: Maybe<Scalars['DateTime']>;
-  user: User;
-  event: Event;
 };
 
 export type TicketInput = {
@@ -104,9 +116,8 @@ export type User = {
   __typename?: 'User';
   id: Scalars['Int'];
   email: Scalars['String'];
+  username: Scalars['String'];
   password: Scalars['String'];
-  events: Array<Event>;
-  tickets: Array<Ticket>;
 };
 
 export type AddEventMutationVariables = Exact<{
@@ -130,7 +141,7 @@ export type AuthRedirectMutationVariables = Exact<{ [key: string]: never; }>;
 export type AuthRedirectMutation = { __typename?: 'Mutation', authRedirect: boolean };
 
 export type GetEventQueryVariables = Exact<{
-  id: Scalars['String'];
+  id: Scalars['Float'];
 }>;
 
 
@@ -156,6 +167,7 @@ export type MeQuery = { __typename?: 'Query', me: { __typename?: 'User', id: num
 
 export type RegisterMutationVariables = Exact<{
   email: Scalars['String'];
+  username: Scalars['String'];
   password: Scalars['String'];
 }>;
 
@@ -265,7 +277,7 @@ export type AuthRedirectMutationHookResult = ReturnType<typeof useAuthRedirectMu
 export type AuthRedirectMutationResult = Apollo.MutationResult<AuthRedirectMutation>;
 export type AuthRedirectMutationOptions = Apollo.BaseMutationOptions<AuthRedirectMutation, AuthRedirectMutationVariables>;
 export const GetEventDocument = gql`
-    query GetEvent($id: String!) {
+    query GetEvent($id: Float!) {
   getEvent(id: $id) {
     id
     name
@@ -406,8 +418,8 @@ export type MeQueryHookResult = ReturnType<typeof useMeQuery>;
 export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>;
 export type MeQueryResult = Apollo.QueryResult<MeQuery, MeQueryVariables>;
 export const RegisterDocument = gql`
-    mutation Register($email: String!, $password: String!) {
-  register(email: $email, password: $password)
+    mutation Register($email: String!, $username: String!, $password: String!) {
+  register(email: $email, username: $username, password: $password)
 }
     `;
 export type RegisterMutationFn = Apollo.MutationFunction<RegisterMutation, RegisterMutationVariables>;
@@ -426,6 +438,7 @@ export type RegisterMutationFn = Apollo.MutationFunction<RegisterMutation, Regis
  * const [registerMutation, { data, loading, error }] = useRegisterMutation({
  *   variables: {
  *      email: // value for 'email'
+ *      username: // value for 'username'
  *      password: // value for 'password'
  *   },
  * });

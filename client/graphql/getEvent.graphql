@@ -1,4 +1,4 @@
-query GetEvent($id: String!) {
+query GetEvent($id: Float!) {
   getEvent(id: $id) {
     id
     name

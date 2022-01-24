@@ -6,12 +6,12 @@ import { createConnection } from "typeorm";
 //Schema
 import { buildSchema } from "type-graphql";
 //Resolvers
-import { UserResolver } from "./resolvers/auth/UserRevolver";
+import { UserResolver } from "./resolvers/user/UserRevolver";
 //Account
 import cookieParser from "cookie-parser";
 import { verify } from "jsonwebtoken";
-import { createAccessToken, createRefreshToken } from "./resolvers/auth/auth";
-import { sendRefreshToken } from "./resolvers/auth/sendRefreshToken";
+import { createAccessToken, createRefreshToken } from "./resolvers/user/auth";
+import { sendRefreshToken } from "./resolvers/user/sendRefreshToken";
 import { User } from "./entities/User";
 import { EventResolver } from "./resolvers/event/EventResolver";
 import { TicketResolver } from "./resolvers/ticket/TicketResolver";

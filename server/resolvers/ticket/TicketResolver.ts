@@ -3,9 +3,9 @@ import { Resolver, Query, Mutation, Arg, Ctx, UseMiddleware } from "type-graphql
 import { Event } from "../../entities/Event";
 import { User } from "../../entities/User";
 import { Ticket, TicketInput } from "../../entities/Ticket";
-import { MyContext } from "../auth/MyContext";
+import { MyContext } from "../user/MyContext";
 import { getRepository, getConnection } from "typeorm";
-import { isAuth } from "../auth/isAuth";
+import { isAuth } from "../user/isAuth";
 
 @Resolver()
 export class TicketResolver {
@@ -26,13 +26,18 @@ export class TicketResolver {
   }
 
   @Query(() => Event)
-  getUticket(@Arg("username") username: string) {
-    const ticket = Ticket.findOne(username);
+  async getUticket(@Arg("username") username: string) {
+    const user = await User.findOne(username);
 
-    if (!Ticket) {
-      return "ticket does not exist";
-    } else {
-      return ticket;
+    if (user != null) {
+      const userId = user.id;
+      const tickets = await Ticket.find({ where: { userId: userId } });
+
+      if (!Ticket) {
+        return "ticket does not exist";
+      } else {
+        return tickets;
+      }
     }
   }
 }

@@ -2,19 +2,19 @@ import React from "react";
 import { useState } from "react";
 import { Card, FormControl, InputLabel, Input, FormHelperText, Button } from "@mui/material";
 import { useRegisterMutation } from "../generated/graphql";
-import registerStyles from "../styles/login.module.css";
+import registerStyles from "../styles/Login.module.css";
 
 const Register = () => {
   const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [register] = useRegisterMutation();
 
   const onSubmit = async () => {
-    console.log(email, password);
-
     const response = await register({
       variables: {
         email,
+        username,
         password,
       },
     });
@@ -36,6 +36,17 @@ const Register = () => {
             }}
           />
           <FormHelperText id="email"></FormHelperText>
+        </FormControl>
+        <FormControl margin="normal">
+          <InputLabel htmlFor="username">Username</InputLabel>
+          <Input
+            id="username"
+            aria-describedby="username"
+            onChange={(e: any) => {
+              setUsername(e.target.value);
+            }}
+          />
+          <FormHelperText id="username"></FormHelperText>
         </FormControl>
         <FormControl margin="normal">
           <InputLabel htmlFor="pw">Password</InputLabel>

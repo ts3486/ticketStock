@@ -7,7 +7,7 @@ import { userType } from "./typeDefs/userTypes";
 import { eventType } from "./typeDefs/eventTypes";
 import { ticketType } from "./typeDefs/ticketTypes";
 //resolvers
-import { UserResolver } from "./resolvers/auth/UserRevolver";
+import { UserResolver } from "./resolvers/user/UserRevolver";
 import { EventResolver } from "./resolvers/event/EventResolver";
 import { TicketResolver } from "./resolvers/ticket/TicketResolver";
 

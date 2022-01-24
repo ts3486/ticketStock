@@ -7,8 +7,8 @@ export const ADD_EVENT = gql`
 `;
 
 export const REGISTER = gql`
-  mutation register($email: String!, $password: String!) {
-    register(email: $email, password: $password)
+  mutation register($email: String!, $username: String!, $password: String!) {
+    register(email: $email, username: $username, password: $password)
   }
 `;
 

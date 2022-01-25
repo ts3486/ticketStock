@@ -7,8 +7,6 @@ import { GET_TICKETS } from "../gql/queries";
 const TicketMarket: React.FC<any> = ({ _tickets }: any) => {
   //   const [array, setArray] = useState([]);
 
-  console.log(_tickets);
-
   useEffect(() => {}, [_tickets]);
 
   return (

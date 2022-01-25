@@ -4,15 +4,23 @@ import mypageStyles from "../../styles/Mypage.module.css";
 import TicketItem from "../../components/Ticket/TicketItem";
 import { GET_UTICKETS } from "../../gql/queries";
 
-const TicketList: React.FC<any> = () => {
+interface Ticket {
+  id: number;
+  name: string;
+  image: string;
+  price: number;
+  date: Date;
+}
+
+const TicketList: React.FC<any> = ({ tickets }: any) => {
   const [array, setArray] = useState([]);
 
   return (
     <div className={mypageStyles.listContainer}>
       <h1>LIST</h1>
-      <div>
-        {array.map((ticket: any) => {
-          <TicketItem ticket={ticket} />;
+      <div className={mypageStyles.list}>
+        {tickets.map((ticket: any) => {
+          return <TicketItem ticket={ticket} key={ticket.id} />;
         })}
       </div>
       {/* page split */}

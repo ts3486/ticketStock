@@ -14,7 +14,7 @@ export class TicketResolver {
     return Ticket.find();
   }
 
-  @Query(() => Event)
+  @Query(() => Ticket)
   getTicket(@Arg("id") id: number) {
     const ticket = Ticket.findOne(id.toString());
 
@@ -25,18 +25,18 @@ export class TicketResolver {
     }
   }
 
-  @Query(() => Event)
-  async getUticket(@Arg("username") username: string) {
-    const user = await User.findOne(username);
+  @Query(() => [Ticket])
+  async getUtickets(@Arg("username") username: string) {
+    const user = await User.findOne({ where: { username: username } });
 
     if (user != null) {
       const userId = user.id;
-      const tickets = await Ticket.find({ where: { userId: userId } });
+      const utickets = await Ticket.find({ where: { userId: userId } });
 
       if (!Ticket) {
         return "ticket does not exist";
       } else {
-        return tickets;
+        return utickets;
       }
     }
   }

@@ -55,7 +55,7 @@ export const GET_USER = gql`
 
 export const GET_UTICKETS = gql`
   {
-    getUTickets(username: String) {
+    getUTickets(username: $username) {
       id
       name
       image

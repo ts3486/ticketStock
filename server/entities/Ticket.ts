@@ -33,6 +33,8 @@ export class Ticket extends BaseEntity {
   @JoinColumn()
   // @Field(() => User)
   user: User;
+
+  @Column({ type: "int", nullable: true })
   userId: number;
 
   @OneToOne(() => Event, (event) => event.ticket)

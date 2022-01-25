@@ -12,13 +12,13 @@ const { newContextComponents } = require("@drizzle/react-components");
 
 const { AccountData, ContractData, ContractForm } = newContextComponents;
 
-const Profile = ({ drizzle, drizzleState, _user }: any) => {
+const Profile = ({ drizzle, drizzleState, _utickets }: any) => {
   const { data, loading, error } = useMeQuery({
     fetchPolicy: "network-only",
   });
 
   useEffect(() => {
-    console.log(data);
+    console.log(_utickets);
   });
 
   if (!data) {
@@ -29,7 +29,7 @@ const Profile = ({ drizzle, drizzleState, _user }: any) => {
     <div className={mypageStyles.pageContainer}>
       <div className={mypageStyles.container}>
         <ProfileCard drizzleData={AccountData} />
-        <TicketList />
+        <TicketList tickets={_utickets} />
       </div>
     </div>
   );
@@ -43,10 +43,10 @@ export const getStaticPaths = async () => {
     errorPolicy: "all",
   });
 
-  const users = data.users;
+  const users = await data.users;
 
   const paths = users.map((user: any) => ({
-    params: { id: user.username },
+    params: { username: user.username.toString() },
   }));
 
   return {
@@ -57,24 +57,23 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async ({ params }: any) => {
   const { error: uticketError, data: uticketData } = await client.query({
-    query: gql`{
-      allUTickets(${params}){
-        id
-        name
-        image
-        price
+    query: gql` {
+      getUtickets(username: "${params.username}"){
+        id,
+        name,
+        image,
+        price,
+        date
       }
     }`,
     errorPolicy: "all",
   });
 
-  console.log("ticket: " + uticketData);
-
-  const utickets = uticketData.allUTickets;
+  const _utickets = uticketData.getUtickets;
 
   return {
     props: {
-      _utickets: utickets,
+      _utickets,
     },
   };
 };

@@ -27,9 +27,16 @@
 
 .listContainer {
   display: flex;
-  align-items: flex-start;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   height: auto;
   width: 50%;
   padding: 5%;
-  background-color: antiquewhite;
+  background-color: white;
+}
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
 }

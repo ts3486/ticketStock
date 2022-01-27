@@ -1,26 +1,26 @@
 import React, { useState } from "react";
 import app from "../../../firebase";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
-import { makeStyles } from "@material-ui/core/styles";
-import { Card, CardActionArea, CardActions, CardContent, CardMedia, Button, Typography, Box } from "@material-ui/core";
+import { Card, CardActionArea, CardActions, CardContent, CardMedia, Button, Typography, Box } from "@mui/material";
 import { ALL_EVENTS } from "../../../gql/queries";
 import { client } from "../../../apollo";
 import { gql } from "@apollo/client";
+import BuyTicket from "../../../components/Transaction/BuyTicket";
 import eventStyles from "../../../styles/event.module.css";
 
 interface Event {
-  events: {
+  event: {
     id: string;
     name: string;
     image: string;
     description: string;
+    ticketId: number;
   };
-
-  event: string[];
 }
 
-const EventPage = ({ event }: any) => {
+const EventPage = ({ event, ticket }: any) => {
   const [imageURL, setURL] = useState("");
+  const [open, setOpen] = useState(false);
 
   // const storage = getStorage(app);
 
@@ -76,12 +76,7 @@ const EventPage = ({ event }: any) => {
             </CardContent>
           </CardActionArea>
           <CardActions>
-            <Button size="small" color="primary">
-              Buy
-            </Button>
-            <Button size="small" color="primary">
-              Learn More
-            </Button>
+            <BuyTicket ticket={ticket} />
           </CardActions>
         </Card>
         <Box>
@@ -108,7 +103,7 @@ export const getStaticPaths = async () => {
 
   const events = data.allEvents;
 
-  const paths = events.map((event: Event["events"]) => ({
+  const paths = events.map((event: Event["event"]) => ({
     params: { id: event.id.toString() },
   }));
 
@@ -119,14 +114,15 @@ export const getStaticPaths = async () => {
 };
 
 export const getStaticProps = async ({ params }: any) => {
-  const { error, data } = await client.query({
+  const { error: eventError, data: eventData } = await client.query({
     query: gql`
     query {
-      getEvent(id: ${params.id.toString()}){
+      getEvent(id: ${params.id}){
         id,
         name,
         image,
-        desc
+        desc,
+        ticketId
       }
     }
   `,
@@ -134,11 +130,29 @@ export const getStaticProps = async ({ params }: any) => {
     errorPolicy: "all",
   });
 
-  const event = Object.values(data.getEvent);
+  const event: any = eventData.getEvent;
+
+  const { error: ticketError, data: ticketData } = await client.query({
+    query: gql`
+    query {
+      getTicket(id: ${event.ticketId}){
+        id,
+        name,
+        image,
+        price,
+      }
+    }
+  `,
+
+    errorPolicy: "all",
+  });
+
+  const ticket: any = ticketData.getTicket;
 
   return {
     props: {
       event,
+      ticket,
     },
   };
 };

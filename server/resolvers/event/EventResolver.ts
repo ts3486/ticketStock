@@ -35,27 +35,23 @@ export class EventResolver {
     @Arg("ticket") ticket: TicketInput
   ) {
     try {
-      //add event to db
-      // const newEvent = await Event.create({ name, image, desc, ticket }).save();
-      const newEvent = new Event();
-      newEvent.name = name;
-      newEvent.image = image;
-      newEvent.desc = desc;
-      newEvent.userId = parseInt(payload!.userId);
-      newEvent.save();
-      console.log("event added");
-
       //add ticket to db
-      // const newTicket = await Ticket.create(ticket).save();
-      const newTicket = new Ticket();
-      newTicket.name = ticket.name;
-      newTicket.image = ticket.image;
-      newTicket.price = ticket.price;
-      newTicket.userId = parseInt(payload!.userId);
-      console.log(newTicket);
-      newTicket.save();
+      const newTicket = await getRepository(Ticket).insert({
+        name: ticket.name,
+        image: ticket.image,
+        price: ticket.price,
+        userId: parseInt(payload!.userId),
+      });
 
-      console.log("ticket added");
+      //add event to db
+
+      await getRepository(Event).insert({
+        name: name,
+        image: image,
+        desc: desc,
+        userId: parseInt(payload!.userId),
+        ticketId: newTicket.identifiers[0].id,
+      });
 
       return true;
     } catch (err) {

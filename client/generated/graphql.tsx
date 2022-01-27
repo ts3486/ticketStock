@@ -26,6 +26,7 @@ export type Event = {
   date?: Maybe<Scalars['DateTime']>;
   user: User;
   ticket: Ticket;
+  ticketId: Scalars['Float'];
 };
 
 export type LoginResponse = {
@@ -42,6 +43,7 @@ export type Mutation = {
   register: Scalars['Boolean'];
   authRedirect: Scalars['Boolean'];
   addEvent?: Maybe<Scalars['Boolean']>;
+  sendTicket: Scalars['Boolean'];
 };
 
 
@@ -70,6 +72,11 @@ export type MutationAddEventArgs = {
   name: Scalars['String'];
 };
 
+
+export type MutationSendTicketArgs = {
+  id: Scalars['Float'];
+};
+
 export type Query = {
   __typename?: 'Query';
   users: Array<User>;
@@ -77,8 +84,8 @@ export type Query = {
   getEvent: Event;
   allEvents: Array<Event>;
   allTickets: Array<Ticket>;
-  getTicket: Event;
-  getUticket: Event;
+  getTicket: Ticket;
+  getUtickets: Array<Ticket>;
 };
 
 
@@ -92,7 +99,7 @@ export type QueryGetTicketArgs = {
 };
 
 
-export type QueryGetUticketArgs = {
+export type QueryGetUticketsArgs = {
   username: Scalars['String'];
 };
 
@@ -173,6 +180,13 @@ export type RegisterMutationVariables = Exact<{
 
 
 export type RegisterMutation = { __typename?: 'Mutation', register: boolean };
+
+export type SendTicketMutationVariables = Exact<{
+  id: Scalars['Float'];
+}>;
+
+
+export type SendTicketMutation = { __typename?: 'Mutation', sendTicket: boolean };
 
 
 export const AddEventDocument = gql`
@@ -450,3 +464,34 @@ export function useRegisterMutation(baseOptions?: Apollo.MutationHookOptions<Reg
 export type RegisterMutationHookResult = ReturnType<typeof useRegisterMutation>;
 export type RegisterMutationResult = Apollo.MutationResult<RegisterMutation>;
 export type RegisterMutationOptions = Apollo.BaseMutationOptions<RegisterMutation, RegisterMutationVariables>;
+export const SendTicketDocument = gql`
+    mutation SendTicket($id: Float!) {
+  sendTicket(id: $id)
+}
+    `;
+export type SendTicketMutationFn = Apollo.MutationFunction<SendTicketMutation, SendTicketMutationVariables>;
+
+/**
+ * __useSendTicketMutation__
+ *
+ * To run a mutation, you first call `useSendTicketMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSendTicketMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [sendTicketMutation, { data, loading, error }] = useSendTicketMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useSendTicketMutation(baseOptions?: Apollo.MutationHookOptions<SendTicketMutation, SendTicketMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SendTicketMutation, SendTicketMutationVariables>(SendTicketDocument, options);
+      }
+export type SendTicketMutationHookResult = ReturnType<typeof useSendTicketMutation>;
+export type SendTicketMutationResult = Apollo.MutationResult<SendTicketMutation>;
+export type SendTicketMutationOptions = Apollo.BaseMutationOptions<SendTicketMutation, SendTicketMutationVariables>;

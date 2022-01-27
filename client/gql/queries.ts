@@ -44,6 +44,18 @@ export const GET_TICKETS = gql`
   }
 `;
 
+export const GET_TICKET = gql`
+  {
+    getTicket(id: $id) {
+      id
+      name
+      image
+      price
+      date
+    }
+  }
+`;
+
 export const GET_USER = gql`
   {
     me {

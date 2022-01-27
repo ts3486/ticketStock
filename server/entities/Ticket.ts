@@ -34,7 +34,8 @@ export class Ticket extends BaseEntity {
   // @Field(() => User)
   user: User;
 
-  @Column({ type: "int", nullable: true })
+  @Column({ type: "int" })
+  @Field(() => Int)
   userId: number;
 
   @OneToOne(() => Event, (event) => event.ticket)

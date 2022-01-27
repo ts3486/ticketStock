@@ -29,11 +29,18 @@ export class Event extends BaseEntity {
   @Field(() => User)
   @ManyToOne(() => User, (user) => user.events)
   user: User;
+
+  @Column({ type: "int", nullable: true })
+  @Field()
   userId: number;
 
   @OneToOne(() => Ticket, (ticket) => ticket.event)
   @Field(() => Ticket)
   ticket: Ticket;
+
+  @Column({ type: "int", nullable: true })
+  @Field()
+  ticketId: number;
 }
 
 @InputType()

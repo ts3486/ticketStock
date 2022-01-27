@@ -40,4 +40,21 @@ export class TicketResolver {
       }
     }
   }
+
+  @Mutation(() => Boolean)
+  @UseMiddleware(isAuth)
+  async sendTicket(@Ctx() { payload }: MyContext, @Arg("id") id: number) {
+    console.log(payload);
+
+    await getConnection()
+      .createQueryBuilder()
+      .update(Ticket)
+      .set({
+        userId: parseInt(payload!.userId),
+      })
+      .where("id = :id", { id: id })
+      .execute();
+
+    return true;
+  }
 }

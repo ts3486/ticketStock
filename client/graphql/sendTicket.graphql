@@ -1,0 +1,3 @@
+mutation SendTicket($id: Float!) {
+  sendTicket(id: $id)
+}

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Dialog, Button } from "@material-ui/core";
+import { Box, Dialog, DialogContent, Button } from "@mui/material";
 import ViewTicket from "./ViewTicket";
 import PurchaseDetails from "./PurchaseDetails";
 import CompletePurchase from "./CompletePurchase";
@@ -19,16 +19,31 @@ const BuyTicket: React.FC<any> = ({ ticket }: any) => {
   const page = () => {
     if (cpage == 1) {
       return (
-        <div>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            height: "100%",
+          }}>
           <ViewTicket />
-          <Button onClick={() => setCpage(2)}>Purchase Details</Button>
-        </div>
+          <Button variant="contained" onClick={() => setCpage(2)}>
+            Continue to purchase
+          </Button>
+        </Box>
       );
     } else if (cpage == 2) {
       return (
-        <div>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            height: "100%",
+          }}>
           <PurchaseDetails />
           <Button
+            variant="contained"
             onClick={() => {
               sendTicket({
                 variables: {
@@ -39,14 +54,22 @@ const BuyTicket: React.FC<any> = ({ ticket }: any) => {
             }}>
             Complete Purchase
           </Button>
-        </div>
+        </Box>
       );
     } else if (cpage == 3) {
       return (
-        <div>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            height: "100%",
+          }}>
           <CompletePurchase />
-          <Button onClick={() => setOpen(false)}>Close</Button>
-        </div>
+          <Button variant="contained" onClick={() => setOpen(false)} sx={{}}>
+            Close
+          </Button>
+        </Box>
       );
     }
   };
@@ -56,7 +79,11 @@ const BuyTicket: React.FC<any> = ({ ticket }: any) => {
       <Button color="primary" variant="contained" onClick={() => setOpen(true)}>
         Ticket
       </Button>
-      <Dialog open={open}>{page()}</Dialog>
+      <Dialog
+        open={open}
+        sx={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
+        <DialogContent sx={{ height: 500, width: 600 }}>{page()}</DialogContent>
+      </Dialog>
     </div>
   );
 };

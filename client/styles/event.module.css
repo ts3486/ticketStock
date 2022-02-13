@@ -1,9 +1,3 @@
-.container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
 .eventContainer {
   margin: 100px;
   display: flex;
@@ -14,4 +8,5 @@
 .card {
   height: 300px;
   margin-bottom: 30px;
+  display: flex;
 }

@@ -5,9 +5,11 @@ import { client } from "../apollo";
 import drizzleOptions from "../drizzleOptions";
 import { AppProps } from "next/dist/shared/lib/router/router";
 import { setAccessToken } from "../accessTokens";
-import { MuiThemeProvider } from "@material-ui/core";
+import { ThemeProvider } from "@mui/material";
 import { theme } from "../styles/theme";
-import Navbar from "../components/Navbar";
+import NavBar from "../components/General/NavBar";
+import Footer from "../components/General/Footer";
+import "../styles/globals.css";
 
 //Drizzle
 const { DrizzleContext } = require("@drizzle/react-plugin");
@@ -58,10 +60,11 @@ export default class TicketStock extends App {
                 console.log("initialized");
                 return (
                   <div className="App">
-                    <MuiThemeProvider theme={theme}>
-                      <Navbar />
+                    <ThemeProvider theme={theme}>
+                      <NavBar />
                       <Component {...pageProps} drizzle={drizzle} drizzleState={drizzleState} />
-                    </MuiThemeProvider>
+                      <Footer />
+                    </ThemeProvider>
                   </div>
                 );
               }

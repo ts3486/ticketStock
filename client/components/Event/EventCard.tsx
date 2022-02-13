@@ -13,10 +13,14 @@ interface Event {
 
 const EventItem: React.FC<Event> = (props: Event) => {
   return (
-    <Card className={indexStyles.eventCard}>
+    <Card className={indexStyles.eventCard} sx={{ borderRadius: 2, height: 325, width: 350 }}>
       <CardActionArea href={`/event/${props.event.id}`}>
-        <CardMedia image={props.event.image} />
+        {/* <CardMedia image={props.event.image} /> */}
+        <CardMedia sx={{ height: 200, width: 350 }} image="event.jpg" />
         <CardContent>
+          <Typography sx={{ color: "purple" }} variant="body2" component="h2">
+            Date
+          </Typography>
           <Typography gutterBottom variant="h5" component="h2">
             {props.event.name}
           </Typography>
@@ -25,14 +29,6 @@ const EventItem: React.FC<Event> = (props: Event) => {
           </Typography>
         </CardContent>
       </CardActionArea>
-      <CardActions>
-        {/* <Button size="small" color="primary">
-          <Link href="/event">Tickets</Link>
-        </Button> */}
-        <Button size="small" color="primary">
-          <Link href={`/event/${props.event.id}`}>Learn More</Link>
-        </Button>
-      </CardActions>
     </Card>
   );
 };

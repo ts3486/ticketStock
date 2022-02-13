@@ -25,8 +25,16 @@ export type Event = {
   desc: Scalars['String'];
   date?: Maybe<Scalars['DateTime']>;
   user: User;
+  userId: Scalars['Float'];
   ticket: Ticket;
   ticketId: Scalars['Float'];
+};
+
+export type EventInput = {
+  name: Scalars['String'];
+  image: Scalars['String'];
+  desc: Scalars['String'];
+  date?: InputMaybe<Scalars['DateTime']>;
 };
 
 export type LoginResponse = {
@@ -67,9 +75,7 @@ export type MutationRegisterArgs = {
 
 export type MutationAddEventArgs = {
   ticket: TicketInput;
-  desc: Scalars['String'];
-  image: Scalars['String'];
-  name: Scalars['String'];
+  event: EventInput;
 };
 
 
@@ -110,6 +116,7 @@ export type Ticket = {
   image: Scalars['String'];
   price: Scalars['Int'];
   date?: Maybe<Scalars['DateTime']>;
+  userId: Scalars['Int'];
 };
 
 export type TicketInput = {
@@ -128,9 +135,7 @@ export type User = {
 };
 
 export type AddEventMutationVariables = Exact<{
-  name: Scalars['String'];
-  image: Scalars['String'];
-  desc: Scalars['String'];
+  event: EventInput;
   ticket: TicketInput;
 }>;
 
@@ -190,8 +195,8 @@ export type SendTicketMutation = { __typename?: 'Mutation', sendTicket: boolean 
 
 
 export const AddEventDocument = gql`
-    mutation AddEvent($name: String!, $image: String!, $desc: String!, $ticket: TicketInput!) {
-  addEvent(name: $name, image: $image, desc: $desc, ticket: $ticket)
+    mutation AddEvent($event: EventInput!, $ticket: TicketInput!) {
+  addEvent(event: $event, ticket: $ticket)
 }
     `;
 export type AddEventMutationFn = Apollo.MutationFunction<AddEventMutation, AddEventMutationVariables>;
@@ -209,9 +214,7 @@ export type AddEventMutationFn = Apollo.MutationFunction<AddEventMutation, AddEv
  * @example
  * const [addEventMutation, { data, loading, error }] = useAddEventMutation({
  *   variables: {
- *      name: // value for 'name'
- *      image: // value for 'image'
- *      desc: // value for 'desc'
+ *      event: // value for 'event'
  *      ticket: // value for 'ticket'
  *   },
  * });

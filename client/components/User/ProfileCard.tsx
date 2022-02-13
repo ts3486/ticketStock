@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
-import mypageStyles from "../../styles/Mypage.module.css";
 import { useMeQuery } from "../../generated/graphql";
 import { ALL_EVENTS, GET_USER } from "../../gql/queries";
 import { Card, Avatar } from "@mui/material";
+import profileStyles from "../../styles/Profile.module.css";
 
 // const { newContextComponents } = require("@drizzle/react-components");
 
@@ -22,8 +22,8 @@ const Profile = ({ drizzle, drizzleState, _user }: any) => {
   }
 
   return (
-    <Card className={mypageStyles.card}>
-      <Avatar className={mypageStyles.avatar} sx={{ width: 150, height: 150 }} src="profile_pic.jpg" />
+    <Card sx={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "5%" }}>
+      <Avatar sx={{ width: 100, height: 100 }} src="/profilePic.jpg" />
 
       {/* display username, email, events */}
       <h4>Email: {data.me.email}</h4>

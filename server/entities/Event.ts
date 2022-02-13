@@ -54,7 +54,6 @@ export class EventInput implements Partial<Event> {
   @Field()
   desc: string;
 
-  @Column(() => Date)
   @Field({ nullable: true })
   date: Date;
 }

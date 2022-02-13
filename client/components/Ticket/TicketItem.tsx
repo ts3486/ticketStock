@@ -1,13 +1,22 @@
 import React from "react";
+import { Card, CardMedia, Typography, Container } from "@mui/material";
 import ticketStyles from "../../styles/Ticket.module.css";
 
 const TicketItem: React.FC<any> = ({ ticket }) => {
   return (
-    <div className={ticketStyles.card}>
-      <div>{ticket.name}</div>
-      <div> Concert name</div>
-      <div> Date </div>
-    </div>
+    <Card
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        margin: 1,
+        padding: 3
+      }}>
+   
+      <CardMedia sx={{ height: 100, width: 200, borderRadius: 3 }} image="/ticket.jpeg" />
+
+      <Typography> Name & Date</Typography>
+    </Card>
   );
 };
 

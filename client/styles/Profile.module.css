@@ -3,16 +3,6 @@
   justify-content: flex-start;
 }
 
-.container {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  background-color: gray;
-  width: 100%;
-  margin: 5%;
-  padding: 5%;
-}
-
 .card {
   display: flex;
   flex-direction: column;
@@ -31,12 +21,6 @@
   justify-content: center;
   align-items: center;
   height: auto;
-  width: 60%;
+  width: 70%;
   padding: 5%;
-  background-color: white;
-}
-
-.list {
-  display: flex;
-  flex-wrap: wrap;
 }

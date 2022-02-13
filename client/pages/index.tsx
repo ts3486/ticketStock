@@ -1,33 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { client } from "../apollo";
 import { ALL_EVENTS, GET_USER } from "../gql/queries";
-import EventCard from "../components/Event/EventCard";
-import indexStyles from "../styles/Index.module.css";
-
-interface Event {
-  id: string;
-  name: string;
-  image: string;
-  desc: string;
-}
+import Header from "../components/General/Header";
+import EventList from "../components/Event/EventList";
+import TopPicks from "../components/Event/TopPicks";
 
 const Index: React.FC = ({ _events }: any) => {
-  const [loading, setLoading] = useState(true);
-
   useEffect(() => {}, [_events]);
 
   return (
-    <div className={indexStyles.contentContainer}>
-      <h1>Events</h1>
-      <div className={indexStyles.eventContainer}>
-        {_events &&
-          _events.map((event: Event) => (
-            <EventCard
-              event={{ id: event.id, name: event.name, image: event.image, description: event.desc }}
-              key={event.id}
-            />
-          ))}
-      </div>
+    <div>
+      <Header />
+      <EventList _events={_events} />
+      <TopPicks />
     </div>
   );
 };
@@ -41,6 +26,7 @@ export const getStaticProps = async () => {
   });
 
   const events: Event[] = eventData.allEvents;
+  console.log(events);
 
   return {
     props: {

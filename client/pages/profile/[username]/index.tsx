@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
-import mypageStyles from "../../../styles/Mypage.module.css";
 import { useMeQuery } from "../../../generated/graphql";
 import { ALL_USERS, GET_UTICKETS } from "../../../gql/queries";
 import { client } from "../../../apollo";
 import { gql } from "@apollo/client";
-import { Card, Avatar } from "@mui/material";
+import { Container, Box } from "@mui/material";
 import ProfileCard from "../../../components/User/ProfileCard";
 import TicketList from "../../../components/Ticket/TicketList";
+import profileStyles from "../../../styles/Profile.module.css";
 
 const { newContextComponents } = require("@drizzle/react-components");
 
@@ -26,12 +26,12 @@ const Profile = ({ drizzle, drizzleState, _utickets }: any) => {
   }
 
   return (
-    <div className={mypageStyles.pageContainer}>
-      <div className={mypageStyles.container}>
-        <ProfileCard drizzleData={AccountData} />
-        <TicketList tickets={_utickets} />
-      </div>
-    </div>
+    <Box sx={{display: "flex", flexDirection: "column", justifyContent: "center", width: "100%"}}>
+    <Container sx={{ display: "flex", alignItems: "center", margin: "10% auto 10% auto", width: "100%" }}>
+      <ProfileCard drizzleData={AccountData} />
+      <TicketList tickets={_utickets} />
+    </Container>
+    </Box>
   );
 };
 

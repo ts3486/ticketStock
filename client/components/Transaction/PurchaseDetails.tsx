@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
+  Container,
   Dialog,
   DialogTitle,
   DialogContent,
@@ -8,7 +9,7 @@ import {
   DialogActions,
   Button,
   Typography,
-} from "@material-ui/core";
+} from "@mui/material";
 import CompletePurchase from "./CompletePurchase";
 
 const Transaction: React.FC<any> = ({ ticket }: any) => {
@@ -19,7 +20,7 @@ const Transaction: React.FC<any> = ({ ticket }: any) => {
   };
 
   return (
-    <div className="transaction">
+    <Container sx={{ height: "100%" }}>
       <DialogTitle>Secure your ticket</DialogTitle>
       <DialogContent>
         <DialogContentText>
@@ -34,7 +35,7 @@ const Transaction: React.FC<any> = ({ ticket }: any) => {
           </Typography>
         </DialogContentText>
       </DialogContent>
-    </div>
+    </Container>
   );
 };
 

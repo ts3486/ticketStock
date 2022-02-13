@@ -1,6 +1,6 @@
 import { Resolver, Query, Mutation, Arg, Ctx, UseMiddleware } from "type-graphql";
 //Account
-import { Event } from "../../entities/Event";
+import { Event, EventInput } from "../../entities/Event";
 import { User } from "../../entities/User";
 import { Ticket, TicketInput } from "../../entities/Ticket";
 import { MyContext } from "../user/MyContext";
@@ -27,13 +27,7 @@ export class EventResolver {
 
   @Mutation(() => Boolean, { nullable: true })
   @UseMiddleware(isAuth)
-  async addEvent(
-    @Ctx() { payload }: MyContext,
-    @Arg("name") name: string,
-    @Arg("image") image: string,
-    @Arg("desc") desc: string,
-    @Arg("ticket") ticket: TicketInput
-  ) {
+  async addEvent(@Ctx() { payload }: MyContext, @Arg("event") event: EventInput, @Arg("ticket") ticket: TicketInput) {
     try {
       //add ticket to db
       const newTicket = await getRepository(Ticket).insert({
@@ -46,9 +40,9 @@ export class EventResolver {
       //add event to db
 
       await getRepository(Event).insert({
-        name: name,
-        image: image,
-        desc: desc,
+        name: event.name,
+        image: event.image,
+        desc: event.desc,
         userId: parseInt(payload!.userId),
         ticketId: newTicket.identifiers[0].id,
       });
@@ -60,30 +54,3 @@ export class EventResolver {
     }
   }
 }
-
-//add to user ticket list
-// 1. get tickets array from User
-// const user = await getRepository(User)
-//   .createQueryBuilder("users")
-//   .leftJoinAndSelect("users.tickets", "ticket")
-//   .where("users.id = :id", { id: payload!.userId })
-//   .getOne();
-
-// if (user != null) {
-//   const updatedTickets: Ticket[] = user.tickets.concat(newTicket);
-
-//   console.log(updatedTickets);
-
-// 2. update User
-// await getRepository(User)
-//   .createQueryBuilder("users")
-//   .leftJoinAndSelect("users.tickets", "ticket")
-//   .update(User)
-//   .set({ tickets: updatedTickets })
-//   .where("users.id = :id", { id: payload!.userId })
-//   .execute();
-// } else {
-//   console.log("user null error");
-// }
-
-// console.log("user ticket info updated");

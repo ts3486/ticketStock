@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { client } from "../../apollo";
-import mypageStyles from "../../styles/Mypage.module.css";
 import TicketItem from "../../components/Ticket/TicketItem";
 import { GET_UTICKETS } from "../../gql/queries";
+import { Card, Container, Typography } from "@mui/material";
+import profileStyles from "../../styles/Profile.module.css";
 
 interface Ticket {
   id: number;
@@ -13,18 +14,26 @@ interface Ticket {
 }
 
 const TicketList: React.FC<any> = ({ tickets }: any) => {
-  const [array, setArray] = useState([]);
-
   return (
-    <div className={mypageStyles.listContainer}>
-      <h1>LIST</h1>
-      <div className={mypageStyles.list}>
+    <Card
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        width: "100%",
+        height: "100%",
+        marginLeft: "2%",
+        padding: "5%",
+      }}>
+      <Typography variant="h3" align="center">
+        List
+      </Typography>
+      <Container sx={{ display: "flex", flexWrap: "wrap" }}>
         {tickets.map((ticket: any) => {
           return <TicketItem ticket={ticket} key={ticket.id} />;
         })}
-      </div>
+      </Container>
       {/* page split */}
-    </div>
+    </Card>
   );
 };
 

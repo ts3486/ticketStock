@@ -53,44 +53,41 @@ const EventPage = ({ event, ticket }: any) => {
   //   });
 
   return (
-    <div className={eventStyles.container}>
-      <div className={eventStyles.eventContainer}>
-        <Card className={eventStyles.card}>
-          <CardActionArea href={`/event/${event[1]}`}>
-            <CardMedia image={event[3]} title="Contemplative Reptile" />
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="h2">
-                {event[2]}
-              </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
-                Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging across all
-                continents except Antarctica
-              </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
-                Date:
-              </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
-                Price:
-              </Typography>
-              {/* <Transaction event={event} /> */}
-            </CardContent>
-          </CardActionArea>
-          <CardActions>
-            <BuyTicket ticket={ticket} />
-          </CardActions>
-        </Card>
-        <Box>
+    <div className={eventStyles.eventContainer}>
+      <Card sx={{ display: "flex", flexDirection: "column", marginBottom: 5 }}>
+        {/* <CardMedia image={event[3]} title="Contemplative Reptile" /> */}
+        <CardMedia image="/event.jpg" title="Contemplative Reptile" sx={{ height: 500, width: "100%" }} />
+        <CardContent sx={{ margin: 1 }}>
           <Typography gutterBottom variant="h5" component="h2">
-            About this event:
+            {event[2]}
           </Typography>
-          <Typography gutterBottom variant="h5" component="h2">
-            Links:
+          <Typography variant="body2" color="textSecondary" component="p">
+            Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents
+            except Antarctica
           </Typography>
-          <Typography gutterBottom variant="h5" component="h2">
-            Socials:
+          <Typography variant="body2" color="textSecondary" component="p">
+            Date:
           </Typography>
-        </Box>
-      </div>
+          <Typography variant="body2" color="textSecondary" component="p">
+            Price:
+          </Typography>
+          {/* <Transaction event={event} /> */}
+        </CardContent>
+        <CardActions sx={{ margin: 1 }}>
+          <BuyTicket ticket={ticket} />
+        </CardActions>
+      </Card>
+      <Box>
+        <Typography gutterBottom variant="h5" component="h2">
+          About this event:
+        </Typography>
+        <Typography gutterBottom variant="h5" component="h2">
+          Links:
+        </Typography>
+        <Typography gutterBottom variant="h5" component="h2">
+          Socials:
+        </Typography>
+      </Box>
     </div>
   );
 };

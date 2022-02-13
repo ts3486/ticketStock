@@ -1,14 +1,24 @@
 import React, { useState } from "react";
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Input } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  Typography,
+  Input,
+} from "@mui/material";
 import Transaction from "./BuyTicket";
-import formStyles from "../../styles/Form.module.css";
+import formStyles from "../../styles/Create.module.css";
 
 const ViewTicket: React.FC<any> = ({ ticket }: any) => {
   return (
-    <div className={formStyles.ticketContainer}>
-      <DialogTitle>Event Ticket</DialogTitle>
-      <DialogContent>Ticket</DialogContent>
-    </div>
+    <Container sx={{ height: "100%" }}>
+      <Typography>Event</Typography>
+      <Typography>Ticket</Typography>
+    </Container>
   );
 };
 

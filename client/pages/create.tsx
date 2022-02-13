@@ -1,85 +1,99 @@
 import React, { useState, useEffect } from "react";
 import app from "../firebase";
+import { uploadFile } from "../functions/firebase/upload.ts";
+import { pinFileToIPFS } from "../functions/pinata/pinFileToIPFS";
+import {ethers} from "ethers";
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { useAddEventMutation } from "../generated/graphql";
-import formStyles from "../styles/Form.module.css";
-import { FormControl, InputLabel, Input, FormHelperText, Button, Card } from "@mui/material";
-import TicketSubmitForm from "../components/Ticket/TicketSubmitForm";
+import formStyles from "../styles/Create.module.css";
+import { Box } from "@mui/material";
+import EventDetailsForm from "../components/Create/EventDetailsForm";
+import TicketDetailsForm from "../components/Create/TicketDetailsForm";
+import ConfirmEvent from "../components/Create/ConfirmEvent";
+const Web3 = require("web3");
+const web3 = new Web3("wss://rinkeby.infura.io/ws/v3/0f3a6fad96f04d13bbbf4654d9099af7");
+const nftBuild = require("../../build/contracts/TicketNFT.json");
+const contract = new web3.eth.Contract(nftBuild.abi, nftBuild.networks[4].address);
+// const contract = new web3.eth.Contract(nftBuild.abi, nftBuild.networks[5777].address); for ganache
+const { mnemonic, publicKey, privateKey } = require("../secret.json");
 
+interface EventInput {
+  name: string;
+  image: string;
+  desc: string;
+  date: Date;
+}
 interface TicketInput {
   name: string;
   image: string;
   price: number;
   date: Date;
 }
+interface Metadata {
+  name: sstring;
+  price: number;
+}
 
 const createEvent = ({ drizzle }: any) => {
-  const [name, setName] = useState("");
-  const [image, setImage] = useState("");
-  const [file, setFile] = useState<File>({} as File);
+  const [event, setEvent] = useState<EventInput>({} as EventInput);
+  const [eventFile, setEventFile] = useState<File>({} as File);
   const [ticket, setTicket] = useState<TicketInput>({} as TicketInput);
   const [ticketFile, setTicketFile] = useState<File>({} as File);
+  const [_metadata, setMetadata] = useState("");
   const [progress, setProgress] = useState(0);
-  const [desc, setDesc] = useState("");
+  const [currentPage, setPage] = useState(1);
   const [addEvent] = useAddEventMutation();
 
   useEffect(() => {
     // authRedirect();  Want to redirect to login page if no login token.
   }, []);
 
-  const handleTicketData = (ticket: TicketInput) => {
-    setTicket(ticket);
-    console.log(ticket);
-  };
+  // mint ticket
+  const mintTicket = async (ticketURI) => {
+    console.log(contract);
+    const baseCost = await contract.methods.cost().call();
+    const txnCount = await web3.eth.getTransactionCount(account);
+    const nonce = await ethers.utils.hexlify(txnCount);
 
-  const handleTicketFile = (_file: File) => {
-    setTicketFile(_file);
-  };
-
-  //firebase function
-  const uploadFile = (_file: File) => {
-    const storage = getStorage(app);
-    const storageRef = ref(storage, "images");
-
-    const metadata = {
-      contentType: "image/jpeg",
-      name: "images/" + _file.name,
-    };
-
-    const uploadTask = uploadBytesResumable(storageRef, file, metadata);
-
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        setProgress(Math.round(snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+    const createTransaction = await web3.eth.accounts.signTransaction(
+      {
+        from: account,
+        nonce: nonce,
+        to: "0x1EB590B195F9463b19C612BaA6b947622434DdF3",
+        value: baseCost,
+        gas: 500000,
+        data: contract.methods.mintTicket(ticketURI).encodeABI(),
       },
-      (error) => {
-        throw error;
-      },
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          console.log("File available at", downloadURL);
-        });
-      }
+      privateKey
     );
-  };
 
-  //mint ticket
-  const mint = async () => {
-    const contract = await drizzle.contracts.Ticket;
+    const createReceipt = await web3.eth
+      .sendSignedTransaction(createTransaction.rawTransaction)
+      .once("sending", () => {
+        console.log("sending...");
+        setLoading(true);
+        setOpen(true);
+      })
+      .once("sent", () => {
+        console.log("sent");
+      })
+      .on("confirmation", (confNumber: any, receipt: any, latestBlockHash: any) => {
+        console.log(confNumber, receipt, latestBlockHash);
+        setLoading(false);
+      })
+      .on("error", (error: any) => {
+        console.log(error);
+      });
 
-    //setting gasLimit and gasPrice was crucial.
-    contract.methods.mint(ticket).send({ from: drizzle.account, gas: "1000000", gasPrice: "100000" });
+    console.log(`Transaction successful with hash: ${createReceipt.transactionHash}`);
 
-    console.log("ticket minted");
+    console.log(`ticketNFT minted`);
   };
 
   const onSubmit = () => {
     addEvent({
       variables: {
-        name: name,
-        image: image,
-        desc: desc,
+        event: event,
         ticket: ticket,
       },
     });
@@ -87,48 +101,36 @@ const createEvent = ({ drizzle }: any) => {
     //Send file to firebase storage
     // uploadFile(file);
     // uploadFile(ticketFile);
-
-    mint();
+    //pinFileToIPFS(_metadata)
+    // mintTicket(_metadata.name);
   };
 
-  return (
-    <div className={formStyles.add}>
-      <Card className={formStyles.formBox}>
-        <h1>Create your event</h1>
-        <FormControl margin="normal">
-          <InputLabel htmlFor="name">Event name </InputLabel>
-          <Input id="name" aria-describedby="name" onChange={(e) => setName(e.target.value)} />
-          <FormHelperText id="name"></FormHelperText>
-        </FormControl>
-
-        <FormControl margin="normal">
-          {/* <InputLabel htmlFor="file">File</InputLabel> */}
-          <Input
-            type="file"
-            id="file"
-            onChange={(e) => {
-              setImage((e.currentTarget as HTMLInputElement).files![0].name);
-              setFile((e.currentTarget as HTMLInputElement).files![0]);
-            }}
-          />
-        </FormControl>
-        <FormControl margin="normal">
-          <InputLabel htmlFor="desc">Description</InputLabel>
-          <Input id="desc" aria-describedby="desc" onChange={(e) => setDesc(e.target.value)} />
-          <FormHelperText id="desc"></FormHelperText>
-        </FormControl>
-
-        <TicketSubmitForm
-          ticketData={(_ticket) => handleTicketData(_ticket)}
-          ticketFile={(_file) => handleTicketFile(_file)}
+  const displayPage = () => {
+    if (currentPage == 1) {
+      return (
+        <EventDetailsForm
+          eventData={(_event) => setEvent(_event)}
+          eventFile={(_file) => setEventFile(_file)}
+          page={(_page) => setPage(_page)}
         />
+      );
+    }
+    if (currentPage == 2) {
+      return (
+        <TicketDetailsForm
+          ticketData={(_ticket) => setTicket(_ticket)}
+          ticketFile={(_file) => setTicketFile(_file)}
+          page={(_page) => setPage(_page)}
+        />
+      );
+    }
+    if (currentPage == 3) {
+      return <ConfirmEvent event={event} eventFile={eventFile} ticket={ticket} ticketFile={ticketFile} />;
+    }
+  };
 
-        <Button className={formStyles.submitButton} variant="contained" onClick={onSubmit} color="primary">
-          Create Event
-        </Button>
-      </Card>
-    </div>
-  );
+  //DOM 
+  return <Box sx={{ display: "flex", justifyContent: "center" }}>{displayPage()}</Box>;
 };
 
 export default createEvent;

@@ -1,3 +1,10 @@
+input EventInput {
+  name: string
+  image: string
+  desc: string
+  date: DateTime
+}
+
 input TicketInput {
   name: string
   image: string
@@ -5,6 +12,6 @@ input TicketInput {
   price: number
 }
 
-mutation AddEvent($name: String!, $image: String!, $desc: String!, $ticket: TicketInput!) {
-  addEvent(name: $name, image: $image, desc: $desc, ticket: $ticket)
+mutation AddEvent($event: EventInput!, $ticket: TicketInput!) {
+  addEvent(event: $event, ticket: $ticket)
 }

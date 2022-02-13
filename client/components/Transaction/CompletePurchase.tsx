@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useSendTicketMutation } from "../../generated/graphql";
 import { makeStyles } from "@material-ui/core/styles";
 import {
+  Container,
   Dialog,
   DialogTitle,
   DialogContent,
@@ -9,7 +10,7 @@ import {
   DialogActions,
   Button,
   Typography,
-} from "@material-ui/core";
+} from "@mui/material";
 import { PinDropSharp } from "@material-ui/icons";
 
 interface Event {
@@ -28,7 +29,7 @@ const Transaction: React.FC<any> = (props: any) => {
   };
 
   return (
-    <div className="transaction">
+    <Container sx={{ height: "100%" }}>
       <DialogTitle>Your purchase has been completed</DialogTitle>
       <DialogContent>
         <DialogContentText>
@@ -37,7 +38,7 @@ const Transaction: React.FC<any> = (props: any) => {
           </Typography>
         </DialogContentText>
       </DialogContent>
-    </div>
+    </Container>
   );
 };
 

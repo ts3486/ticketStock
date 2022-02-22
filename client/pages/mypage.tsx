@@ -6,11 +6,9 @@ import { Card, Avatar } from "@mui/material";
 import ProfileCard from "../components/User/ProfileCard";
 import TicketList from "../components/Ticket/TicketList";
 
-const { newContextComponents } = require("@drizzle/react-components");
 
-const { AccountData, ContractData, ContractForm } = newContextComponents;
 
-const Profile = ({ drizzle, drizzleState, _user }: any) => {
+const Profile = () => {
   const { data, loading, error } = useMeQuery({
     fetchPolicy: "network-only",
   });
@@ -26,8 +24,8 @@ const Profile = ({ drizzle, drizzleState, _user }: any) => {
   return (
     <div className={mypageStyles.pageContainer}>
       <div className={mypageStyles.container}>
-        <ProfileCard drizzleData={AccountData} />
-        <TicketList />
+        <ProfileCard userData={data}/>
+        <TicketList/>
       </div>
     </div>
   );

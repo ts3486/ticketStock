@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Typography } from "@mui/material";
+import { Typography, Box } from "@mui/material";
 import EventCard from "./EventCard";
 import Filters from "./Filters";
 import indexStyles from "../../styles/Index.module.css";
@@ -19,7 +19,15 @@ const EventList: React.FC<any> = ({ _events }: any) => {
       <Typography sx={{ width: "100%", textAlign: "left", fontSize: 30 }}>Events&Ticket</Typography>
 
       <Filters />
-      <div className={indexStyles.eventContainer}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          flexWrap: "wrap",
+          marginTop: 1,
+          maxHeight: 650,
+          overflow: "auto",
+        }}>
         {_events &&
           _events.map((event: Event) => (
             <EventCard
@@ -27,7 +35,7 @@ const EventList: React.FC<any> = ({ _events }: any) => {
               key={event.id}
             />
           ))}
-      </div>
+      </Box>
     </div>
   );
 };

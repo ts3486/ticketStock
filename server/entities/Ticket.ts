@@ -1,4 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToOne, ManyToOne, JoinColumn } from "typeorm";
+import { Readable } from "stream";
 import { ObjectType, InputType, Field, Int } from "type-graphql";
 import { User } from "./User";
 import { Event } from "./Event";
@@ -56,4 +57,16 @@ export class TicketInput implements Partial<Ticket> {
 
   @Field({ nullable: true })
   date: Date;
+}
+
+@InputType()
+export class FileInput {
+  @Field()
+  stream: Readable;
+  @Field()
+  filename: string;
+  @Field()
+  mimetype: string;
+  @Field()
+  encoding: string;
 }

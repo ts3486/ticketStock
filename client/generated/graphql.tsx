@@ -15,6 +15,8 @@ export type Scalars = {
   Float: number;
   /** The javascript `Date` as string. Type represents date and time as the ISO Date string. */
   DateTime: any;
+  /** The `Upload` scalar type represents a file upload. */
+  Upload: any;
 };
 
 export type Event = {
@@ -52,6 +54,7 @@ export type Mutation = {
   authRedirect: Scalars['Boolean'];
   addEvent?: Maybe<Scalars['Boolean']>;
   sendTicket: Scalars['Boolean'];
+  pinFile: Scalars['Boolean'];
 };
 
 
@@ -83,15 +86,27 @@ export type MutationSendTicketArgs = {
   id: Scalars['Float'];
 };
 
+
+export type MutationPinFileArgs = {
+  ticket: TicketInput;
+  file: Scalars['Upload'];
+};
+
 export type Query = {
   __typename?: 'Query';
   users: Array<User>;
+  getUser: User;
   me: User;
   getEvent: Event;
   allEvents: Array<Event>;
   allTickets: Array<Ticket>;
   getTicket: Ticket;
   getUtickets: Array<Ticket>;
+};
+
+
+export type QueryGetUserArgs = {
+  username: Scalars['String'];
 };
 
 
@@ -159,6 +174,13 @@ export type GetEventQueryVariables = Exact<{
 
 export type GetEventQuery = { __typename?: 'Query', getEvent: { __typename?: 'Event', id: number, name: string, image: string, desc: string } };
 
+export type GetUserQueryVariables = Exact<{
+  username: Scalars['String'];
+}>;
+
+
+export type GetUserQuery = { __typename?: 'Query', getUser: { __typename?: 'User', id: number, username: string, email: string } };
+
 export type LoginMutationVariables = Exact<{
   email: Scalars['String'];
   password: Scalars['String'];
@@ -175,7 +197,15 @@ export type LogoutMutation = { __typename?: 'Mutation', logout: boolean };
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MeQuery = { __typename?: 'Query', me: { __typename?: 'User', id: number, email: string } };
+export type MeQuery = { __typename?: 'Query', me: { __typename?: 'User', id: number, username: string, email: string } };
+
+export type PinFileMutationVariables = Exact<{
+  file: Scalars['Upload'];
+  ticket: TicketInput;
+}>;
+
+
+export type PinFileMutation = { __typename?: 'Mutation', pinFile: boolean };
 
 export type RegisterMutationVariables = Exact<{
   email: Scalars['String'];
@@ -331,6 +361,43 @@ export function useGetEventLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<G
 export type GetEventQueryHookResult = ReturnType<typeof useGetEventQuery>;
 export type GetEventLazyQueryHookResult = ReturnType<typeof useGetEventLazyQuery>;
 export type GetEventQueryResult = Apollo.QueryResult<GetEventQuery, GetEventQueryVariables>;
+export const GetUserDocument = gql`
+    query getUser($username: String!) {
+  getUser(username: $username) {
+    id
+    username
+    email
+  }
+}
+    `;
+
+/**
+ * __useGetUserQuery__
+ *
+ * To run a query within a React component, call `useGetUserQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetUserQuery({
+ *   variables: {
+ *      username: // value for 'username'
+ *   },
+ * });
+ */
+export function useGetUserQuery(baseOptions: Apollo.QueryHookOptions<GetUserQuery, GetUserQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetUserQuery, GetUserQueryVariables>(GetUserDocument, options);
+      }
+export function useGetUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUserQuery, GetUserQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetUserQuery, GetUserQueryVariables>(GetUserDocument, options);
+        }
+export type GetUserQueryHookResult = ReturnType<typeof useGetUserQuery>;
+export type GetUserLazyQueryHookResult = ReturnType<typeof useGetUserLazyQuery>;
+export type GetUserQueryResult = Apollo.QueryResult<GetUserQuery, GetUserQueryVariables>;
 export const LoginDocument = gql`
     mutation Login($email: String!, $password: String!) {
   login(email: $email, password: $password) {
@@ -403,6 +470,7 @@ export const MeDocument = gql`
     query Me {
   me {
     id
+    username
     email
   }
 }
@@ -434,6 +502,38 @@ export function useMeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MeQuery
 export type MeQueryHookResult = ReturnType<typeof useMeQuery>;
 export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>;
 export type MeQueryResult = Apollo.QueryResult<MeQuery, MeQueryVariables>;
+export const PinFileDocument = gql`
+    mutation pinFile($file: Upload!, $ticket: TicketInput!) {
+  pinFile(file: $file, ticket: $ticket)
+}
+    `;
+export type PinFileMutationFn = Apollo.MutationFunction<PinFileMutation, PinFileMutationVariables>;
+
+/**
+ * __usePinFileMutation__
+ *
+ * To run a mutation, you first call `usePinFileMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `usePinFileMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [pinFileMutation, { data, loading, error }] = usePinFileMutation({
+ *   variables: {
+ *      file: // value for 'file'
+ *      ticket: // value for 'ticket'
+ *   },
+ * });
+ */
+export function usePinFileMutation(baseOptions?: Apollo.MutationHookOptions<PinFileMutation, PinFileMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<PinFileMutation, PinFileMutationVariables>(PinFileDocument, options);
+      }
+export type PinFileMutationHookResult = ReturnType<typeof usePinFileMutation>;
+export type PinFileMutationResult = Apollo.MutationResult<PinFileMutation>;
+export type PinFileMutationOptions = Apollo.BaseMutationOptions<PinFileMutation, PinFileMutationVariables>;
 export const RegisterDocument = gql`
     mutation Register($email: String!, $username: String!, $password: String!) {
   register(email: $email, username: $username, password: $password)

@@ -2,6 +2,7 @@ import "dotenv/config";
 import express from "express";
 import "reflect-metadata";
 import { ApolloServer } from "apollo-server-express";
+import { graphqlUploadExpress } from "graphql-upload";
 import { createConnection } from "typeorm";
 //Schema
 import { buildSchema } from "type-graphql";
@@ -26,6 +27,7 @@ const cors = require("cors");
       credentials: true,
     })
   );
+  app.use(graphqlUploadExpress({ maxFileSize: 10000, maxFiles: 10 }));
 
   //token refresh REST requeset
   app.post("/refresh_token", async (req, res) => {
@@ -81,6 +83,7 @@ const cors = require("cors");
     context: ({ req, res }) => ({ req, res }),
     introspection: true,
     playground: true,
+    uploads: false,
   });
 
   apolloServer.applyMiddleware({ app, cors: false });

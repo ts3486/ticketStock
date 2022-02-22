@@ -1,0 +1,17 @@
+input TicketInput {
+  name: string
+  image: string
+  date: DateTime
+  price: number
+}
+
+  type File {
+    filename: String!
+    mimetype: String!
+    encoding: String!
+  }
+
+
+mutation pinFile($file: Upload!, $ticket: TicketInput!){
+    pinFile(file: $file, ticket: $ticket)
+}

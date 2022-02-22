@@ -25,9 +25,15 @@ interface Props {
   eventFile: File;
   ticket: TicketInput;
   ticketFile: File;
+
+  completion: () => Boolean;
 }
 
 const ConfirmEvent: React.FC<Props> = (props) => {
+  const completion = () => {
+    props.completion();
+  };
+
   return (
     <Card
       sx={{
@@ -46,7 +52,9 @@ const ConfirmEvent: React.FC<Props> = (props) => {
       <Typography variant="h6" sx={{ marginBottom: "2%" }}>
         Ticket Details
       </Typography>
-      <Button variant="contained">STEP 3: Confirm Event</Button>
+      <Button variant="contained" onClick={() => completion()}>
+        STEP 3: Create Event
+      </Button>
     </Card>
   );
 };

@@ -26,7 +26,6 @@ export const getStaticProps = async () => {
   });
 
   const events: Event[] = eventData.allEvents;
-  console.log(events);
 
   return {
     props: {

@@ -26,24 +26,26 @@ const Footer: React.FC = () => {
           fontWeight: 100,
           textAlign: "left",
           marginBottom: 3,
+          display: "flex",
+          alignItems: "center",
         }}>
         Top Picks <LocalFireDepartmentIcon sx={{ fontSize: 40, marginLeft: 1 }} />
       </Typography>
       <div className={indexStyles.cardsContainer}>
         <Card className={indexStyles.eventCard}>
-          <CardMedia />
+          <CardMedia image="" sx={{ height: 300, width: 400 }} />
           <CardContent>
             <Typography gutterBottom variant="h5" component="h2"></Typography>
           </CardContent>
         </Card>
         <Card className={indexStyles.eventCard}>
-          <CardMedia />
+          <CardMedia image="" sx={{ height: 300, width: 400 }} />
           <CardContent>
             <Typography gutterBottom variant="h5" component="h2"></Typography>
           </CardContent>
         </Card>
         <Card className={indexStyles.eventCard}>
-          <CardMedia />
+          <CardMedia image="" sx={{ height: 300, width: 400 }} />
           <CardContent>
             <Typography gutterBottom variant="h5" component="h2"></Typography>
           </CardContent>

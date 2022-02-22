@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useMeQuery } from "../../../generated/graphql";
-import { ALL_USERS, GET_UTICKETS } from "../../../gql/queries";
+import { ALL_USERS, GET_UTICKETS, GET_USER } from "../../../gql/queries";
 import { client } from "../../../apollo";
 import { gql } from "@apollo/client";
 import { Container, Box } from "@mui/material";
@@ -8,27 +8,19 @@ import ProfileCard from "../../../components/User/ProfileCard";
 import TicketList from "../../../components/Ticket/TicketList";
 import profileStyles from "../../../styles/Profile.module.css";
 
-const { newContextComponents } = require("@drizzle/react-components");
-
-const { AccountData, ContractData, ContractForm } = newContextComponents;
-
-const Profile = ({ drizzle, drizzleState, _utickets }: any) => {
-  const { data, loading, error } = useMeQuery({
-    fetchPolicy: "network-only",
-  });
+const Profile = ({_user, _utickets }: any) => {
 
   useEffect(() => {
-    console.log(_utickets);
   });
 
-  if (!data) {
+  if (!_user) {
     return <div>no data. create an account?</div>;
   }
 
   return (
     <Box sx={{display: "flex", flexDirection: "column", justifyContent: "center", width: "100%"}}>
     <Container sx={{ display: "flex", alignItems: "center", margin: "10% auto 10% auto", width: "100%" }}>
-      <ProfileCard drizzleData={AccountData} />
+      <ProfileCard userData={_user} />
       <TicketList tickets={_utickets} />
     </Container>
     </Box>
@@ -56,6 +48,22 @@ export const getStaticPaths = async () => {
 };
 
 export const getStaticProps = async ({ params }: any) => {
+
+  const { error: userError, data: userData } = await client.query({
+    query: gql` {
+      getUser(username: "${params.username}"){
+        id,
+        username,
+        email
+      }
+    }`,
+    errorPolicy: "all",
+  });
+
+  const _user = userData.getUser;
+  console.log(_user);
+
+
   const { error: uticketError, data: uticketData } = await client.query({
     query: gql` {
       getUtickets(username: "${params.username}"){
@@ -73,6 +81,7 @@ export const getStaticProps = async ({ params }: any) => {
 
   return {
     props: {
+      _user, 
       _utickets,
     },
   };

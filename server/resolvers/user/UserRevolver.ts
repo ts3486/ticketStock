@@ -24,6 +24,17 @@ export class UserResolver {
   }
 
   @Query(() => User)
+  async getUser(@Arg("username") username: string) {
+    try {
+      return User.findOne({ where: { username } });
+    } catch (err) {
+      console.log(err);
+      console.log("user not found");
+      return null;
+    }
+  }
+
+  @Query(() => User)
   @UseMiddleware(isAuth)
   me(@Ctx() { payload }: MyContext) {
     try {

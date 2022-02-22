@@ -58,7 +58,8 @@ export const GET_TICKET = gql`
 
 export const GET_USER = gql`
   {
-    me {
+    getUser(username: $username) {
+      id
       username
       email
     }

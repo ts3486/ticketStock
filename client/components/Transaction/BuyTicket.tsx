@@ -50,6 +50,8 @@ const BuyTicket: React.FC<any> = ({ ticket }: any) => {
                   id: ticket.id,
                 },
               });
+
+              //mint ticket
               setCpage(3);
             }}>
             Complete Purchase

@@ -14,6 +14,7 @@ import {
   MenuItem,
   Menu,
   useScrollTrigger,
+  ClickAwayListener,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import AccountCircle from "@mui/icons-material/AccountCircle";
@@ -103,11 +104,15 @@ const NavComponent = () => {
     }
   });
 
-  const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+  const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleMenuClose = () => {
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleClickAway = () => {
     setAnchorEl(null);
   };
 
@@ -126,13 +131,19 @@ const NavComponent = () => {
         horizontal: "right",
       }}
       open={isMenuOpen}
-      onClose={handleMenuClose}>
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      onClose={handleClose}>
+      <MenuItem onClick={handleClose}>Profile</MenuItem>
+      <MenuItem
+        onClick={() => {
+          handleClose();
+          window.location.href = "/create";
+        }}>
+        Create
+      </MenuItem>
       <MenuItem
         onClick={() => {
           logout();
-          handleMenuClose();
+          handleClose();
           window.location.href = "/";
         }}>
         Logout
@@ -174,11 +185,11 @@ const NavComponent = () => {
                     aria-label="account of current user"
                     aria-controls={menuId}
                     aria-haspopup="true"
-                    onClick={handleProfileMenuOpen}
+                    onClick={handleMenu}
                     color="inherit">
                     <AccountCircle />
-                    {renderMenu}
                   </IconButton>
+                  {renderMenu}
                 </div>
               ) : (
                 <Button

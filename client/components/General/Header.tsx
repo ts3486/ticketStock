@@ -12,7 +12,7 @@ const Header: React.FC = () => {
         <div className={indexStyles.headerContentContainer}>
           <h1 className={indexStyles.headerPhrase}>The future of ticketing is here. </h1>
           <Button className={indexStyles.headerButton} variant="contained" onClick={() => setOpen(true)}>
-            The fuck do you mean?
+            What do you mean?
           </Button>
 
           {open ? (

@@ -20,6 +20,8 @@ const Register = () => {
     });
 
     console.log("registration info submitted", response);
+
+    window.location.href = "/";
   };
 
   return (

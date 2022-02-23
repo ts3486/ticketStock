@@ -33,19 +33,19 @@ const Footer: React.FC = () => {
       </Typography>
       <div className={indexStyles.cardsContainer}>
         <Card className={indexStyles.eventCard}>
-          <CardMedia image="" sx={{ height: 300, width: 400 }} />
+          <CardMedia image="./fire.jpeg" sx={{ height: 300, width: 400 }} />
           <CardContent>
             <Typography gutterBottom variant="h5" component="h2"></Typography>
           </CardContent>
         </Card>
         <Card className={indexStyles.eventCard}>
-          <CardMedia image="" sx={{ height: 300, width: 400 }} />
+          <CardMedia image="./fire.jpeg" sx={{ height: 300, width: 400 }} />
           <CardContent>
             <Typography gutterBottom variant="h5" component="h2"></Typography>
           </CardContent>
         </Card>
         <Card className={indexStyles.eventCard}>
-          <CardMedia image="" sx={{ height: 300, width: 400 }} />
+          <CardMedia image="./fire.jpeg" sx={{ height: 300, width: 400 }} />
           <CardContent>
             <Typography gutterBottom variant="h5" component="h2"></Typography>
           </CardContent>

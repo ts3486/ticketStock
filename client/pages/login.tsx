@@ -23,6 +23,8 @@ const Login = () => {
     }
 
     console.log("login info submitted", response);
+
+    window.location.href = "/";
   };
 
   return (

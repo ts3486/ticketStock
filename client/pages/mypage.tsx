@@ -6,8 +6,6 @@ import { Card, Avatar } from "@mui/material";
 import ProfileCard from "../components/User/ProfileCard";
 import TicketList from "../components/Ticket/TicketList";
 
-
-
 const Profile = () => {
   const { data, loading, error } = useMeQuery({
     fetchPolicy: "network-only",
@@ -24,29 +22,11 @@ const Profile = () => {
   return (
     <div className={mypageStyles.pageContainer}>
       <div className={mypageStyles.container}>
-        <ProfileCard userData={data}/>
-        <TicketList/>
+        <ProfileCard userData={data} />
+        <TicketList />
       </div>
     </div>
   );
 };
 
 export default Profile;
-
-// export const getStaticProps = async () => {
-// const { error: userError, data: userData } = await client.query({
-//   query: GET_USER,
-//   errorPolicy: "all",
-// });
-// const { error: eventError, data: eventData } = await client.query({
-//   query: ALL_EVENTS,
-//   fetchPolicy: "network-only",
-//   errorPolicy: "all",
-// });
-// return {
-//   props: {
-//     // _user: userData,
-//     _events: eventData.allEvents,
-//   },
-// };
-// };

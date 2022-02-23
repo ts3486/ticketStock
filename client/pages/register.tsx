@@ -34,6 +34,7 @@ const Register = () => {
             onChange={(e: any) => {
               setEmail(e.target.value);
             }}
+            placeholder="Enter email..."
           />
           <FormHelperText id="email"></FormHelperText>
         </FormControl>
@@ -45,6 +46,7 @@ const Register = () => {
             onChange={(e: any) => {
               setUsername(e.target.value);
             }}
+            placeholder="Enter username..."
           />
           <FormHelperText id="username"></FormHelperText>
         </FormControl>
@@ -53,9 +55,11 @@ const Register = () => {
           <Input
             id="pw"
             aria-describedby="pw"
+            type="password"
             onChange={(e: any) => {
               setPassword(e.target.value);
             }}
+            placeholder="Enter password..."
           />
           <FormHelperText id="pw"></FormHelperText>
         </FormControl>

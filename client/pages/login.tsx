@@ -37,6 +37,7 @@ const Login = () => {
             onChange={(e) => {
               setEmail(e.target.value);
             }}
+            placeholder="Enter email..."
           />
           <FormHelperText id="email"></FormHelperText>
         </FormControl>
@@ -45,9 +46,11 @@ const Login = () => {
           <Input
             id="pw"
             aria-describedby="pw"
+            type="password"
             onChange={(e) => {
               setPassword(e.target.value);
             }}
+            placeholder="Enter password..."
           />
           <FormHelperText id="pw"></FormHelperText>
         </FormControl>

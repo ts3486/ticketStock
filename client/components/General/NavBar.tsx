@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getAccessToken } from "../../accessTokens";
+import { useLogoutMutation } from "../../generated/graphql";
 import { styled, alpha } from "@mui/material/styles";
 import {
   AppBar,
@@ -14,13 +15,10 @@ import {
   Menu,
   useScrollTrigger,
 } from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import MoreIcon from "@mui/icons-material/MoreVert";
-import { propsToClassKey } from "@mui/styles";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -91,13 +89,19 @@ function ElevationScroll(props: any) {
 }
 
 const NavComponent = () => {
-  const userState = getAccessToken();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const [loggedin, setLoggedin] = useState(userState ? true : false);
+  const [loggedin, setLoggedin] = useState(false);
+  const [logout] = useLogoutMutation();
 
   const isMenuOpen = Boolean(anchorEl);
 
-  useEffect(() => {});
+  useEffect(() => {
+    const userState = getAccessToken();
+
+    if (userState != "") {
+      setLoggedin(true);
+    }
+  });
 
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -125,7 +129,14 @@ const NavComponent = () => {
       onClose={handleMenuClose}>
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
+      <MenuItem
+        onClick={() => {
+          logout();
+          handleMenuClose();
+          window.location.href = "/";
+        }}>
+        Logout
+      </MenuItem>
     </Menu>
   );
 

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
@@ -63,23 +64,31 @@ function ElevationScroll(props: any) {
   // Note that you normally won't need to set the window ref as useScrollTrigger
   // will default to window.
   // This is only being set here because the demo is in an iframe.
+
+  const barTrigger = useScrollTrigger({
+    disableHysteresis: true,
+    threshold: 0,
+    target: window ? window() : undefined,
+  });
+
   const trigger = useScrollTrigger({
     disableHysteresis: true,
-    threshold: 500,
+    threshold: 600,
     target: window ? window() : undefined,
   });
 
   return React.cloneElement(children, {
     style: {
-      backgroundColor: trigger ? "rgb(248,248,248)" : null,
-      color: trigger ? "black" : null,
-      transition: "background-color 0.3s color 0.3s",
+      position: barTrigger ? "fixed" : null,
+      // backgroundColor: trigger ? "rgb(248,248,248)" : null,
+      // color: trigger ? "black" : null,
     },
   });
 }
 
 const NavComponent = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [loggedIn, setLoggedIn] = useState(false);
   const isMenuOpen = Boolean(anchorEl);
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -108,13 +117,14 @@ const NavComponent = () => {
       onClose={handleMenuClose}>
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
     </Menu>
   );
 
   return (
     <Box sx={{ flexGrow: 1 }}>
       <ElevationScroll>
-        <AppBar position="fixed" sx={{ color: "black", backgroundColor: "rgb(248,248,248)" }}>
+        <AppBar sx={{ position: "sticky", color: "white", backgroundColor: "rgb(0,0,0,1.3)" }}>
           <Toolbar>
             <IconButton size="large" edge="start" color="inherit" aria-label="open drawer" sx={{ mr: 2 }}>
               <MenuIcon />
@@ -129,7 +139,7 @@ const NavComponent = () => {
               <StyledInputBase placeholder="Search…" inputProps={{ "aria-label": "search" }} />
             </Search>
             <Box sx={{ flexGrow: 1 }} />
-            <Box sx={{ display: { xs: "none", md: "flex" } }}>
+            <Box sx={{ display: { xs: "none", md: "flex", diplay: "flex", alignItems: "center" } }}>
               <IconButton size="large" aria-label="show 4 new mails" color="inherit">
                 <Badge badgeContent={4} color="error">
                   <MailIcon />
@@ -150,7 +160,16 @@ const NavComponent = () => {
                 color="inherit">
                 <AccountCircle />
               </IconButton>
-              {renderMenu}
+              {loggedIn ? (
+                { renderMenu }
+              ) : (
+                <Button
+                  variant="contained"
+                  onClick={() => (window.location.href = "/login")}
+                  sx={{ marginLeft: 3, marginRight: 3, height: "50%" }}>
+                  Login
+                </Button>
+              )}
             </Box>
           </Toolbar>
         </AppBar>

@@ -1,14 +1,17 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useMeQuery } from "../../../generated/graphql";
 import { ALL_USERS, GET_UTICKETS, GET_USER } from "../../../gql/queries";
 import { client } from "../../../apollo";
 import { gql } from "@apollo/client";
 import { Container, Box } from "@mui/material";
 import ProfileCard from "../../../components/User/ProfileCard";
+import EventList from "../../../components/Event/EventList";
 import TicketList from "../../../components/Ticket/TicketList";
 import profileStyles from "../../../styles/Profile.module.css";
 
 const Profile = ({ _user, _utickets, _uevents }: any) => {
+  const [page, setPage] = useState(false);
+
   useEffect(() => {});
 
   if (!_user) {
@@ -19,7 +22,9 @@ const Profile = ({ _user, _utickets, _uevents }: any) => {
     <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center", width: "100%" }}>
       <Container sx={{ display: "flex", alignItems: "center", margin: "10% auto 10% auto", width: "100%" }}>
         <ProfileCard userData={_user} />
-        <TicketList tickets={_utickets} />
+        <Box sx={{ maxHeight: 500, overflow: "auto" }}>
+          {page ? <EventList _events={_uevents} /> : <TicketList tickets={_utickets} />}
+        </Box>
       </Container>
     </Box>
   );

@@ -39,6 +39,8 @@ const createEvent = () => {
     getWeb3().then((currentAccount) => {
       setAccount(currentAccount);
     });
+
+    console.log("metamask account: " + account);
   }, []);
 
   const submit = () => {

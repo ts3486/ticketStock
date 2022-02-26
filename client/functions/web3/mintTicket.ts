@@ -1,17 +1,18 @@
 import React, { useState } from "react";
-import ethers from "ethers";
+import { ethers } from "ethers";
 import detectEthereumProvider from "@metamask/detect-provider";
 const Web3 = require("web3");
-const web3 = new Web3("wss://rinkeby.infura.io/ws/v3/0f3a6fad96f04d13bbbf4654d9099af7");
+// const web3 = new Web3("wss://rinkeby.infura.io/ws/v3/0f3a6fad96f04d13bbbf4654d9099af7");
+const web3 = new Web3("http://localhost:7545");
 const { mnemonic, publicKey, privateKey } = require("../../secret.json");
 const nftBuild = require("../../../build/contracts/TicketNFT.json");
 const contract = new web3.eth.Contract(nftBuild.abi, nftBuild.networks[5777].address);
-// const contract = new web3.eth.Contract(nftBuild.abi, nftBuild.networks[5777].address); for ganache
+// const contract = new web3.eth.Contract(nftBuild.abi, nftBuild.networks[4].address); for rinkeby
 
 export const mintTicket = async (account: string, ticketURI: string) => {
   console.log(contract);
+  console.log(account, ticketURI);
 
-  const [loading, setLoading] = useState(false);
   const baseCost = await contract.methods.cost().call();
   const txnCount = await web3.eth.getTransactionCount(account);
   const nonce = await ethers.utils.hexlify(txnCount);
@@ -32,7 +33,7 @@ export const mintTicket = async (account: string, ticketURI: string) => {
     .sendSignedTransaction(createTransaction.rawTransaction)
     .once("sending", () => {
       console.log("sending...");
-      setLoading(true);
+      // setLoading(true);
       // setOpen(true);
     })
     .once("sent", () => {
@@ -40,7 +41,7 @@ export const mintTicket = async (account: string, ticketURI: string) => {
     })
     .on("confirmation", (confNumber: any, receipt: any, latestBlockHash: any) => {
       console.log(confNumber, receipt, latestBlockHash);
-      setLoading(false);
+      // setLoading(false);
     })
     .on("error", (error: any) => {
       console.log(error);

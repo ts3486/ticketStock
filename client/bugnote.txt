@@ -1,0 +1,4 @@
+- connection not open on send();
+
+
+- reason could not pin file to ipfs: Was using axios in backend XD. Axios is a client side method. 

@@ -12,7 +12,7 @@ export const pinFileToIPFS = (file: any, ticket: any) => {
   //You'll need to make sure that the metadata is in the form of a JSON object that's been convered to a string
   //metadata is optional
   const metadata = JSON.stringify({
-    name: "ticketNFT",
+    name: ticket.name,
     keyvalues: {
       ticketName: ticket.name,
       image: ticket.image,

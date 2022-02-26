@@ -48,7 +48,7 @@ contract TicketNFT is ERC721Enumerable, Ownable {
   }
 
   // public
-  function mintTicketNFT(uint256 _tokenURI) public payable {
+  function mintTicket(string memory _tokenURI) public payable {
     uint256 supply = totalSupply();
     require(supply <= maxSupply);
 
@@ -58,7 +58,7 @@ contract TicketNFT is ERC721Enumerable, Ownable {
 
     uint256 _tokenId = supply + 1;
 
-    _mint(msg.sender, _tokenURI);
+    _mint(msg.sender, _tokenId);
     _setTokenURI(_tokenId, _tokenURI);
   }
 
@@ -78,12 +78,12 @@ contract TicketNFT is ERC721Enumerable, Ownable {
 
   //tokenURI related funtions
 
-  function _setTokenURI(uint256 tokenId,  uint256 _tokenURI) internal virtual {
+  function _setTokenURI(uint256 tokenId,  string memory _tokenURI) internal virtual {
     require(_exists(tokenId), "ERC721Metadata: URI set of nonexistent token");
 
     string memory currentBaseURI = _baseURI();
 
-    _tokenURIs[tokenId] = string(abi.encodePacked(currentBaseURI, _tokenURI.toString(), baseExtension));
+    _tokenURIs[tokenId] = string(abi.encodePacked(currentBaseURI, _tokenURI, baseExtension));
   }
 
   function tokenURI(uint256 tokenId) public view virtual override returns (string memory) {

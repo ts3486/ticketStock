@@ -24,9 +24,6 @@ const TicketList: React.FC<any> = ({ tickets }: any) => {
         marginLeft: "2%",
         padding: "5%",
       }}>
-      <Typography variant="h3" align="center">
-        List
-      </Typography>
       <Container sx={{ display: "flex", flexWrap: "wrap", marginTop: "2%" }}>
         {tickets.map((ticket: any) => {
           return <TicketItem ticket={ticket} key={ticket.id} />;

@@ -22,7 +22,7 @@ const Profile = ({ _user, _utickets, _uevents }: any) => {
     <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center", width: "100%" }}>
       <Container sx={{ display: "flex", alignItems: "center", margin: "10% auto 10% auto", width: "100%" }}>
         <ProfileCard userData={_user} />
-        <Box sx={{ maxHeight: 500, overflow: "auto" }}>
+        <Box sx={{ maxHeight: 500, width: 900, overflowY: "visible", overflowX: "hidden" }}>
           {page ? <EventList _events={_uevents} /> : <TicketList tickets={_utickets} />}
         </Box>
       </Container>

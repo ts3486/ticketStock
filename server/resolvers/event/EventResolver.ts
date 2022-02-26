@@ -25,6 +25,36 @@ export class EventResolver {
     return Event.find();
   }
 
+  @Query(() => [Event])
+  async getUevents(@Arg("username") username: string) {
+    const user = await User.findOne({ where: { username: username } });
+
+    if (user != null) {
+      const userId = user.id;
+      const uevents = await Event.find({ where: { userId: userId } });
+
+      if (!Event) {
+        return "event does not exist";
+      } else {
+        return uevents;
+      }
+    }
+  }
+
+  // async getUtickets(@Arg("username") username: string) {
+  //   const user = await User.findOne({ where: { username: username } });
+
+  //   if (user != null) {
+  //     const userId = user.id;
+  //     const utickets = await Ticket.find({ where: { userId: userId } });
+
+  //     if (!Ticket) {
+  //       return "ticket does not exist";
+  //     } else {
+  //       return utickets;
+  //     }
+  //   }
+
   @Mutation(() => Boolean, { nullable: true })
   @UseMiddleware(isAuth)
   async addEvent(@Ctx() { payload }: MyContext, @Arg("event") event: EventInput, @Arg("ticket") ticket: TicketInput) {

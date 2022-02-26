@@ -8,21 +8,19 @@ import ProfileCard from "../../../components/User/ProfileCard";
 import TicketList from "../../../components/Ticket/TicketList";
 import profileStyles from "../../../styles/Profile.module.css";
 
-const Profile = ({_user, _utickets }: any) => {
-
-  useEffect(() => {
-  });
+const Profile = ({ _user, _utickets, _uevents }: any) => {
+  useEffect(() => {});
 
   if (!_user) {
     return <div>no data. create an account?</div>;
   }
 
   return (
-    <Box sx={{display: "flex", flexDirection: "column", justifyContent: "center", width: "100%"}}>
-    <Container sx={{ display: "flex", alignItems: "center", margin: "10% auto 10% auto", width: "100%" }}>
-      <ProfileCard userData={_user} />
-      <TicketList tickets={_utickets} />
-    </Container>
+    <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center", width: "100%" }}>
+      <Container sx={{ display: "flex", alignItems: "center", margin: "10% auto 10% auto", width: "100%" }}>
+        <ProfileCard userData={_user} />
+        <TicketList tickets={_utickets} />
+      </Container>
     </Box>
   );
 };
@@ -48,7 +46,6 @@ export const getStaticPaths = async () => {
 };
 
 export const getStaticProps = async ({ params }: any) => {
-
   const { error: userError, data: userData } = await client.query({
     query: gql` {
       getUser(username: "${params.username}"){
@@ -63,6 +60,19 @@ export const getStaticProps = async ({ params }: any) => {
   const _user = userData.getUser;
   console.log(_user);
 
+  const { error: ueventError, data: ueventData } = await client.query({
+    query: gql` {
+      getUevents(username: "${params.username}"){
+        id,
+        name,
+        image,
+        date
+      }
+    }`,
+    errorPolicy: "all",
+  });
+
+  const _uevents = ueventData.getUevents;
 
   const { error: uticketError, data: uticketData } = await client.query({
     query: gql` {
@@ -81,8 +91,9 @@ export const getStaticProps = async ({ params }: any) => {
 
   return {
     props: {
-      _user, 
+      _user,
       _utickets,
+      _uevents,
     },
   };
 };

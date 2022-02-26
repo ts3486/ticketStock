@@ -10,10 +10,9 @@ const TicketItem: React.FC<any> = ({ ticket }) => {
         flexDirection: "column",
         alignItems: "center",
         margin: 1,
-        padding: 3
+        padding: 3,
       }}>
-   
-      <CardMedia sx={{ height: 100, width: 200, borderRadius: 3 }} image="/ticket.jpeg" />
+      <CardMedia sx={{ height: 100, width: 160, borderRadius: 3 }} image="/ticket.jpeg" />
 
       <Typography> Name & Date</Typography>
     </Card>

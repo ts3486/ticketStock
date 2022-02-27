@@ -21,25 +21,22 @@ interface Event {
   };
 }
 
-const createdDialog: React.FC<any> = (props: any) => {
+const CreatedDialog: React.FC<any> = (username: string) => {
   const [open, setOpen] = useState(false);
-
-  const closePDialog = () => {
-    props.closePDialog();
-  };
 
   return (
     <Container sx={{ height: "100%" }}>
-      <DialogTitle>Your purchase has been completed</DialogTitle>
+      <DialogTitle>Your event&ticketNFT has been created</DialogTitle>
       <DialogContent>
         <DialogContentText>
           <Typography gutterBottom variant="h5" component="h2">
-            Enjoy the event!
+            Check your event in your profile page.
           </Typography>
         </DialogContentText>
+        <Button onClick={() => (window.location.href = `/profile/${username}`)}>Go to profile</Button>
       </DialogContent>
     </Container>
   );
 };
 
-export default createdDialog;
+export default CreatedDialog;

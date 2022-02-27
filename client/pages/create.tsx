@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { useAddEventMutation, usePinFileMutation } from "../generated/graphql";
+import { useAddEventMutation, usePinFileMutation, useMeQuery } from "../generated/graphql";
+import { client } from "../apollo";
+import { gql } from "@apollo/client";
 import getWeb3 from "../functions/web3/getWeb3";
 import { pinFileToIPFS } from "../functions/pinFile";
 import { mintTicket } from "../functions/web3/mintTicket";
-import { Box } from "@mui/material";
+import { Box, Dialog } from "@mui/material";
 import EventDetailsForm from "../components/Create/EventDetailsForm";
 import TicketDetailsForm from "../components/Create/TicketDetailsForm";
 import ConfirmEvent from "../components/Create/ConfirmEvent";
+import CreatedDialog from "../components/Create/createdDialog";
 
 interface EventInput {
   name: string;
@@ -21,16 +24,27 @@ interface TicketInput {
   date: Date;
 }
 
-const createEvent = () => {
+interface User {
+  id: string;
+  username: string;
+  email: string;
+}
+
+const CreateEvent = () => {
   const [event, setEvent] = useState<EventInput>({} as EventInput);
   const [eventFile, setEventFile] = useState<File>({} as File);
   const [ticket, setTicket] = useState<TicketInput>({} as TicketInput);
   const [ticketFile, setTicketFile] = useState<File>({} as File);
+  const [open, setOpen] = useState(false);
   const [progress, setProgress] = useState(0);
   const [currentPage, setPage] = useState(1);
   const [account, setAccount] = useState("");
   const [addEvent] = useAddEventMutation();
   const [pinFile] = usePinFileMutation();
+
+  //current user
+  const { loading, error, data } = useMeQuery();
+  const currentUser = data?.me;
 
   useEffect(() => {
     // authRedirect();  Want to redirect to login page if no login token.
@@ -83,13 +97,18 @@ const createEvent = () => {
     }
     if (currentPage == 3) {
       return (
-        <ConfirmEvent
-          event={event}
-          eventFile={eventFile}
-          ticket={ticket}
-          ticketFile={ticketFile}
-          completion={() => submit()}
-        />
+        <Box>
+          <ConfirmEvent
+            event={event}
+            eventFile={eventFile}
+            ticket={ticket}
+            ticketFile={ticketFile}
+            completion={() => submit()}
+          />
+          <Dialog open={open}>
+            <CreatedDialog username={currentUser?.username} />
+          </Dialog>
+        </Box>
       );
     }
   };
@@ -98,4 +117,4 @@ const createEvent = () => {
   return <Box sx={{ display: "flex", justifyContent: "center" }}>{displayPage()}</Box>;
 };
 
-export default createEvent;
+export default CreateEvent;

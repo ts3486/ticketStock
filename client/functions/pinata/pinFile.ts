@@ -1,6 +1,6 @@
 const axios = require("axios");
 const FormData = require("form-data");
-const { pinataApiKey, pinataSecretApiKey } = require("../secret.json");
+const { pinataApiKey, pinataSecretApiKey } = require("../../secret.json");
 
 export const pinFileToIPFS = (file: any, ticket: any) => {
   const url = `https://api.pinata.cloud/pinning/pinFileToIPFS`;
@@ -48,10 +48,11 @@ export const pinFileToIPFS = (file: any, ticket: any) => {
         pinata_secret_api_key: pinataSecretApiKey,
       },
     })
-    .then(function (response: any) {
-      //handle response here
+    .then((response: any) => {
+      console.log("pinataAPI response: " + JSON.stringify(response));
+      return response;
     })
-    .catch(function (error: any) {
+    .catch((error: any) => {
       //handle error here
     });
 };

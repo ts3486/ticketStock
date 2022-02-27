@@ -21,7 +21,7 @@ const Transaction: React.FC<any> = ({ ticket }: any) => {
 
   return (
     <Container sx={{ height: "100%" }}>
-      <DialogTitle>Secure your ticket</DialogTitle>
+      <DialogTitle>Complete your purchase</DialogTitle>
       <DialogContent>
         <DialogContentText>
           <Typography gutterBottom variant="h5" component="h2">

@@ -3,13 +3,13 @@ import { useAddEventMutation, usePinFileMutation, useMeQuery } from "../generate
 import { client } from "../apollo";
 import { gql } from "@apollo/client";
 import getWeb3 from "../functions/web3/getWeb3";
-import { pinFileToIPFS } from "../functions/pinFile";
+import { pinFileToIPFS } from "../functions/pinata/pinFile";
 import { mintTicket } from "../functions/web3/mintTicket";
 import { Box, Dialog } from "@mui/material";
 import EventDetailsForm from "../components/Create/EventDetailsForm";
 import TicketDetailsForm from "../components/Create/TicketDetailsForm";
 import ConfirmEvent from "../components/Create/ConfirmEvent";
-import CreatedDialog from "../components/Create/createdDialog";
+import CreatedDialog from "../components/Create/CreatedDialog";
 
 interface EventInput {
   name: string;
@@ -58,6 +58,13 @@ const CreateEvent = () => {
   }, []);
 
   const submit = () => {
+    //Pin file and metadata to pinata => then mint ticket using image/metadata URI from pinata.
+    pinFileToIPFS(ticketFile, ticket).then((response: any) => {
+      setTicket({ ...ticket, image: response.IpfsHash });
+    });
+    mintTicket(account, ticket.name);
+
+    //POST to MySQL DB:
     // addEvent({
     //   variables: {
     //     event: event,
@@ -65,13 +72,11 @@ const CreateEvent = () => {
     //   },
     // });
 
-    //Send file to firebase storage
+    //Send file to firebase storage bucket
     // uploadFile(file);
     // uploadFile(ticketFile);
 
-    //Pin file and metadata to pinata => then mint ticket using image/metadata URI from pinata.
-    pinFileToIPFS(ticketFile, ticket);
-    mintTicket(account, ticket.name);
+    setOpen(true);
 
     return true;
   };
@@ -97,24 +102,26 @@ const CreateEvent = () => {
     }
     if (currentPage == 3) {
       return (
-        <Box>
-          <ConfirmEvent
-            event={event}
-            eventFile={eventFile}
-            ticket={ticket}
-            ticketFile={ticketFile}
-            completion={() => submit()}
-          />
-          <Dialog open={open}>
-            <CreatedDialog username={currentUser?.username} />
-          </Dialog>
-        </Box>
+        <ConfirmEvent
+          event={event}
+          eventFile={eventFile}
+          ticket={ticket}
+          ticketFile={ticketFile}
+          completion={() => submit()}
+        />
       );
     }
   };
 
   //DOM
-  return <Box sx={{ display: "flex", justifyContent: "center" }}>{displayPage()}</Box>;
+  return (
+    <Box sx={{ display: "flex", justifyContent: "center" }}>
+      {displayPage()}{" "}
+      <Dialog open={open}>
+        <CreatedDialog username={currentUser?.username} />
+      </Dialog>
+    </Box>
+  );
 };
 
 export default CreateEvent;

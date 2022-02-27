@@ -59,7 +59,6 @@ const TicketCreateForm: React.FC<Props> = (props) => {
         hidden
         sx={{ marginTop: 3 }}
         onChange={(e) => {
-          setImage((e.currentTarget as HTMLInputElement).files![0].name);
           setFile((e.currentTarget as HTMLInputElement).files![0]);
         }}
       />

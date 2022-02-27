@@ -10,7 +10,7 @@ import {
   Typography,
   CardMedia,
 } from "@mui/material";
-import { pinFileToIPFS } from "../../functions/pinFile";
+import { pinFileToIPFS } from "../../functions/pinata/pinFile";
 
 interface Props {
   eventData: (event: { name: string; image: string; desc: string; date: Date }) => void;

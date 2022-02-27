@@ -29,7 +29,7 @@ const CreatedDialog: React.FC<any> = (username: string) => {
       <DialogTitle>Your event&ticketNFT has been created</DialogTitle>
       <DialogContent>
         <DialogContentText>
-          <Typography gutterBottom variant="h5" component="h2">
+          <Typography component={"span"} gutterBottom>
             Check your event in your profile page.
           </Typography>
         </DialogContentText>

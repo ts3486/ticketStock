@@ -26,7 +26,7 @@ const BuyTicket: React.FC<any> = ({ ticket }: any) => {
             alignItems: "center",
             height: "100%",
           }}>
-          <ViewTicket />
+          <ViewTicket ticket={ticket} />
           <Button variant="contained" onClick={() => setCpage(2)}>
             Continue to purchase
           </Button>

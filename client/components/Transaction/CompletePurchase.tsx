@@ -33,9 +33,7 @@ const Transaction: React.FC<any> = (props: any) => {
       <DialogTitle>Your purchase has been completed</DialogTitle>
       <DialogContent>
         <DialogContentText>
-          <Typography gutterBottom variant="h5" component="h2">
-            Enjoy the event!
-          </Typography>
+          <Typography gutterBottom>Enjoy the event!</Typography>
         </DialogContentText>
       </DialogContent>
     </Container>

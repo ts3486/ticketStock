@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { client } from "../../apollo";
 import TicketItem from "../../components/Ticket/TicketItem";
 import { GET_UTICKETS } from "../../gql/queries";
-import { Card, Container, Typography } from "@mui/material";
+import { Box, Card, Container, Typography } from "@mui/material";
 import profileStyles from "../../styles/Profile.module.css";
 
 interface Ticket {
@@ -15,22 +15,23 @@ interface Ticket {
 
 const TicketList: React.FC<any> = ({ tickets }: any) => {
   return (
-    <Card
+    <Box
       sx={{
         display: "flex",
-        flexDirection: "column",
         width: "100%",
         height: "100%",
         marginLeft: "2%",
-        padding: "5%",
+        padding: "2%",
       }}>
-      <Container sx={{ display: "flex", flexWrap: "wrap", marginTop: "2%" }}>
-        {tickets.map((ticket: any) => {
-          return <TicketItem ticket={ticket} key={ticket.id} />;
-        })}
+      <Container sx={{ marginTop: "2%" }}>
+        <Box sx={{ display: "flex", flexWrap: "wrap" }}>
+          {tickets.map((ticket: any) => {
+            return <TicketItem ticket={ticket} key={ticket.id} />;
+          })}
+        </Box>
       </Container>
       {/* page split */}
-    </Card>
+    </Box>
   );
 };
 

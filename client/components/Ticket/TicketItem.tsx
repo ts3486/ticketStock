@@ -11,8 +11,9 @@ const TicketItem: React.FC<any> = ({ ticket }) => {
         alignItems: "center",
         margin: 1,
         padding: 3,
+        width: "30%",
       }}>
-      <CardMedia sx={{ height: 100, width: 160, borderRadius: 3 }} image="/ticket.jpeg" />
+      <CardMedia sx={{ height: 100, width: 170, borderRadius: 3 }} image="/ticket.jpeg" />
 
       <Typography> Name & Date</Typography>
     </Card>

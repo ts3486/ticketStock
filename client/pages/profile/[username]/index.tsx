@@ -3,7 +3,7 @@ import { useMeQuery } from "../../../generated/graphql";
 import { ALL_USERS, GET_UTICKETS, GET_USER } from "../../../gql/queries";
 import { client } from "../../../apollo";
 import { gql } from "@apollo/client";
-import { Container, Box } from "@mui/material";
+import { Card, Container, Box, Button } from "@mui/material";
 import ProfileCard from "../../../components/User/ProfileCard";
 import EventList from "../../../components/Event/EventList";
 import TicketList from "../../../components/Ticket/TicketList";
@@ -22,9 +22,19 @@ const Profile = ({ _user, _utickets, _uevents }: any) => {
     <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center", width: "100%" }}>
       <Container sx={{ display: "flex", alignItems: "center", margin: "10% auto 10% auto", width: "100%" }}>
         <ProfileCard userData={_user} />
-        <Box sx={{ maxHeight: 500, width: 900, overflowY: "visible", overflowX: "hidden" }}>
-          {page ? <EventList _events={_uevents} /> : <TicketList tickets={_utickets} />}
-        </Box>
+        <Card sx={{ height: 650, marginLeft: "2%" }}>
+          <Box sx={{ marginTop: "5%", marginLeft: "7%" }}>
+            <Button sx={{}} onClick={() => setPage(false)}>
+              Tickets
+            </Button>
+            <Button sx={{ marginRight: "2%" }} onClick={() => setPage(true)}>
+              Your Events
+            </Button>
+          </Box>
+          <Box sx={{ maxHeight: 500, width: 900, overflowY: "visible", overflowX: "hidden", marginTop: "3%" }}>
+            {page ? <EventList _events={_uevents} /> : <TicketList tickets={_utickets} />}
+          </Box>
+        </Card>
       </Container>
     </Box>
   );

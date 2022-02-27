@@ -82,7 +82,7 @@ function ElevationScroll(props: any) {
 
   return React.cloneElement(children, {
     style: {
-      position: barTrigger ? "fixed" : null,
+      // position: barTrigger ? "fixed" : null,
       // backgroundColor: trigger ? "rgb(248,248,248)" : null,
       // color: trigger ? "black" : null,
     },
@@ -154,7 +154,7 @@ const NavComponent = () => {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <ElevationScroll>
-        <AppBar sx={{ position: "sticky", color: "white", backgroundColor: "rgb(0,0,0,1.3)" }}>
+        <AppBar sx={{ position: "fixed", color: "white", backgroundColor: "rgb(0,0,0,1.3)" }}>
           <Toolbar>
             <Typography variant="h6" noWrap component="div" sx={{ display: { xs: "none", sm: "block" } }}>
               TicketStock

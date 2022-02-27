@@ -13,10 +13,10 @@ interface Event {
 
 const EventItem: React.FC<Event> = (props: Event) => {
   return (
-    <Card sx={{ borderRadius: 2, height: "65%", width: "30%", margin: 2 }}>
+    <Card sx={{ borderRadius: 2, height: "65%", width: "28%", margin: 2 }}>
       <CardActionArea href={`/event/${props.event.id}`}>
         {/* <CardMedia image={props.event.image} /> */}
-        <CardMedia sx={{ height: 200, width: 340 }} image="event.jpg" />
+        <CardMedia sx={{ height: 200 }} image="/event.jpg" />
         <CardContent>
           <Typography sx={{ color: "purple" }} variant="body2" component="h2">
             Date

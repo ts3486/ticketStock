@@ -49,7 +49,7 @@ const CreateEvent = () => {
     // authRedirect();  Want to redirect to login page if no login token.
 
     //getWeb3 account
-    getWeb3().then((currentAccount) => {
+    getWeb3().then((currentAccount: string) => {
       setAccount(currentAccount);
     });
 

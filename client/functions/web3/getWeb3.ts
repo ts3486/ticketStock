@@ -2,10 +2,10 @@ import Web3 from "web3";
 import detectEthereumProvider from "@metamask/detect-provider";
 
 const getWeb3 = () =>
-  new Promise((resolve, reject) => {
+  new Promise<string | any>((resolve, reject) => {
     // Wait for loading completion to avoid race conditions with web3 injection timing.
     window.addEventListener("load", async () => {
-      const provider = await detectEthereumProvider();
+      const provider: any = await detectEthereumProvider();
 
       if (provider) {
         try {
@@ -13,12 +13,12 @@ const getWeb3 = () =>
           const accounts = await provider.request({ method: "eth_requestAccounts" });
           const account = accounts[0];
           console.log("current account: " + account);
-          provider.on("accountsChanged", (accounts) => {
+          provider.on("accountsChanged", (accounts: any) => {
             // Time to reload your interface with accounts[0]!
             console.log("current account: " + accounts[0]);
           });
 
-          resolve(account);
+          return resolve(account);
         } catch (error) {
           reject(error);
         }

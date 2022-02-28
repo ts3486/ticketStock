@@ -1,17 +1,33 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Dialog, DialogContent, Button } from "@mui/material";
 import ViewTicket from "./ViewTicket";
 import PurchaseDetails from "./PurchaseDetails";
 import CompletePurchase from "./CompletePurchase";
 import { useSendTicketMutation } from "../../generated/graphql";
+import getWeb3 from "../../functions/web3/getWeb3";
+import { transferTicket } from "../../functions/web3/transferTicket";
 
 const BuyTicket: React.FC<any> = ({ ticket }: any) => {
   const [open, setOpen] = useState(false);
   const [cpage, setCpage] = useState(1);
+  const [account, setAccount] = useState("");
   const [sendTicket] = useSendTicketMutation();
+
+  useEffect(() => {});
 
   const handleDialog = () => {
     setOpen(false);
+  };
+
+  const onPurchase = () => {
+    sendTicket({
+      variables: {
+        id: ticket.id,
+      },
+    });
+
+    //mint ticket
+    transferTicket(account, ticket.cid);
   };
 
   console.log("ticket to purchase: " + ticket.id, typeof ticket.id);
@@ -33,6 +49,10 @@ const BuyTicket: React.FC<any> = ({ ticket }: any) => {
         </Box>
       );
     } else if (cpage == 2) {
+      getWeb3().then((currentAccount: string) => {
+        setAccount(currentAccount);
+      });
+
       return (
         <Box
           sx={{
@@ -45,16 +65,7 @@ const BuyTicket: React.FC<any> = ({ ticket }: any) => {
           <Button
             variant="contained"
             onClick={() => {
-              sendTicket({
-                variables: {
-                  id: ticket.id,
-                },
-              });
-
-              //mint ticket
-              //get NFT contract based on ID? => call transfer method to transwfer ownership to current user.
-              //how to get NFT contract? Available info, CID, user account,
-
+              onPurchase();
               setCpage(3);
             }}>
             Complete Purchase
@@ -81,13 +92,20 @@ const BuyTicket: React.FC<any> = ({ ticket }: any) => {
 
   return (
     <div className="transaction">
-      <Button color="primary" variant="contained" onClick={() => setOpen(true)}>
+      <Button
+        color="primary"
+        variant="contained"
+        onClick={() => {
+          setOpen(true);
+          onPurchase();
+        }}>
         Ticket
       </Button>
       <Dialog
         open={open}
         sx={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
         <DialogContent sx={{ height: 500, width: 600 }}>{page()}</DialogContent>
+        <Button variant="contained" onClick={() => setOpen(false)} />
       </Dialog>
     </div>
   );

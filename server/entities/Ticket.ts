@@ -18,6 +18,10 @@ export class Ticket extends BaseEntity {
   @Field({ nullable: true })
   cid: string;
 
+  // @Column("text")
+  // @Field({ nullable: true })
+  // tokenId: string;
+
   // @Column({ type: "longblob" })
   // @Field()
   // file: string;

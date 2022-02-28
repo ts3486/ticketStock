@@ -22,10 +22,10 @@ contract TicketNFT is ERC721Enumerable, Ownable {
   string public baseExtension = ".json";
   uint256 public cost = 0.1 ether;
   uint256 public maxSupply = 20;
-  uint256 public id = 1;
 
   // Optional mapping for token URIs
-  mapping(uint256 => string) private _tokenURIs;
+  mapping(uint256 => string) public _tokenURIs;
+  mapping(string => uint256) public _tokenIds;
 
   constructor(
     string memory _name,
@@ -68,6 +68,10 @@ contract TicketNFT is ERC721Enumerable, Ownable {
     return owner;
   }
 
+  function getValueAtMapping(string memory ticketURI)  public view returns(uint value) {
+      return _tokenIds[ticketURI];
+}
+
   function walletOfOwner(address _owner) public view returns (uint256[] memory) {
     uint256 ownerTokenCount = balanceOf(_owner);
     uint256[] memory tokenIds = new uint256[](ownerTokenCount);
@@ -85,6 +89,7 @@ contract TicketNFT is ERC721Enumerable, Ownable {
     string memory currentBaseURI = _baseURI();
 
     _tokenURIs[tokenId] = string(abi.encodePacked(currentBaseURI, _tokenURI, baseExtension));
+    _tokenIds[string(abi.encodePacked(currentBaseURI, _tokenURI, baseExtension))] = tokenId;
   }
 
   function tokenURI(uint256 tokenId) public view virtual override returns (string memory) {

@@ -9,7 +9,7 @@ const ViewTicket: React.FC<any> = ({ ticket }: any) => {
       <Typography>Ticket</Typography>
       <CardMedia
         sx={{ marginTop: "3%", marginBottom: "3%", height: 300 }}
-        image={`https://gateway.pinata.cloud/ipfs/${ticket.image}`}
+        image={`https://gateway.pinata.cloud/ipfs/${ticket.cid}`}
         // image={"https://gateway.pinata.cloud/ipfs/QmcesxD5ttRexNCZ6i6ra9D8iXoqFbxiEmXuwN3NKJz29D"}
       />
       <Typography>Pricing</Typography>

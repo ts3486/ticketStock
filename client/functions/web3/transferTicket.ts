@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { ethers } from "ethers";
+import { BigNumber } from "bignumber.js";
 import detectEthereumProvider from "@metamask/detect-provider";
 const Web3 = require("web3");
 // const web3 = new Web3("wss://rinkeby.infura.io/ws/v3/0f3a6fad96f04d13bbbf4654d9099af7");
@@ -9,19 +10,26 @@ const nftBuild = require("../../../build/contracts/TicketNFT.json");
 const contract = new web3.eth.Contract(nftBuild.abi, nftBuild.networks[5777].address);
 // const contract = new web3.eth.Contract(nftBuild.abi, nftBuild.networks[4].address); for rinkeby
 
-export const transferTicket = async (buyer: string, tokenId: number) => {
+export const transferTicket = async (buyer: string, ticketCid: string) => {
   // get address of current USER => get current OWNER of NFT with checkowner() => how to get ticketId.
+  // how to get ticketId: retrieve tokenId from ticketURI to tokenId mapping in contract;
 
-  const seller = await contract.methods.checkowner().call();
+  const tokenId = await contract.methods.getValueAtMapping(`https://gateway.pinata.cloud/ipfs/${ticketCid}`);
+
+  console.log(tokenId);
+
+  const seller = await contract.methods.checkOwner(tokenId).call();
   const baseCost = await contract.methods.cost().call();
   const txnCount = await web3.eth.getTransactionCount(buyer);
   const nonce = await ethers.utils.hexlify(txnCount);
 
   const createTransaction = await web3.eth.accounts.signTransaction(
     {
-      from: seller,
+      from: buyer,
       nonce: nonce,
-      to: "0x1EB590B195F9463b19C612BaA6b947622434DdF3",
+      //change on new contract deployment.
+      //   0x162205217344115d92A5339A27C9795f49B5Ce17
+      to: contract,
       value: baseCost,
       gas: 500000,
       data: contract.methods._transferFrom(seller, buyer, tokenId).encodeABI(),

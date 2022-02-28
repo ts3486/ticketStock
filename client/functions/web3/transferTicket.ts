@@ -14,7 +14,8 @@ export const transferTicket = async (buyer: string, ticketCid: string) => {
   // get address of current USER => get current OWNER of NFT with checkowner() => how to get ticketId.
   // how to get ticketId: retrieve tokenId from ticketURI to tokenId mapping in contract;
 
-  const tokenId = await contract.methods.getValueAtMapping(`https://gateway.pinata.cloud/ipfs/${ticketCid}`);
+  //   const tokenId = await contract.methods.getValueAtMapping(`https://gateway.pinata.cloud/ipfs/${ticketCid}`).call();
+  const tokenId = await contract.methods._tokenIds(`https://gateway.pinata.cloud/ipfs/${ticketCid}`);
 
   console.log(tokenId);
 

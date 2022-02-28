@@ -15,8 +15,8 @@ export class Ticket extends BaseEntity {
   name: string;
 
   @Column("text")
-  @Field()
-  image: string;
+  @Field({ nullable: true })
+  cid: string;
 
   // @Column({ type: "longblob" })
   // @Field()
@@ -50,7 +50,7 @@ export class TicketInput implements Partial<Ticket> {
   name: string;
 
   @Field()
-  image: string;
+  cid: string;
 
   @Field(() => Int)
   price: number;

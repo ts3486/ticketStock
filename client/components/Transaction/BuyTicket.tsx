@@ -52,6 +52,9 @@ const BuyTicket: React.FC<any> = ({ ticket }: any) => {
               });
 
               //mint ticket
+              //get NFT contract based on ID? => call transfer method to transwfer ownership to current user.
+              //how to get NFT contract? Available info, CID, user account,
+
               setCpage(3);
             }}>
             Complete Purchase

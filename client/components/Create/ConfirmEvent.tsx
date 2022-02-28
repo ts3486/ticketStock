@@ -15,7 +15,7 @@ interface EventInput {
 
 interface TicketInput {
   name: string;
-  image: string;
+  cid?: string;
   price: number;
   date: Date;
 }

@@ -62,7 +62,7 @@ export class EventResolver {
       //add ticket to db
       const newTicket = await getRepository(Ticket).insert({
         name: ticket.name,
-        image: ticket.image,
+        cid: ticket.cid,
         price: ticket.price,
         userId: parseInt(payload!.userId),
       });

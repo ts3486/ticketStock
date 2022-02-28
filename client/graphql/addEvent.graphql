@@ -7,7 +7,6 @@ input EventInput {
 
 input TicketInput {
   name: string
-  image: string
   date: DateTime
   price: number
 }

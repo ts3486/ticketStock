@@ -1,21 +1,8 @@
 import React, { useState } from "react";
-import {
-  Box,
-  Button,
-  Container,
-  CardMedia,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  Typography,
-  Input,
-} from "@mui/material";
-import Transaction from "./BuyTicket";
-import formStyles from "../../styles/Create.module.css";
+import { Container, CardMedia, Typography } from "@mui/material";
 
 const ViewTicket: React.FC<any> = ({ ticket }: any) => {
-  console.log(ticket);
+  console.log(ticket.image);
 
   return (
     <Container sx={{ height: "100%" }}>

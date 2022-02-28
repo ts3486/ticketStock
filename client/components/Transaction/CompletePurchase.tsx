@@ -32,9 +32,7 @@ const Transaction: React.FC<any> = (props: any) => {
     <Container sx={{ height: "100%" }}>
       <DialogTitle>Your purchase has been completed</DialogTitle>
       <DialogContent>
-        <DialogContentText>
-          <Typography gutterBottom>Enjoy the event!</Typography>
-        </DialogContentText>
+        <Typography gutterBottom>Enjoy the event!</Typography>
       </DialogContent>
     </Container>
   );

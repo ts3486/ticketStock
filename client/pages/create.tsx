@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useAddEventMutation, usePinFileMutation, useMeQuery } from "../generated/graphql";
+import { useAddEventMutation, useMeQuery } from "../generated/graphql";
 import { client } from "../apollo";
 import { gql } from "@apollo/client";
 import getWeb3 from "../functions/web3/getWeb3";
 import { pinFileToIPFS } from "../functions/pinata/pinFile";
 import { mintTicket } from "../functions/web3/mintTicket";
-import { Box, Dialog } from "@mui/material";
+import { Button, Box, Dialog } from "@mui/material";
 import EventDetailsForm from "../components/Create/EventDetailsForm";
 import TicketDetailsForm from "../components/Create/TicketDetailsForm";
 import ConfirmEvent from "../components/Create/ConfirmEvent";
@@ -19,7 +19,7 @@ interface EventInput {
 }
 interface TicketInput {
   name: string;
-  image: string;
+  cid: string;
   price: number;
   date: Date;
 }
@@ -40,7 +40,6 @@ const CreateEvent = () => {
   const [currentPage, setPage] = useState(1);
   const [account, setAccount] = useState("");
   const [addEvent] = useAddEventMutation();
-  const [pinFile] = usePinFileMutation();
 
   //current user
   const { loading, error, data } = useMeQuery();
@@ -60,17 +59,18 @@ const CreateEvent = () => {
   const submit = () => {
     //Pin file and metadata to pinata => then mint ticket using image/metadata URI from pinata.
     pinFileToIPFS(ticketFile, ticket).then((response: any) => {
-      setTicket({ ...ticket, image: response.IpfsHash });
+      setTicket({ ...ticket, ["cid"]: response.data.IpfsHash.replace(/\"/g, "") });
     });
+    console.log(ticket);
     mintTicket(account, ticket.name);
 
     //POST to MySQL DB:
-    // addEvent({
-    //   variables: {
-    //     event: event,
-    //     ticket: ticket,
-    //   },
-    // });
+    addEvent({
+      variables: {
+        event: event,
+        ticket: ticket,
+      },
+    });
 
     //Send file to firebase storage bucket
     // uploadFile(file);
@@ -119,6 +119,7 @@ const CreateEvent = () => {
       {displayPage()}{" "}
       <Dialog open={open}>
         <CreatedDialog username={currentUser?.username} />
+        <Button onClick={() => setOpen(false)}>Close</Button>
       </Dialog>
     </Box>
   );

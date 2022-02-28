@@ -28,11 +28,8 @@ const CreatedDialog: React.FC<any> = (username: string) => {
     <Container sx={{ height: "100%" }}>
       <DialogTitle>Your event&ticketNFT has been created</DialogTitle>
       <DialogContent>
-        <DialogContentText>
-          <Typography component={"span"} gutterBottom>
-            Check your event in your profile page.
-          </Typography>
-        </DialogContentText>
+        <Typography gutterBottom>Check your event in your profile page.</Typography>
+
         <Button onClick={() => (window.location.href = `/profile/${username}`)}>Go to profile</Button>
       </DialogContent>
     </Container>

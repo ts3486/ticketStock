@@ -7,20 +7,20 @@ import DatePicker from "@mui/lab/DatePicker";
 import formStyles from "../../styles/Create.module.css";
 
 interface Props {
-  ticketData: (ticket: { name: string; image: string; date: Date; price: number }) => void;
+  ticketData: (ticket: { name: string; cid: string; date: Date; price: number }) => void;
   ticketFile: (file: File) => void;
   page: (page: number) => void;
 }
 
 const TicketCreateForm: React.FC<Props> = (props) => {
   const [name, setName] = useState("");
-  const [image, setImage] = useState("");
+  const [cid, setCid] = useState("");
   const [file, setFile] = useState<File>({} as File);
   const [date, setDate] = useState<Date>(new Date("2021-11-18T21:11:54"));
   const [price, setPrice] = useState(0);
 
   const onSet = (e: any) => {
-    const ticket = { name, image, price, date };
+    const ticket = { name, cid, price, date };
 
     props.ticketData(ticket);
     props.ticketFile(file);

@@ -135,7 +135,7 @@ export const getStaticProps = async ({ params }: any) => {
       getTicket(id: ${event.ticketId}){
         id,
         name,
-        image,
+        cid,
         price,
       }
     }

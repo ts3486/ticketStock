@@ -37,7 +37,7 @@ export const GET_TICKETS = gql`
     allTickets {
       id
       name
-      image
+      cid
       price
       date
     }
@@ -49,7 +49,7 @@ export const GET_TICKET = gql`
     getTicket(id: $id) {
       id
       name
-      image
+      cid
       price
       date
     }
@@ -71,7 +71,7 @@ export const GET_UTICKETS = gql`
     getUTickets(username: $username) {
       id
       name
-      image
+      cid
       price
       date
     }

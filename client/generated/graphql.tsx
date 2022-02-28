@@ -15,8 +15,6 @@ export type Scalars = {
   Float: number;
   /** The javascript `Date` as string. Type represents date and time as the ISO Date string. */
   DateTime: any;
-  /** The `Upload` scalar type represents a file upload. */
-  Upload: any;
 };
 
 export type Event = {
@@ -54,7 +52,6 @@ export type Mutation = {
   authRedirect: Scalars['Boolean'];
   addEvent?: Maybe<Scalars['Boolean']>;
   sendTicket: Scalars['Boolean'];
-  pinFile: Scalars['Boolean'];
 };
 
 
@@ -86,12 +83,6 @@ export type MutationSendTicketArgs = {
   id: Scalars['Float'];
 };
 
-
-export type MutationPinFileArgs = {
-  ticket: TicketInput;
-  file: Scalars['Upload'];
-};
-
 export type Query = {
   __typename?: 'Query';
   users: Array<User>;
@@ -99,6 +90,7 @@ export type Query = {
   me: User;
   getEvent: Event;
   allEvents: Array<Event>;
+  getUevents: Array<Event>;
   allTickets: Array<Ticket>;
   getTicket: Ticket;
   getUtickets: Array<Ticket>;
@@ -115,6 +107,11 @@ export type QueryGetEventArgs = {
 };
 
 
+export type QueryGetUeventsArgs = {
+  username: Scalars['String'];
+};
+
+
 export type QueryGetTicketArgs = {
   id: Scalars['Float'];
 };
@@ -128,7 +125,7 @@ export type Ticket = {
   __typename?: 'Ticket';
   id: Scalars['Int'];
   name: Scalars['String'];
-  image: Scalars['String'];
+  cid: Scalars['String'];
   price: Scalars['Int'];
   date?: Maybe<Scalars['DateTime']>;
   userId: Scalars['Int'];
@@ -136,7 +133,7 @@ export type Ticket = {
 
 export type TicketInput = {
   name: Scalars['String'];
-  image: Scalars['String'];
+  cid: Scalars['String'];
   price: Scalars['Int'];
   date?: InputMaybe<Scalars['DateTime']>;
 };
@@ -198,14 +195,6 @@ export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type MeQuery = { __typename?: 'Query', me: { __typename?: 'User', id: number, username: string, email: string } };
-
-export type PinFileMutationVariables = Exact<{
-  file: Scalars['Upload'];
-  ticket: TicketInput;
-}>;
-
-
-export type PinFileMutation = { __typename?: 'Mutation', pinFile: boolean };
 
 export type RegisterMutationVariables = Exact<{
   email: Scalars['String'];
@@ -502,38 +491,6 @@ export function useMeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MeQuery
 export type MeQueryHookResult = ReturnType<typeof useMeQuery>;
 export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>;
 export type MeQueryResult = Apollo.QueryResult<MeQuery, MeQueryVariables>;
-export const PinFileDocument = gql`
-    mutation pinFile($file: Upload!, $ticket: TicketInput!) {
-  pinFile(file: $file, ticket: $ticket)
-}
-    `;
-export type PinFileMutationFn = Apollo.MutationFunction<PinFileMutation, PinFileMutationVariables>;
-
-/**
- * __usePinFileMutation__
- *
- * To run a mutation, you first call `usePinFileMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `usePinFileMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [pinFileMutation, { data, loading, error }] = usePinFileMutation({
- *   variables: {
- *      file: // value for 'file'
- *      ticket: // value for 'ticket'
- *   },
- * });
- */
-export function usePinFileMutation(baseOptions?: Apollo.MutationHookOptions<PinFileMutation, PinFileMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<PinFileMutation, PinFileMutationVariables>(PinFileDocument, options);
-      }
-export type PinFileMutationHookResult = ReturnType<typeof usePinFileMutation>;
-export type PinFileMutationResult = Apollo.MutationResult<PinFileMutation>;
-export type PinFileMutationOptions = Apollo.BaseMutationOptions<PinFileMutation, PinFileMutationVariables>;
 export const RegisterDocument = gql`
     mutation Register($email: String!, $username: String!, $password: String!) {
   register(email: $email, username: $username, password: $password)

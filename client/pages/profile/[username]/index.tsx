@@ -94,7 +94,7 @@ export const getStaticProps = async ({ params }: any) => {
       getUtickets(username: "${params.username}"){
         id,
         name,
-        image,
+        cid,
         price,
         date
       }

@@ -23,17 +23,9 @@ const Transaction: React.FC<any> = ({ ticket }: any) => {
     <Container sx={{ height: "100%" }}>
       <DialogTitle>Complete your purchase</DialogTitle>
       <DialogContent>
-        <DialogContentText>
-          <Typography gutterBottom variant="h5" component="h2">
-            Event Title:
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            Date: {}
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            Price: {}
-          </Typography>
-        </DialogContentText>
+        <Typography gutterBottom>Event Title:</Typography>
+        <Typography>Date: {}</Typography>
+        <Typography>Price: {}</Typography>
       </DialogContent>
     </Container>
   );

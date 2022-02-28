@@ -49,7 +49,6 @@ export const pinFileToIPFS = (file: any, ticket: any) => {
       },
     })
     .then((response: any) => {
-      console.log("pinataAPI response: " + JSON.stringify(response));
       return response;
     })
     .catch((error: any) => {

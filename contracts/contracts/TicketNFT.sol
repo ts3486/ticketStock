@@ -22,6 +22,7 @@ contract TicketNFT is ERC721Enumerable, Ownable {
   string public baseExtension = ".json";
   uint256 public cost = 0.1 ether;
   uint256 public maxSupply = 20;
+  uint256 public id = 1;
 
   // Optional mapping for token URIs
   mapping(uint256 => string) private _tokenURIs;

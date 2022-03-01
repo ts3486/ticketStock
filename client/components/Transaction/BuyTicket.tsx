@@ -20,11 +20,11 @@ const BuyTicket: React.FC<any> = ({ ticket }: any) => {
   };
 
   const onPurchase = () => {
-    sendTicket({
-      variables: {
-        id: ticket.id,
-      },
-    });
+    // sendTicket({
+    //   variables: {
+    //     id: ticket.id,
+    //   },
+    // });
 
     //mint ticket
     transferTicket(account, ticket.cid);
@@ -65,7 +65,7 @@ const BuyTicket: React.FC<any> = ({ ticket }: any) => {
           <Button
             variant="contained"
             onClick={() => {
-              onPurchase();
+              // onPurchase();
               setCpage(3);
             }}>
             Complete Purchase

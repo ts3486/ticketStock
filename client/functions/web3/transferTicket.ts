@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { ethers } from "ethers";
-import { BigNumber } from "bignumber.js";
 import detectEthereumProvider from "@metamask/detect-provider";
 const Web3 = require("web3");
 // const web3 = new Web3("wss://rinkeby.infura.io/ws/v3/0f3a6fad96f04d13bbbf4654d9099af7");
@@ -14,13 +13,19 @@ export const transferTicket = async (buyer: string, ticketCid: string) => {
   // get address of current USER => get current OWNER of NFT with checkowner() => how to get ticketId.
   // how to get ticketId: retrieve tokenId from ticketURI to tokenId mapping in contract;
 
-  //   const tokenId = await contract.methods.getValueAtMapping(`https://gateway.pinata.cloud/ipfs/${ticketCid}`).call();
-  const tokenId = await contract.methods._tokenIds(`https://gateway.pinata.cloud/ipfs/${ticketCid}`);
+  const baseCost = await contract.methods
+    .cost()
+    .call()
+    .then(() => console.log("hello"));
 
-  console.log(tokenId);
+  //   const tokenId = await contract.methods.getValueAtMapping(`https://gateway.pinata.cloud/ipfs/${ticketCid}`).call();
+
+  const tokenURI = `https://gateway.pinata.cloud/ipfs/${ticketCid}`;
+
+  const tokenId = await contract.methods.tokenIds(tokenURI).call();
 
   const seller = await contract.methods.checkOwner(tokenId).call();
-  const baseCost = await contract.methods.cost().call();
+  //   const baseCost = await contract.methods.cost().call();
   const txnCount = await web3.eth.getTransactionCount(buyer);
   const nonce = await ethers.utils.hexlify(txnCount);
 

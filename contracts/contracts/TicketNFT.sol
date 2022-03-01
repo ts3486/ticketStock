@@ -23,9 +23,8 @@ contract TicketNFT is ERC721Enumerable, Ownable {
   uint256 public cost = 0.1 ether;
   uint256 public maxSupply = 20;
 
-  // Optional mapping for token URIs
-  mapping(uint256 => string) public _tokenURIs;
-  mapping(string => uint256) public _tokenIds;
+  mapping(uint256 => string) public tokenURIs;
+  mapping(string => uint256) public tokenIds;
 
   constructor(
     string memory _name,
@@ -69,17 +68,17 @@ contract TicketNFT is ERC721Enumerable, Ownable {
   }
 
   function getValueAtMapping(string memory ticketURI)  public view returns(uint value) {
-      return _tokenIds[ticketURI];
+      return tokenIds[ticketURI];
 }
 
-  function walletOfOwner(address _owner) public view returns (uint256[] memory) {
-    uint256 ownerTokenCount = balanceOf(_owner);
-    uint256[] memory tokenIds = new uint256[](ownerTokenCount);
-    for (uint256 i; i < ownerTokenCount; i++) {
-      tokenIds[i] = tokenOfOwnerByIndex(_owner, i);
-    }
-    return tokenIds;
-  }
+  // function walletOfOwner(address _owner) public view returns (uint256[] memory) {
+  //   uint256 ownerTokenCount = balanceOf(_owner);
+  //   uint256[] memory _tokenIds = new uint256[](ownerTokenCount);
+  //   for (uint256 i; i < ownerTokenCount; i++) {
+  //     tokenIds[i.toString()] = tokenOfOwnerByIndex(_owner, i);
+  //   }
+  //   return _tokenIds;
+  // }
 
   //tokenURI related funtions
 
@@ -88,8 +87,8 @@ contract TicketNFT is ERC721Enumerable, Ownable {
 
     string memory currentBaseURI = _baseURI();
 
-    _tokenURIs[tokenId] = string(abi.encodePacked(currentBaseURI, _tokenURI, baseExtension));
-    _tokenIds[string(abi.encodePacked(currentBaseURI, _tokenURI, baseExtension))] = tokenId;
+    tokenURIs[tokenId] = string(abi.encodePacked(currentBaseURI, _tokenURI, baseExtension));
+    tokenIds[string(abi.encodePacked(currentBaseURI, _tokenURI, baseExtension))] = tokenId;
   }
 
   function tokenURI(uint256 tokenId) public view virtual override returns (string memory) {

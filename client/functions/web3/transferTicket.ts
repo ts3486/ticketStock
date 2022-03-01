@@ -10,22 +10,14 @@ const contract = new web3.eth.Contract(nftBuild.abi, nftBuild.networks[5777].add
 // const contract = new web3.eth.Contract(nftBuild.abi, nftBuild.networks[4].address); for rinkeby
 
 export const transferTicket = async (buyer: string, ticketCid: string) => {
-  // get address of current USER => get current OWNER of NFT with checkowner() => how to get ticketId.
-  // how to get ticketId: retrieve tokenId from ticketURI to tokenId mapping in contract;
-
-  const baseCost = await contract.methods
-    .cost()
-    .call()
-    .then(() => console.log("hello"));
-
-  //   const tokenId = await contract.methods.getValueAtMapping(`https://gateway.pinata.cloud/ipfs/${ticketCid}`).call();
-
   const tokenURI = `https://gateway.pinata.cloud/ipfs/${ticketCid}`;
 
   const tokenId = await contract.methods.tokenIds(tokenURI).call();
+  //OR
+  // const tokenId = await contract.methods.getValueAtMapping(tokenURI).call();
 
   const seller = await contract.methods.checkOwner(tokenId).call();
-  //   const baseCost = await contract.methods.cost().call();
+  const baseCost = await contract.methods.cost().call();
   const txnCount = await web3.eth.getTransactionCount(buyer);
   const nonce = await ethers.utils.hexlify(txnCount);
 

@@ -3,7 +3,7 @@
 // const ComplexStorage = artifacts.require("ComplexStorage");
 const TicketNFT = artifacts.require("TicketNFT");
 
-const IPFS_IMAGE_METADATA_URI = `https://gateway.pinata.cloud/ipfs/QmUojKBcTFu9vNEGp2AVjPn2t6TXFstBKt9rQHkjjjXMJd/`;
+const IPFS_IMAGE_METADATA_URI = `https://gateway.pinata.cloud/ipfs/`;
 
 module.exports = function (deployer) {
   // deployer.deploy(SimpleStorage);

@@ -67,7 +67,7 @@ contract TicketNFT is ERC721Enumerable, Ownable {
     return owner;
   }
 
-  function getValueAtMapping(string memory ticketURI)  public view returns(uint value) {
+  function getValueAtMapping(string memory ticketURI)  public view returns(uint256 value) {
       return tokenIds[ticketURI];
 }
 

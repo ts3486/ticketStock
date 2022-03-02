@@ -63,6 +63,9 @@ contract TicketNFT is ERC721Enumerable, Ownable {
   }
 
   function checkOwner(uint256 tokenId) public view returns (address) {
+
+    require(_exists(tokenId), "cannot check owner of nonexistent token");
+
     address owner = ownerOf(tokenId);
     return owner;
   }
@@ -83,7 +86,7 @@ contract TicketNFT is ERC721Enumerable, Ownable {
   //tokenURI related funtions
 
   function _setTokenURI(uint256 tokenId,  string memory _tokenURI) internal virtual {
-    require(_exists(tokenId), "ERC721Metadata: URI set of nonexistent token");
+
 
     string memory currentBaseURI = _baseURI();
 

@@ -13,8 +13,11 @@ export const transferTicket = async (buyer: string, ticketCid: string) => {
   const tokenURI = `https://gateway.pinata.cloud/ipfs/${ticketCid}`;
 
   const tokenId = await contract.methods.tokenIds(tokenURI).call();
+
   //OR
   // const tokenId = await contract.methods.getValueAtMapping(tokenURI).call();
+
+  console.log(tokenId);
 
   const seller = await contract.methods.checkOwner(tokenId).call();
   const baseCost = await contract.methods.cost().call();

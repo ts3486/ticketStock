@@ -1,4 +1,10 @@
+require("dotenv").config();
 const path = require("path");
+const HDWalletProvider = require("@truffle/hdwallet-provider");
+const mnemonic = process.env.MNEMONIC;
+const projectID = process.env.PROJECT_ID;
+
+const RinkebyProvider = new HDWalletProvider(mnemonic, `https://rinkeby.infura.io/v3/${projectID}`);
 
 module.exports = {
   // See <http://truffleframework.com/docs/advanced/configuration>
@@ -11,13 +17,13 @@ module.exports = {
       port: 7545,
       network_id: "*",
     },
-    // rinkeby: {
-    //   from: "0x4bcFa9287e80138B1705f03bd12C83d775c58ab1",
-    //   provider: RinkebyProvider,
-    //   network_id: 4,
-    //   gas: 10000000,
-    //   // gasPrice: 25000000000,
-    // },
+    rinkeby: {
+      // from: "0x4bcFa9287e80138B1705f03bd12C83d775c58ab1",
+      provider: RinkebyProvider,
+      network_id: 4,
+      gas: 10000000,
+      gasPrice: 25000000000,
+    },
   },
 
   compilers: {
@@ -33,4 +39,10 @@ module.exports = {
       // }
     },
   },
+
+  plugins: ["truffle-plugin-verify"],
+
+  // api_keys: {
+  //   etherscan: apiKey,
+  // },
 };

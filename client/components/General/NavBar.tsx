@@ -156,9 +156,23 @@ const NavComponent = () => {
       <ElevationScroll>
         <AppBar sx={{ position: "fixed", color: "white", backgroundColor: "rgb(0,0,0,1.3)" }}>
           <Toolbar>
-            <Typography variant="h6" noWrap component="div" sx={{ display: { xs: "none", sm: "block" } }}>
-              TicketStock
-            </Typography>
+            <Button
+              onClick={() => (window.location.href = "/")}
+              variant="text"
+              sx={{ color: "white", backgroundColor: "rgb(0,0,0,1.3)" }}>
+              <Typography
+                variant="h6"
+                noWrap
+                sx={{
+                  display: { xs: "none", sm: "block" },
+                  color: "white",
+                  backgroundColor: "rgb(0,0,0,1.3)",
+                  textTransform: "none",
+                }}>
+                TicketStock
+              </Typography>
+            </Button>
+
             <Search>
               <SearchIconWrapper>
                 <SearchIcon />

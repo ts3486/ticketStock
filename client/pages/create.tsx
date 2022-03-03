@@ -58,11 +58,12 @@ const CreateEvent = () => {
   }, []);
 
   const submit = () => {
+    console.log(event, ticket);
+
     //Pin file and metadata to pinata => then mint ticket using image/metadata URI from pinata.
     pinFileToIPFS(ticketFile, ticket).then((response: any) => {
       setTicket({ ...ticket, ["cid"]: response.data.IpfsHash.replace(/\"/g, "") });
     });
-    console.log(ticket);
     mintTicket(account, ticket.name);
 
     //POST to MySQL DB:

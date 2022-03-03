@@ -5,14 +5,6 @@ import { GET_UTICKETS } from "../../gql/queries";
 import { Box, Card, Container, Typography } from "@mui/material";
 import profileStyles from "../../styles/Profile.module.css";
 
-interface Ticket {
-  id: number;
-  name: string;
-  image: string;
-  price: number;
-  date: Date;
-}
-
 const TicketList: React.FC<any> = ({ tickets }: any) => {
   return (
     <Box

@@ -1,17 +1,12 @@
 import React from "react";
-import { Card, CardActionArea, CardActions, CardContent, CardMedia, Button, Typography, Link } from "@mui/material";
-import indexStyles from "../../styles/Index.module.css";
+import { Card, CardActionArea, CardContent, CardMedia, Typography } from "@mui/material";
+import { Event } from "../../types/types";
 
-interface Event {
-  event: {
-    id: string;
-    name: string;
-    image: string;
-    description: string;
-  };
+interface Props {
+  event: Event;
 }
 
-const EventItem: React.FC<Event> = (props: Event) => {
+const EventCard: React.FC<Props> = (props: Props) => {
   return (
     <Card sx={{ borderRadius: 2, height: "65%", width: "28%", margin: 2 }}>
       <CardActionArea href={`/event/${props.event.id}`}>
@@ -25,7 +20,7 @@ const EventItem: React.FC<Event> = (props: Event) => {
             {props.event.name}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            {props.event.description}
+            {props.event.desc}
           </Typography>
         </CardContent>
       </CardActionArea>
@@ -33,4 +28,4 @@ const EventItem: React.FC<Event> = (props: Event) => {
   );
 };
 
-export default EventItem;
+export default EventCard;

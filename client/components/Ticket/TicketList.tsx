@@ -1,11 +1,9 @@
-import React, { useState } from "react";
-import { client } from "../../apollo";
+import React from "react";
 import TicketItem from "../../components/Ticket/TicketItem";
-import { GET_UTICKETS } from "../../gql/queries";
-import { Box, Card, Container, Typography } from "@mui/material";
-import profileStyles from "../../styles/Profile.module.css";
+import { Box, Container } from "@mui/material";
+import { Ticket } from "../../types/types";
 
-const TicketList: React.FC<any> = ({ tickets }: any) => {
+const TicketList: React.FC<Ticket[]> = (tickets: Ticket[]) => {
   return (
     <Box
       sx={{
@@ -17,7 +15,7 @@ const TicketList: React.FC<any> = ({ tickets }: any) => {
       }}>
       <Container sx={{ marginTop: "2%" }}>
         <Box sx={{ display: "flex", flexWrap: "wrap" }}>
-          {tickets.map((ticket: any) => {
+          {tickets.map((ticket) => {
             return <TicketItem ticket={ticket} key={ticket.id} />;
           })}
         </Box>

@@ -11,10 +11,10 @@ import {
   Select,
   MenuItem,
 } from "@mui/material";
-import { pinFileToIPFS } from "../../functions/pinata/pinFile";
+import { EventInput } from "../../types/types";
 
 interface Props {
-  eventData: (event: { name: string; category: string; image: string; desc: string; date: Date }) => void;
+  eventData: (event: EventInput) => void;
   eventFile: (file: File) => void;
   page: (page: number) => void;
 }

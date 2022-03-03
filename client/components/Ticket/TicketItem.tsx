@@ -1,8 +1,12 @@
 import React from "react";
-import { Card, CardMedia, Typography, Container } from "@mui/material";
-import ticketStyles from "../../styles/Ticket.module.css";
+import { Card, CardMedia, Typography} from "@mui/material";
+import { Ticket } from "../../types/types";
 
-const TicketItem: React.FC<any> = ({ ticket }) => {
+interface Props {
+  ticket: Ticket
+}
+
+const TicketItem: React.FC<Props> = (props: Props) => {
   return (
     <Card
       sx={{

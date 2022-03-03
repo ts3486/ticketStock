@@ -13,14 +13,6 @@ import {
 } from "@mui/material";
 import { PinDropSharp } from "@material-ui/icons";
 
-interface Event {
-  event: {
-    title: string;
-    image: string;
-    description: string;
-  };
-}
-
 const CreatedDialog: React.FC<any> = (username: string) => {
   const [open, setOpen] = useState(false);
 

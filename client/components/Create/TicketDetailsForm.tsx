@@ -4,10 +4,10 @@ import { TextField } from "@mui/material";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DatePicker from "@mui/lab/DatePicker";
-import formStyles from "../../styles/Create.module.css";
+import { TicketInput } from "../../types/types";
 
 interface Props {
-  ticketData: (ticket: { name: string; cid: string; date: Date; price: number }) => void;
+  ticketData: (ticket: TicketInput) => void;
   ticketFile: (file: File) => void;
   page: (page: number) => void;
 }

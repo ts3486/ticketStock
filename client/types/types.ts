@@ -1,10 +1,10 @@
 export interface Event {
-  id: string;
+  id: number;
   category: string;
   name: string;
   image: string;
-  description: string;
-  ticketId: number;
+  desc: string;
+  ticketId?: number;
 }
 
 export interface EventInput {
@@ -15,7 +15,7 @@ export interface EventInput {
   date: Date;
 }
 
-interface Ticket {
+export interface Ticket {
   id: number;
   name: string;
   image: string;

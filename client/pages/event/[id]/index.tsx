@@ -6,18 +6,8 @@ import { ALL_EVENTS } from "../../../gql/queries";
 import { client } from "../../../apollo";
 import { gql } from "@apollo/client";
 import BuyTicket from "../../../components/Transaction/BuyTicket";
+import { Event } from "../../../types/types";
 import eventStyles from "../../../styles/event.module.css";
-
-interface Event {
-  event: {
-    id: string;
-    category: string;
-    name: string;
-    image: string;
-    description: string;
-    ticketId: number;
-  };
-}
 
 const EventPage = ({ event, ticket }: any) => {
   const [imageURL, setURL] = useState("");
@@ -101,7 +91,7 @@ export const getStaticPaths = async () => {
 
   const events = data.allEvents;
 
-  const paths = events.map((event: Event["event"]) => ({
+  const paths = events.map((event: Event) => ({
     params: { id: event.id.toString() },
   }));
 

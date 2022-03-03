@@ -1,4 +1,16 @@
+//Bugs
+
 - connection not open on send();
 
-
 - reason could not pin file to ipfs: Was using axios in backend XD. Axios is a client side method. 
+
+-
+
+
+
+//Notes
+
+
+- React.FC 
+-enables usage of generics (React.FC<type>), which type the input of the functional component. 
+-sets children (which is what the component encloses) to React.Node (React.Node accepts strings, html elements, and the general things.)

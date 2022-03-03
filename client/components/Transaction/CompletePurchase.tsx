@@ -11,15 +11,6 @@ import {
   Button,
   Typography,
 } from "@mui/material";
-import { PinDropSharp } from "@material-ui/icons";
-
-interface Event {
-  event: {
-    title: string;
-    image: string;
-    description: string;
-  };
-}
 
 const Transaction: React.FC<any> = (props: any) => {
   const [open, setOpen] = useState(false);

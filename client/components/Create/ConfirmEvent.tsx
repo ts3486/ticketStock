@@ -1,24 +1,7 @@
-import React, { useState } from "react";
-import { Box, Card, Button, Input, Typography, CardMedia } from "@mui/material";
-import { TextField } from "@mui/material";
-import AdapterDateFns from "@mui/lab/AdapterDateFns";
-import LocalizationProvider from "@mui/lab/LocalizationProvider";
-import DatePicker from "@mui/lab/DatePicker";
-import formStyles from "../../styles/Create.module.css";
+import React from "react";
+import { Card, Button, Typography, CardMedia } from "@mui/material";
 
-interface EventInput {
-  name: string;
-  image: string;
-  desc: string;
-  date: Date;
-}
-
-interface TicketInput {
-  name: string;
-  cid?: string;
-  price: number;
-  date: Date;
-}
+import { EventInput, TicketInput } from "../../types/types";
 
 interface Props {
   event: EventInput;

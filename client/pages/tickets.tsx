@@ -10,10 +10,20 @@ const Tickets: React.FC<any> = ({ _tickets }: any) => {
   useEffect(() => {}, [_tickets]);
 
   return (
-    <Container>
+    <Container sx={{ margin: "10%", display: "flex", flexDirection: "column", justifyContent: "center" }}>
       <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
-        <Typography>TICKET MARKET</Typography>
-        <Box>{_tickets && _tickets.map((ticket: any) => <TicketItem ticket={ticket} key={ticket.id} />)}</Box>
+        <Typography sx={{ textAlign: "center" }} variant="h2">
+          TICKET MARKET
+        </Typography>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            flexWrap: "wrap",
+            marginTop: "3%",
+          }}>
+          {_tickets && _tickets.map((ticket: any) => <TicketItem ticket={ticket} key={ticket.id} />)}
+        </Box>
       </Box>
     </Container>
   );

@@ -1,7 +1,17 @@
 import React, { useState } from "react";
 import app from "../../../firebase";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
-import { Card, CardActionArea, CardActions, CardContent, CardMedia, Button, Typography, Box } from "@mui/material";
+import {
+  Container,
+  Card,
+  CardActionArea,
+  CardActions,
+  CardContent,
+  CardMedia,
+  Button,
+  Typography,
+  Box,
+} from "@mui/material";
 import { ALL_EVENTS } from "../../../gql/queries";
 import { client } from "../../../apollo";
 import { gql } from "@apollo/client";
@@ -44,7 +54,7 @@ const EventPage = ({ event, ticket }: any) => {
   //   });
 
   return (
-    <div className={eventStyles.eventContainer}>
+    <Container sx={{ margin: "10%" }}>
       <Card sx={{ display: "flex", flexDirection: "column", marginBottom: 5 }}>
         {/* <CardMedia image={event[3]} title="Contemplative Reptile" /> */}
         <CardMedia image="/event.jpg" title="Contemplative Reptile" sx={{ height: 500, width: "100%" }} />
@@ -79,7 +89,7 @@ const EventPage = ({ event, ticket }: any) => {
           Socials:
         </Typography>
       </Box>
-    </div>
+    </Container>
   );
 };
 

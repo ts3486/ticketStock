@@ -15,7 +15,7 @@ const EventList: React.FC<any> = ({ _events }: any) => {
   useEffect(() => {}, [_events]);
 
   return (
-    <Box sx={{ width: "100%", display: "flex", flexWrap: "wrap" }}>
+    <Box sx={{ width: "100%", display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
       {_events &&
         _events.map((event: Event) => (
           <EventCard

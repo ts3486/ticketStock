@@ -77,24 +77,3 @@
   height: 250px;
   width: 30%;
 }
-
-.topPicksContainer {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.topPicksContainer {
-  margin-left: 8%;
-  margin-right: 8%;
-  margin-top: 5%;
-  margin-bottom: 10%;
-}
-
-.cardsContainer {
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
-  height: 300px;
-  margin-top: 1%;
-}

@@ -19,38 +19,25 @@ const Footer: React.FC = () => {
   const [value, setValue] = React.useState(0);
 
   return (
-    <Box className={indexStyles.topPicksContainer}>
-      <Typography
-        sx={{
-          fontSize: 30,
-          fontWeight: 100,
-          textAlign: "left",
-          marginBottom: 3,
-          display: "flex",
-          alignItems: "center",
-        }}>
-        Top Picks <LocalFireDepartmentIcon sx={{ fontSize: 40, marginLeft: 1 }} />
-      </Typography>
-      <div className={indexStyles.cardsContainer}>
-        <Card className={indexStyles.eventCard}>
-          <CardMedia image="./fire.jpeg" sx={{ height: 300, width: 400 }} />
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="h2"></Typography>
-          </CardContent>
-        </Card>
-        <Card className={indexStyles.eventCard}>
-          <CardMedia image="./fire.jpeg" sx={{ height: 300, width: 400 }} />
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="h2"></Typography>
-          </CardContent>
-        </Card>
-        <Card className={indexStyles.eventCard}>
-          <CardMedia image="./fire.jpeg" sx={{ height: 300, width: 400 }} />
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="h2"></Typography>
-          </CardContent>
-        </Card>
-      </div>
+    <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+      <Card sx={{ height: 400, width: 350 }}>
+        <CardMedia image="./fire.jpeg" sx={{ height: 300, width: 350 }} />
+        <CardContent>
+          <Typography gutterBottom variant="h5" component="h2"></Typography>
+        </CardContent>
+      </Card>
+      <Card sx={{ height: 400, width: 350 }}>
+        <CardMedia image="./fire.jpeg" sx={{ height: 300, width: 350 }} />
+        <CardContent>
+          <Typography gutterBottom variant="h5" component="h2"></Typography>
+        </CardContent>
+      </Card>
+      <Card sx={{ height: 400, width: 350 }}>
+        <CardMedia image="./fire.jpeg" sx={{ height: 300, width: 350 }} />
+        <CardContent>
+          <Typography gutterBottom variant="h5" component="h2"></Typography>
+        </CardContent>
+      </Card>
     </Box>
   );
 };

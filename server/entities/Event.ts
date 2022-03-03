@@ -10,6 +10,10 @@ export class Event extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Field({ nullable: true })
+  @Column("text")
+  category: string;
+
   @Field()
   @Column("text")
   name: string;
@@ -47,6 +51,9 @@ export class Event extends BaseEntity {
 export class EventInput implements Partial<Event> {
   @Field()
   name: string;
+
+  @Field()
+  category?: string;
 
   @Field()
   image: string;

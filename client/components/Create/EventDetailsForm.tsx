@@ -8,25 +8,27 @@ import {
   Card,
   Container,
   Typography,
-  CardMedia,
+  Select,
+  MenuItem,
 } from "@mui/material";
 import { pinFileToIPFS } from "../../functions/pinata/pinFile";
 
 interface Props {
-  eventData: (event: { name: string; image: string; desc: string; date: Date }) => void;
+  eventData: (event: { name: string; category: string; image: string; desc: string; date: Date }) => void;
   eventFile: (file: File) => void;
   page: (page: number) => void;
 }
 
 const EventDetailsForm: React.FC<Props> = (props) => {
   const [name, setName] = useState("");
+  const [category, setCategory] = useState("");
   const [image, setImage] = useState("");
   const [desc, setDesc] = useState("");
   const [date, setDate] = useState<Date>(new Date("2021-11-18T21:11:54"));
   const [file, setFile] = useState<File>({} as File);
 
   const onSet = (e: any) => {
-    const event = { name, image, desc, date };
+    const event = { name, category, image, desc, date };
 
     props.eventData(event);
     props.eventFile(file);
@@ -50,6 +52,23 @@ const EventDetailsForm: React.FC<Props> = (props) => {
           <InputLabel htmlFor="name">Event name </InputLabel>
           <Input id="name" aria-describedby="name" onChange={(e) => setName(e.target.value)} />
           <FormHelperText id="name"></FormHelperText>
+        </FormControl>
+
+        <FormControl fullWidth>
+          <InputLabel id="demo-simple-select-label">Category</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={category}
+            label="Age"
+            onChange={(e: any) => setCategory(e?.target.value)}>
+            <MenuItem value={"culture"}>Culture</MenuItem>
+            <MenuItem value={"creative"}>Creative</MenuItem>
+            <MenuItem value={"exercise"}>Exercise</MenuItem>
+            <MenuItem value={"exercise"}>Career</MenuItem>
+            <MenuItem value={"exercise"}>Tech</MenuItem>
+            <MenuItem value={"exercise"}>Performance</MenuItem>
+          </Select>
         </FormControl>
 
         <FormControl margin="normal">

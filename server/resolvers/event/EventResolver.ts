@@ -71,6 +71,7 @@ export class EventResolver {
 
       await getRepository(Event).insert({
         name: event.name,
+        category: event.category,
         image: event.image,
         desc: event.desc,
         userId: parseInt(payload!.userId),

@@ -13,6 +13,7 @@ import CreatedDialog from "../components/Create/CreatedDialog";
 
 interface EventInput {
   name: string;
+  category: string;
   image: string;
   desc: string;
   date: Date;

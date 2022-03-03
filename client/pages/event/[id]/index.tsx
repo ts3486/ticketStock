@@ -11,6 +11,7 @@ import eventStyles from "../../../styles/event.module.css";
 interface Event {
   event: {
     id: string;
+    category: string;
     name: string;
     image: string;
     description: string;

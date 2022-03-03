@@ -1,5 +1,6 @@
 input EventInput {
   name: string
+  category: string
   image: string
   desc: string
   date: DateTime

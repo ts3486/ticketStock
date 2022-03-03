@@ -20,6 +20,7 @@ export type Scalars = {
 export type Event = {
   __typename?: 'Event';
   id: Scalars['Int'];
+  category?: Maybe<Scalars['String']>;
   name: Scalars['String'];
   image: Scalars['String'];
   desc: Scalars['String'];
@@ -32,6 +33,7 @@ export type Event = {
 
 export type EventInput = {
   name: Scalars['String'];
+  category: Scalars['String'];
   image: Scalars['String'];
   desc: Scalars['String'];
   date?: InputMaybe<Scalars['DateTime']>;
@@ -125,7 +127,7 @@ export type Ticket = {
   __typename?: 'Ticket';
   id: Scalars['Int'];
   name: Scalars['String'];
-  cid: Scalars['String'];
+  cid?: Maybe<Scalars['String']>;
   price: Scalars['Int'];
   date?: Maybe<Scalars['DateTime']>;
   userId: Scalars['Int'];

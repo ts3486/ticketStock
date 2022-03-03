@@ -51,7 +51,7 @@ const Header: React.FC = () => {
           ) : null}
         </div>
       </div>
-      <div className={indexStyles.arrowDown} />
+      {/* <div className={indexStyles.arrowDown} /> */}
     </div>
   );
 };

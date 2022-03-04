@@ -1,15 +1,20 @@
 import React, { useEffect } from "react";
 import { client } from "../apollo";
-import { ALL_EVENTS, GET_USER } from "../gql/queries";
+import { ALL_EVENTS } from "../gql/queries";
 import { Box, Container, Typography } from "@mui/material";
 import Header from "../components/General/Header";
 import EventList from "../components/Event/EventList";
 import Filters from "../components/Event/Filters";
 import TopPicks from "../components/Event/TopPicks";
 import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
+import { Event } from "../types/types";
 
-const Index: React.FC = ({ _events }: any) => {
-  useEffect(() => {}, [_events]);
+interface Props {
+  _events: Event[];
+}
+
+const Index: React.FC<Props> = ({ _events }) => {
+  useEffect(() => {});
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center", marginBottom: "10%" }}>
@@ -25,7 +30,7 @@ const Index: React.FC = ({ _events }: any) => {
             display: "flex",
             justifyContent: "center",
           }}>
-          <EventList _events={_events} />
+          <EventList events={_events} />
         </Box>
 
         <Typography

@@ -3,12 +3,16 @@ import { Box } from "@mui/material";
 import EventCard from "./EventItem";
 import { Event } from "../../types/types";
 
-const EventList: React.FC<Event[]> = (_events: Event[]) => {
+interface Props {
+  events: Event[];
+}
+
+const EventList: React.FC<Props> = ({ events }) => {
   useEffect(() => {});
 
   return (
     <Box sx={{ width: "100%", display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
-      {_events && _events.map((event) => <EventCard event={event} />)}
+      {events && events.map((event: Event) => <EventCard event={event} />)}
     </Box>
   );
 };

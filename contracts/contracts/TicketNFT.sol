@@ -20,7 +20,7 @@ contract TicketNFT is ERC721Enumerable, Ownable {
   //baseURI is the location URL of the user (document containing the node).
   string baseURI;
   string public baseExtension = ".json";
-  uint256 public cost = 0.1 ether;
+  uint256 public cost = 0.0001 ether;
   uint256 public maxSupply = 20;
 
   mapping(uint256 => string) public tokenURIs;

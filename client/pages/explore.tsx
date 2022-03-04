@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { client } from "../apollo";
-import EventList from "../components/Event/EventList";
+import VerticalEventList from "../components/Event/VerticalEventList";
 import TicketList from "../components/Ticket/TicketList";
-import { Box, Container, Typography } from "@mui/material";
+import { Button, Box, Container, Typography } from "@mui/material";
 import { GET_EVENTS, GET_TICKETS } from "../gql/queries";
 
 const Explore: React.FC<any> = ({ _events, _tickets }: any) => {
@@ -13,9 +13,23 @@ const Explore: React.FC<any> = ({ _events, _tickets }: any) => {
   return (
     <Container sx={{ margin: "10%", display: "flex", flexDirection: "column", justifyContent: "center" }}>
       <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
-        <Typography sx={{ textAlign: "center" }} variant="h2">
+        <Typography sx={{ textAlign: "center", marginBottom: "3%" }} variant="h2">
           Explore
         </Typography>
+
+        <Button
+          variant="contained"
+          sx={{ width: "10%", justifyContent: "center" }}
+          onClick={() => {
+            if (display == false) {
+              setDisplay(true);
+            }
+            if (display == true) {
+              setDisplay(false);
+            }
+          }}>
+          {display ? "Events" : "Tickets"}
+        </Button>
 
         {display ? (
           <Box
@@ -23,19 +37,21 @@ const Explore: React.FC<any> = ({ _events, _tickets }: any) => {
               display: "flex",
               justifyContent: "center",
               flexWrap: "wrap",
-              marginTop: "3%",
+              maxHeight: 1020,
+              overflow: "hidden",
             }}>
-            <EventList events={_events} />
+            <TicketList tickets={_tickets} />
           </Box>
         ) : (
           <Box
             sx={{
               display: "flex",
+              flexDirection: "column",
               justifyContent: "center",
-              flexWrap: "wrap",
-              marginTop: "3%",
+              maxHeight: 1020,
+              overflow: "hidden",
             }}>
-            <TicketList tickets={_tickets} />
+            <VerticalEventList events={_events} />
           </Box>
         )}
       </Box>

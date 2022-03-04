@@ -34,7 +34,7 @@ export const transferTicket = async (buyer: string, ticketCid: string) => {
       to: contract,
       value: baseCost,
       gas: 10000000,
-      gasPrice: 100000,
+      gasPrice: 5000000,
       data: contract.methods._transferFrom(seller, buyer, tokenId).encodeABI(),
     },
     privateKey

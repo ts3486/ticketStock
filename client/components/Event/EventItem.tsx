@@ -8,7 +8,7 @@ interface Props {
 
 const EventCard: React.FC<Props> = (props: Props) => {
   return (
-    <Card sx={{ borderRadius: 2, height: "65%", width: "28%", margin: 2 }}>
+    <Card sx={{ borderRadius: 2, height: 310, width: "28%", margin: 2 }}>
       <CardActionArea href={`/event/${props.event.id}`}>
         {/* <CardMedia image={props.event.image} /> */}
         <CardMedia sx={{ height: 200 }} image="/event.jpg" />

@@ -1,5 +1,6 @@
 import { gql } from "@apollo/client";
 
+//USER
 export const ALL_USERS = gql`
   {
     users {
@@ -10,7 +11,18 @@ export const ALL_USERS = gql`
   }
 `;
 
-export const ALL_EVENTS = gql`
+export const GET_USER = gql`
+  {
+    getUser(username: $username) {
+      id
+      username
+      email
+    }
+  }
+`;
+
+//EVENTS
+export const GET_EVENTS = gql`
   {
     allEvents {
       id
@@ -32,6 +44,7 @@ export const GET_EVENT = gql`
   }
 `;
 
+//TICKETS
 export const GET_TICKETS = gql`
   {
     allTickets {
@@ -52,16 +65,6 @@ export const GET_TICKET = gql`
       cid
       price
       date
-    }
-  }
-`;
-
-export const GET_USER = gql`
-  {
-    getUser(username: $username) {
-      id
-      username
-      email
     }
   }
 `;

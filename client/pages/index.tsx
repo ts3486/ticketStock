@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { client } from "../apollo";
-import { ALL_EVENTS } from "../gql/queries";
-import { Box, Container, Typography } from "@mui/material";
+import { GET_EVENTS } from "../gql/queries";
+import { Button, Box, Container, Typography } from "@mui/material";
 import Header from "../components/General/Header";
 import EventList from "../components/Event/EventList";
 import Filters from "../components/Event/Filters";
@@ -19,33 +19,43 @@ const Index: React.FC<Props> = ({ _events }) => {
   return (
     <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center", marginBottom: "10%" }}>
       <Header />
-      <Container>
-        <Typography sx={{ width: "100%", textAlign: "left", fontSize: 30 }}>Events&Ticket</Typography>
-        <Filters />
-        <Box
-          sx={{
-            maxHeight: 500,
-            overflow: "auto",
-            flexWrap: "nowrap",
-            display: "flex",
-            justifyContent: "center",
-          }}>
-          <EventList events={_events} />
+      <Container sx={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
+        <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
+          <Typography sx={{ width: "100%", textAlign: "left", fontSize: 30 }}>Events</Typography>
+          <Filters />
+          <Box
+            sx={{
+              maxHeight: 700,
+              overflow: "hidden",
+              flexWrap: "nowrap",
+              display: "flex",
+              flexDirection: "column",
+            }}>
+            <EventList events={_events} />
+          </Box>
+          <Button
+            onClick={() => (window.location.href = "/explore")}
+            sx={{ width: "10%", borderRadius: 30, backgroundColor: "primary" }}
+            variant="contained">
+            See More
+          </Button>
         </Box>
 
-        <Typography
-          sx={{
-            fontSize: 30,
-            fontWeight: 100,
-            textAlign: "left",
-            marginTop: 10,
-            marginBottom: 5,
-            display: "flex",
-            alignItems: "center",
-          }}>
-          Top Picks <LocalFireDepartmentIcon sx={{ fontSize: 40, marginLeft: 1 }} />
-        </Typography>
-        <TopPicks />
+        <Box>
+          <Typography
+            sx={{
+              fontSize: 30,
+              fontWeight: 100,
+              textAlign: "left",
+              marginTop: 10,
+              marginBottom: 5,
+              display: "flex",
+              alignItems: "center",
+            }}>
+            Top Picks <LocalFireDepartmentIcon sx={{ fontSize: 40, marginLeft: 1 }} />
+          </Typography>
+          <TopPicks />
+        </Box>
       </Container>
     </Box>
   );
@@ -55,7 +65,7 @@ export default Index;
 
 export const getStaticProps = async () => {
   const { error: eventError, data: eventData } = await client.query({
-    query: ALL_EVENTS,
+    query: GET_EVENTS,
     errorPolicy: "all",
   });
 

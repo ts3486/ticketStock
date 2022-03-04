@@ -12,7 +12,7 @@ const EventList: React.FC<Props> = ({ events }) => {
 
   return (
     <Box sx={{ width: "100%", display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
-      {events && events.map((event: Event) => <EventCard event={event} />)}
+      {events && events.map((event: Event) => <EventCard event={event} key={event.id} />)}
     </Box>
   );
 };

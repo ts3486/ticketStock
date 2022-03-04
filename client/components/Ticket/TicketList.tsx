@@ -3,7 +3,11 @@ import TicketItem from "../../components/Ticket/TicketItem";
 import { Box, Container } from "@mui/material";
 import { Ticket } from "../../types/types";
 
-const TicketList: React.FC<Ticket[]> = (tickets: Ticket[]) => {
+interface Props {
+  tickets: Ticket[];
+}
+
+const TicketList: React.FC<Props> = ({ tickets }) => {
   return (
     <Box
       sx={{

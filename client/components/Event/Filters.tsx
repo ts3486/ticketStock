@@ -49,9 +49,9 @@ const Filter = () => {
             value={age}
             label="Age"
             onChange={handleChange}>
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
+            <MenuItem value={10}>Tokyo</MenuItem>
+            <MenuItem value={20}>Manhattan</MenuItem>
+            <MenuItem value={30}>Berlin</MenuItem>
           </Select>
         </FormControl>
         <FormControl
@@ -73,9 +73,9 @@ const Filter = () => {
             label="Age"
             onChange={handleChange}
             sx={{ borderRadius: 20, textAlign: "center" }}>
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
+            <MenuItem value={10}>Today</MenuItem>
+            <MenuItem value={20}>This week</MenuItem>
+            <MenuItem value={30}>This month</MenuItem>
           </Select>
         </FormControl>
         <FormControl
@@ -93,9 +93,9 @@ const Filter = () => {
             label="Age"
             onChange={handleChange}
             sx={{ borderRadius: 20 }}>
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
+            <MenuItem value={10}>10km</MenuItem>
+            <MenuItem value={20}>20km</MenuItem>
+            <MenuItem value={30}>30km</MenuItem>
           </Select>
         </FormControl>
         <FormControl
@@ -113,9 +113,9 @@ const Filter = () => {
             label="Age"
             onChange={handleChange}
             sx={{ borderRadius: 20 }}>
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
+            <MenuItem value={10}>Performance</MenuItem>
+            <MenuItem value={20}>Tech</MenuItem>
+            <MenuItem value={30}>Creative</MenuItem>
           </Select>
         </FormControl>
       </Container>

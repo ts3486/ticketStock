@@ -65,9 +65,9 @@ const EventDetailsForm: React.FC<Props> = (props) => {
             <MenuItem value={"culture"}>Culture</MenuItem>
             <MenuItem value={"creative"}>Creative</MenuItem>
             <MenuItem value={"exercise"}>Exercise</MenuItem>
-            <MenuItem value={"exercise"}>Career</MenuItem>
-            <MenuItem value={"exercise"}>Tech</MenuItem>
-            <MenuItem value={"exercise"}>Performance</MenuItem>
+            <MenuItem value={"career"}>Career</MenuItem>
+            <MenuItem value={"tech"}>Tech</MenuItem>
+            <MenuItem value={"performance"}>Performance</MenuItem>
           </Select>
         </FormControl>
 

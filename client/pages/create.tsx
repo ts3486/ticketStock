@@ -10,26 +10,7 @@ import EventDetailsForm from "../components/Create/EventDetailsForm";
 import TicketDetailsForm from "../components/Create/TicketDetailsForm";
 import ConfirmEvent from "../components/Create/ConfirmEvent";
 import CreatedDialog from "../components/Create/CreatedDialog";
-
-interface EventInput {
-  name: string;
-  category: string;
-  image: string;
-  desc: string;
-  date: Date;
-}
-interface TicketInput {
-  name: string;
-  cid: string;
-  price: number;
-  date: Date;
-}
-
-interface User {
-  id: string;
-  username: string;
-  email: string;
-}
+import { EventInput, TicketInput, User } from "../types/types";
 
 const CreateEvent = () => {
   const [event, setEvent] = useState<EventInput>({} as EventInput);
@@ -54,8 +35,8 @@ const CreateEvent = () => {
       setAccount(currentAccount);
     });
 
-    console.log("metamask account: " + account);
-  }, []);
+    console.log(account);
+  }, [account]);
 
   const submit = () => {
     console.log(event, ticket);

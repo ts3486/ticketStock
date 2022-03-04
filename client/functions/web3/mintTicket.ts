@@ -22,9 +22,10 @@ export const mintTicket = async (account: string, ticketURI: string) => {
     {
       from: account,
       nonce: nonce,
-      to: "0x1EB590B195F9463b19C612BaA6b947622434DdF3",
+      to: contract._address,
       value: baseCost,
-      gas: 100000,
+      gas: 500000,
+      gasPrice: 250000,
       data: contract.methods.mintTicket(ticketURI).encodeABI(),
     },
     privateKey

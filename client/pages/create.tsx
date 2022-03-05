@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useAddEventMutation, useMeQuery } from "../generated/graphql";
-import { client } from "../apollo";
-import { gql } from "@apollo/client";
 import getWeb3 from "../functions/web3/getWeb3";
+import detectEthereumProvider from "@metamask/detect-provider";
 import { pinFileToIPFS } from "../functions/pinata/pinFile";
 import { mintTicket } from "../functions/web3/mintTicket";
 import { Button, Box, Dialog } from "@mui/material";
@@ -17,10 +16,10 @@ const CreateEvent = () => {
   const [eventFile, setEventFile] = useState<File>({} as File);
   const [ticket, setTicket] = useState<TicketInput>({} as TicketInput);
   const [ticketFile, setTicketFile] = useState<File>({} as File);
+  const [tokenId, setId] = useState(0);
   const [open, setOpen] = useState(false);
   const [progress, setProgress] = useState(0);
   const [currentPage, setPage] = useState(1);
-  const [account, setAccount] = useState("");
   const [addEvent] = useAddEventMutation();
 
   //current user
@@ -31,37 +30,44 @@ const CreateEvent = () => {
     // authRedirect();  Want to redirect to login page if no login token.
 
     //getWeb3 account
-    getWeb3().then((currentAccount: string) => {
-      setAccount(currentAccount);
-    });
-
-    console.log(account);
-  }, [account]);
+    getWeb3();
+  }, []);
 
   const submit = () => {
-    console.log(event, ticket);
+    const metamaskAccount = window.localStorage.getItem("metamaskAccount");
 
-    //Pin file and metadata to pinata => then mint ticket using image/metadata URI from pinata.
-    pinFileToIPFS(ticketFile, ticket).then((response: any) => {
-      setTicket({ ...ticket, ["cid"]: response.data.IpfsHash.replace(/\"/g, "") });
-    });
-    mintTicket(account, ticket.name);
+    if (metamaskAccount != null) {
+      console.log(event, ticket);
 
-    //POST to MySQL DB:
-    addEvent({
-      variables: {
-        event: event,
-        ticket: ticket,
-      },
-    });
+      //Pin file and metadata to pinata => then mint ticket using image/metadata URI from pinata.
+      pinFileToIPFS(ticketFile, ticket).then((response: any) => {
+        setTicket({ ...ticket, ["cid"]: response.data.IpfsHash.replace(/\"/g, "") });
+      });
+      mintTicket(metamaskAccount, ticket.name).then((tokenId) => {
+        setId(tokenId);
+        console.log("ticket tokenID: " + tokenId);
+        setTicket({ ...ticket, tokenId: tokenId });
+      });
 
-    //Send file to firebase storage bucket
-    // uploadFile(file);
-    // uploadFile(ticketFile);
+      //POST to MySQL DB:
+      addEvent({
+        variables: {
+          event: event,
+          ticket: ticket,
+        },
+      });
 
-    setOpen(true);
+      //Send file to firebase storage bucket
+      // uploadFile(file);
+      // uploadFile(ticketFile);
 
-    return true;
+      setOpen(true);
+
+      return true;
+    } else {
+      console.log("no metamask account. Creation failed");
+      return false;
+    }
   };
 
   const displayPage = () => {

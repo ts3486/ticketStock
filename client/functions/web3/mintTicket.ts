@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { ethers } from "ethers";
 import detectEthereumProvider from "@metamask/detect-provider";
+const { mnemonic, publicKey, privateKey, projectId } = require("../../secret.json");
 const Web3 = require("web3");
-const web3 = new Web3("wss://rinkeby.infura.io/ws/v3/6e725098b36246dbb0418339a439de14");
-// const web3 = new Web3("http://localhost:7545");
-const { mnemonic, publicKey, privateKey } = require("../../secret.json");
+// const web3 = new Web3(`wss://rinkeby.infura.io/ws/v3/${projectId}`);
+const web3 = new Web3("http://localhost:7545");
 const nftBuild = require("../../../build/contracts/TicketNFT.json");
-// const contract = new web3.eth.Contract(nftBuild.abi, nftBuild.networks[5777].address);
+const contract = new web3.eth.Contract(nftBuild.abi, nftBuild.networks[5777].address);
 // for rinkeby
-const contract = new web3.eth.Contract(nftBuild.abi, nftBuild.networks[4].address);
+// const contract = new web3.eth.Contract(nftBuild.abi, nftBuild.networks[4].address);
 
 export const mintTicket = async (account: string, ticketURI: string) => {
   console.log(contract);
@@ -24,8 +24,8 @@ export const mintTicket = async (account: string, ticketURI: string) => {
       nonce: nonce,
       to: contract._address,
       value: baseCost,
-      gas: 500000,
-      gasPrice: 250000,
+      gas: 300000,
+      gasPrice: 2500000,
       data: contract.methods.mintTicket(ticketURI).encodeABI(),
     },
     privateKey
@@ -50,4 +50,7 @@ export const mintTicket = async (account: string, ticketURI: string) => {
     });
 
   console.log(`Transaction successful with hash: ${createReceipt.transactionHash}`);
+
+  const tokenId = Web3.utils.hexToNumber(createReceipt.logs[0].topics[3]);
+  return tokenId;
 };

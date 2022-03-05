@@ -15,12 +15,13 @@ interface Props {
 const TicketCreateForm: React.FC<Props> = (props) => {
   const [name, setName] = useState("");
   const [cid, setCid] = useState("");
+  const [tokenId] = useState<number>(0);
   const [file, setFile] = useState<File>({} as File);
   const [date, setDate] = useState<Date>(new Date("2021-11-18T21:11:54"));
   const [price, setPrice] = useState(0);
 
   const onSet = (e: any) => {
-    const ticket = { name, cid, price, date };
+    const ticket = { name, cid, tokenId, price, date };
 
     props.ticketData(ticket);
     props.ticketFile(file);

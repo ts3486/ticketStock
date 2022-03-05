@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Box, Dialog, DialogContent, Button } from "@mui/material";
+import { Typography, Container, Box, Dialog, DialogContent, Button } from "@mui/material";
+import getWeb3 from "../../functions/web3/getWeb3";
 import ViewTicket from "./ViewTicket";
 import PurchaseDetails from "./PurchaseDetails";
 import CompletePurchase from "./CompletePurchase";
 import { useSendTicketMutation } from "../../generated/graphql";
-import getWeb3 from "../../functions/web3/getWeb3";
 import { transferTicket } from "../../functions/web3/transferTicket";
 
 const BuyTicket: React.FC<any> = ({ ticket }: any) => {
@@ -13,7 +13,10 @@ const BuyTicket: React.FC<any> = ({ ticket }: any) => {
   const [account, setAccount] = useState("");
   const [sendTicket] = useSendTicketMutation();
 
-  useEffect(() => {});
+  useEffect(() => {
+    //getWeb3 account
+    getWeb3();
+  });
 
   const handleDialog = () => {
     setOpen(false);
@@ -43,7 +46,7 @@ const BuyTicket: React.FC<any> = ({ ticket }: any) => {
             height: "100%",
           }}>
           <ViewTicket ticket={ticket} />
-          <Button variant="contained" onClick={() => setCpage(2)}>
+          <Button sx={{}} variant="contained" onClick={() => setCpage(2)}>
             Continue to purchase
           </Button>
         </Box>
@@ -82,16 +85,13 @@ const BuyTicket: React.FC<any> = ({ ticket }: any) => {
             height: "100%",
           }}>
           <CompletePurchase />
-          <Button variant="contained" onClick={() => setOpen(false)} sx={{}}>
-            Close
-          </Button>
         </Box>
       );
     }
   };
 
   return (
-    <div className="transaction">
+    <Container>
       <Button
         color="primary"
         variant="contained"
@@ -101,13 +101,15 @@ const BuyTicket: React.FC<any> = ({ ticket }: any) => {
         }}>
         Ticket
       </Button>
-      <Dialog
-        open={open}
-        sx={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
-        <DialogContent sx={{ height: 500, width: 600 }}>{page()}</DialogContent>
-        <Button variant="contained" onClick={() => setOpen(false)} />
+      <Dialog open={open} sx={{}}>
+        <Button sx={{ height: 50, width: 600, paddingRight: "5%" }} onClick={() => setOpen(false)}>
+          <Typography sx={{ width: "100%" }} align="right">
+            X
+          </Typography>
+        </Button>
+        <DialogContent sx={{}}>{page()}</DialogContent>
       </Dialog>
-    </div>
+    </Container>
   );
 };
 

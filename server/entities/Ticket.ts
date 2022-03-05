@@ -18,9 +18,9 @@ export class Ticket extends BaseEntity {
   @Field({ nullable: true })
   cid: string;
 
-  // @Column("text")
-  // @Field({ nullable: true })
-  // tokenId: string;
+  @Column()
+  @Field({ nullable: true })
+  tokenId: number;
 
   // @Column({ type: "longblob" })
   // @Field()
@@ -55,6 +55,9 @@ export class TicketInput implements Partial<Ticket> {
 
   @Field()
   cid: string;
+
+  @Field({ nullable: true })
+  tokenId: number;
 
   @Field(() => Int)
   price: number;

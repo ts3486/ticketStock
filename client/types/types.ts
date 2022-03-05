@@ -26,6 +26,7 @@ export interface Ticket {
 export interface TicketInput {
   name: string;
   cid: string;
+  tokenId: number;
   price: number;
   date: Date;
 }

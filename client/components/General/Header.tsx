@@ -20,15 +20,14 @@ const Header: React.FC = () => {
       <CardMedia image={"header1.jpg"} sx={{ height: 750, width: "100%" }}>
         <Box sx={{ paddingTop: "15%", paddingLeft: "8%" }}>
           <Typography variant="h1" sx={{ color: "white", marginBottom: "3%", width: "65%", fontWeight: 700 }}>
-            The future of ticketing is here.{" "}
+            "The future of ticketing is here."{" "}
           </Typography>
           <Button
             sx={{
-              width: "30%",
+              width: "25%",
               height: 50,
-              fontSize: "17 !important",
-              fontWeight: "bold !important",
-              backgroundColor: "#1fd1f9",
+              fontSize: 20,
+              fontWeight: 800,
               backgroundImage: "linear-gradient(315deg, #1fd1f9 0%, #b621fe 74%)",
             }}
             variant="contained"

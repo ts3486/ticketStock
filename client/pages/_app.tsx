@@ -7,6 +7,7 @@ import thunk from "redux-thunk";
 import { composeWithDevTools } from "@redux-devtools/extension";
 import authReducer from "../store/reducers/authReducer";
 import { client } from "../apollo";
+import getWeb3 from "../functions/web3/getWeb3";
 import { AppProps } from "next/dist/shared/lib/router/router";
 import { setAccessToken } from "../accessTokens";
 import { ThemeProvider } from "@mui/material";

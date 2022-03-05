@@ -12,7 +12,7 @@ import {
   Typography,
   Box,
 } from "@mui/material";
-import { ALL_EVENTS } from "../../../gql/queries";
+import { GET_EVENTS } from "../../../gql/queries";
 import { client } from "../../../apollo";
 import { gql } from "@apollo/client";
 import BuyTicket from "../../../components/Transaction/BuyTicket";
@@ -95,7 +95,7 @@ const EventPage = ({ event, ticket }: any) => {
 
 export const getStaticPaths = async () => {
   const { error, data } = await client.query({
-    query: ALL_EVENTS,
+    query: GET_EVENTS,
     errorPolicy: "all",
   });
 

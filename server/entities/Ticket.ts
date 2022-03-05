@@ -15,11 +15,11 @@ export class Ticket extends BaseEntity {
   name: string;
 
   @Column("text")
-  @Field({ nullable: true })
+  @Field()
   cid: string;
 
   @Column()
-  @Field({ nullable: true })
+  @Field()
   tokenId: number;
 
   // @Column({ type: "longblob" })
@@ -31,7 +31,7 @@ export class Ticket extends BaseEntity {
   price: number;
 
   @Column(() => Date)
-  @Field({ nullable: true })
+  @Field()
   date: Date;
 
   @ManyToOne(() => User, (user) => user.tickets)
@@ -56,13 +56,13 @@ export class TicketInput implements Partial<Ticket> {
   @Field()
   cid: string;
 
-  @Field({ nullable: true })
+  @Field()
   tokenId: number;
 
   @Field(() => Int)
   price: number;
 
-  @Field({ nullable: true })
+  @Field()
   date: Date;
 }
 

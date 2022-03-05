@@ -128,6 +128,7 @@ export type Ticket = {
   id: Scalars['Int'];
   name: Scalars['String'];
   cid?: Maybe<Scalars['String']>;
+  tokenId?: Maybe<Scalars['Float']>;
   price: Scalars['Int'];
   date?: Maybe<Scalars['DateTime']>;
   userId: Scalars['Int'];
@@ -136,6 +137,7 @@ export type Ticket = {
 export type TicketInput = {
   name: Scalars['String'];
   cid: Scalars['String'];
+  tokenId?: InputMaybe<Scalars['Float']>;
   price: Scalars['Int'];
   date?: InputMaybe<Scalars['DateTime']>;
 };

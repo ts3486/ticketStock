@@ -23,14 +23,18 @@ const BuyTicket: React.FC<any> = ({ ticket }: any) => {
   };
 
   const onPurchase = () => {
-    // sendTicket({
-    //   variables: {
-    //     id: ticket.id,
-    //   },
-    // });
+    const metamaskAccount = window.localStorage.getItem("metamaskAccount");
 
-    //mint ticket
-    transferTicket(account, ticket.cid);
+    if (metamaskAccount != null) {
+      // sendTicket({
+      //   variables: {
+      //     id: ticket.id,
+      //   },
+      // });
+
+      //mint ticket
+      transferTicket(account, ticket.tokenId);
+    }
   };
 
   console.log("ticket to purchase: " + ticket.id, typeof ticket.id);

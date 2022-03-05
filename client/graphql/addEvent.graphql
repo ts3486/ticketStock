@@ -8,6 +8,8 @@ input EventInput {
 
 input TicketInput {
   name: string
+  cid: string
+  tokenId: string
   date: DateTime
   price: number
 }

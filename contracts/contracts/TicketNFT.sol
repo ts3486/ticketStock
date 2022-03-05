@@ -21,7 +21,7 @@ contract TicketNFT is ERC721Enumerable, Ownable {
   string baseURI;
   string public baseExtension = ".json";
   uint256 public cost = 0.0001 ether;
-  uint256 public maxSupply = 20;
+  uint256 public maxSupply = 100;
 
   mapping(uint256 => string) public tokenURIs;
   mapping(string => uint256) public tokenIds;
@@ -50,7 +50,7 @@ contract TicketNFT is ERC721Enumerable, Ownable {
   // public
   function mintTicket(string memory _tokenURI) public payable {
     uint256 supply = totalSupply();
-    require(supply <= maxSupply);
+    // require(supply <= maxSupply);
 
     if (msg.sender != owner()) {
       require(msg.value >= cost);

@@ -63,7 +63,7 @@ export class EventResolver {
       const newTicket = await getRepository(Ticket).insert({
         name: ticket.name,
         cid: ticket.cid,
-        tokenId: 0,
+        tokenId: ticket.tokenId,
         price: ticket.price,
         userId: parseInt(payload!.userId),
       });

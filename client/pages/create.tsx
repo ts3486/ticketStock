@@ -16,7 +16,6 @@ const CreateEvent = () => {
   const [eventFile, setEventFile] = useState<File>({} as File);
   const [ticket, setTicket] = useState<TicketInput>({} as TicketInput);
   const [ticketFile, setTicketFile] = useState<File>({} as File);
-  const [tokenId, setId] = useState(0);
   const [open, setOpen] = useState(false);
   const [progress, setProgress] = useState(0);
   const [currentPage, setPage] = useState(1);
@@ -39,23 +38,29 @@ const CreateEvent = () => {
     if (metamaskAccount != null) {
       console.log(event, ticket);
 
-      //Pin file and metadata to pinata => then mint ticket using image/metadata URI from pinata.
-      pinFileToIPFS(ticketFile, ticket).then((response: any) => {
-        setTicket({ ...ticket, ["cid"]: response.data.IpfsHash.replace(/\"/g, "") });
-      });
-      mintTicket(metamaskAccount, ticket.name).then((tokenId) => {
-        setId(tokenId);
-        console.log("ticket tokenID: " + tokenId);
-        setTicket({ ...ticket, tokenId: tokenId });
-      });
-
-      //POST to MySQL DB:
-      addEvent({
-        variables: {
-          event: event,
-          ticket: ticket,
-        },
-      });
+      //1. Pin file and metadata to pinata => then mint ticket using image/metadata URI from pinata.
+      pinFileToIPFS(ticketFile, ticket)
+        .then((response: any) => {
+          setTicket({ ...ticket, ["cid"]: response.data.IpfsHash.replace(/\"/g, "") });
+        })
+        .then(() => {
+          //2. Mint on chain
+          mintTicket(metamaskAccount, ticket.name).then((tokenId) => {
+            console.log("ticket tokenID: " + tokenId);
+            // const input = { tokenId: tokenId };
+            setTicket({ ...ticket, ["tokenId"]: tokenId });
+            console.log(ticket);
+          });
+        })
+        .then(() => {
+          //3. POST to MySQL DB:
+          addEvent({
+            variables: {
+              event: event,
+              ticket: ticket,
+            },
+          });
+        });
 
       //Send file to firebase storage bucket
       // uploadFile(file);

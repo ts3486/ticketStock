@@ -17,7 +17,7 @@ const getWeb3 = () =>
           console.log("current account: " + account);
           provider.on("accountsChanged", (accounts: any) => {
             // Time to reload your interface with accounts[0]!
-            window.localStorage.setItem("metamaskAccount", account);
+            window.localStorage.setItem("metamaskAccount", accounts[0]);
             console.log("changed account to: " + accounts[0]);
             return resolve(account);
           });

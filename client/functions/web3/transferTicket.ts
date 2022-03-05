@@ -10,12 +10,12 @@ const contract = new web3.eth.Contract(nftBuild.abi, nftBuild.networks[5777].add
 // for rinkeby
 // const contract = new web3.eth.Contract(nftBuild.abi, nftBuild.networks[4].address);
 
-export const transferTicket = async (buyer: string, ticketCid: string) => {
-  const tokenURI = `https://gateway.pinata.cloud/ipfs/${ticketCid}`;
+export const transferTicket = async (buyer: string, tokenId: number) => {
+  // const tokenURI = `https://gateway.pinata.cloud/ipfs/${ticketCid}`;
 
-  const tokenId = await contract.methods.tokenIds(tokenURI).call();
+  // const tokenId = await contract.methods.tokenIds(tokenURI).call();
 
-  console.log(tokenURI, tokenId);
+  console.log(buyer, tokenId);
 
   const seller = await contract.methods.checkOwner(tokenId).call();
   console.log(buyer, seller);

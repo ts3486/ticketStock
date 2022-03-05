@@ -137,6 +137,7 @@ export const getStaticProps = async ({ params }: any) => {
         id,
         name,
         cid,
+        tokenId,
         price,
       }
     }

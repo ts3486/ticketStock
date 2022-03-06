@@ -20,18 +20,19 @@ export const transferTicket = async (buyer: string, tokenId: number) => {
   const seller = await contract.methods.checkOwner(tokenId).call();
   console.log(buyer, seller);
   const baseCost = await contract.methods.cost().call();
+  console.log("base cost: " + baseCost);
   const txnCount = await web3.eth.getTransactionCount(buyer);
+  console.log("txn count: " + txnCount);
   const nonce = await ethers.utils.hexlify(txnCount);
+  console.log("nonce: " + nonce);
 
   const createTransaction = await web3.eth.accounts.signTransaction(
     {
       from: buyer,
       nonce: nonce,
-      //change on new contract deployment.
-      //   0x162205217344115d92A5339A27C9795f49B5Ce17
-      to: contract,
+      to: contract._address,
       value: baseCost,
-      gas: 100000,
+      gas: 300000,
       gasPrice: 2500000,
       data: contract.methods._transferFrom(seller, buyer, tokenId).encodeABI(),
     },
@@ -56,6 +57,10 @@ export const transferTicket = async (buyer: string, tokenId: number) => {
     });
 
   console.log(`Transaction successful with hash: ${createReceipt.transactionHash}`);
+
+  const newOwner = await contract.methods.checkOwner(tokenId).call();
+
+  console.log("new owner: " + newOwner);
 
   return createReceipt;
 };

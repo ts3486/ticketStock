@@ -25,6 +25,7 @@ contract TicketNFT is ERC721Enumerable, Ownable {
 
   mapping(uint256 => string) public tokenURIs;
   mapping(string => uint256) public tokenIds;
+  mapping(address => uint256[] ) public onSaleTokens;
 
   constructor(
     string memory _name,
@@ -43,8 +44,13 @@ contract TicketNFT is ERC721Enumerable, Ownable {
       _burn(tokenId);
   }
 
-  function _transferFrom(address from, address to, uint256 tokenId) internal {
-    transferFrom(from, to, tokenId);
+  function approveSale(address owner, address buyer, uint256 tokenId ) public {
+    approve(buyer, tokenId);
+    onSaleTokens[owner].push(tokenId);
+  }
+
+  function _transferFrom(address from, address to, uint256 tokenId) public payable {
+    safeTransferFrom(from, to, tokenId);
   }
 
   // public

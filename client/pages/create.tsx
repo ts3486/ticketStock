@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useAddEventMutation, useMeQuery } from "../generated/graphql";
 import getWeb3 from "../functions/web3/getWeb3";
 import detectEthereumProvider from "@metamask/detect-provider";
@@ -16,10 +16,13 @@ const CreateEvent = () => {
   const [eventFile, setEventFile] = useState<File>({} as File);
   const [ticket, setTicket] = useState<TicketInput>({} as TicketInput);
   const [ticketFile, setTicketFile] = useState<File>({} as File);
+  const [updated, setUpdate] = useState(false);
   const [open, setOpen] = useState(false);
   const [progress, setProgress] = useState(0);
   const [currentPage, setPage] = useState(1);
   const [addEvent] = useAddEventMutation();
+
+  const updatedTicket = useRef({ ...ticket });
 
   //current user
   const { loading, error, data } = useMeQuery();
@@ -30,7 +33,20 @@ const CreateEvent = () => {
 
     //getWeb3 account
     getWeb3();
-  }, []);
+
+    if (updated) {
+      console.log(ticket);
+
+      addEvent({
+        variables: {
+          event: event,
+          ticket: ticket,
+        },
+      });
+
+      console.log("event&ticket created");
+    }
+  }, [ticket]);
 
   const submit = () => {
     const metamaskAccount = window.localStorage.getItem("metamaskAccount");
@@ -39,33 +55,22 @@ const CreateEvent = () => {
       console.log(event, ticket);
 
       //1. Pin file and metadata to pinata => then mint ticket using image/metadata URI from pinata.
-      pinFileToIPFS(ticketFile, ticket)
-        .then((response: any) => {
-          setTicket({ ...ticket, ["cid"]: response.data.IpfsHash.replace(/\"/g, "") });
-        })
-        .then(() => {
-          //2. Mint on chain
-          mintTicket(metamaskAccount, ticket.name).then((tokenId) => {
-            console.log("ticket tokenID: " + tokenId);
-            // const input = { tokenId: tokenId };
-            setTicket({ ...ticket, ["tokenId"]: tokenId });
-            console.log(ticket);
-          });
-        })
-        .then(() => {
-          //3. POST to MySQL DB:
-          addEvent({
-            variables: {
-              event: event,
-              ticket: ticket,
-            },
-          });
+      pinFileToIPFS(ticketFile, ticket).then((response: any) => {
+        //2. Mint on chain
+        mintTicket(metamaskAccount, ticket.name).then((tokenId) => {
+          console.log("ticket tokenID: " + tokenId);
+          const input = { cid: response.data.IpfsHash.replace(/\"/g, ""), tokenId: tokenId };
+          setTicket({ ...ticket, ...input });
         });
+      });
+
+      //3. POST to MySQL DB:
 
       //Send file to firebase storage bucket
       // uploadFile(file);
       // uploadFile(ticketFile);
 
+      setUpdate(true);
       setOpen(true);
 
       return true;

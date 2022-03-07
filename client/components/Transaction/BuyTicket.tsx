@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Typography, Container, Box, Dialog, DialogContent, Button } from "@mui/material";
 import getWeb3 from "../../functions/web3/getWeb3";
+import { mintTicket } from "../../functions/web3/mintTicket";
 import ViewTicket from "./ViewTicket";
 import PurchaseDetails from "./PurchaseDetails";
 import CompletePurchase from "./CompletePurchase";
@@ -33,9 +34,13 @@ const BuyTicket: React.FC<any> = ({ ticket }: any) => {
       //     id: ticket.id,
       //   },
       // });
-
       //mint ticket
-      transferTicket(metamaskAccount, ticket.tokenId);
+      // transferTicket(metamaskAccount, ticket.tokenId);
+      mintTicket(metamaskAccount, ticket.name).then((tokenId) => {
+        console.log("ticket tokenID: " + tokenId);
+        // const input = { tokenId: tokenId };
+        // setTicket({ ...ticket, ...input });
+      });
     }
   };
 

@@ -10,31 +10,23 @@ const contract = new web3.eth.Contract(nftBuild.abi, nftBuild.networks[5777].add
 // for rinkeby
 // const contract = new web3.eth.Contract(nftBuild.abi, nftBuild.networks[4].address);
 
-export const transferTicket = async (buyer: string, tokenId: number) => {
-  // const tokenURI = `https://gateway.pinata.cloud/ipfs/${ticketCid}`;
+export const mintTicket = async (account: string, ticketURI: string) => {
+  console.log(contract);
+  console.log(account, ticketURI);
 
-  // const tokenId = await contract.methods.tokenIds(tokenURI).call();
-
-  console.log(buyer, tokenId);
-
-  const seller = await contract.methods.checkOwner(tokenId).call();
-  console.log(buyer, seller);
   const baseCost = await contract.methods.cost().call();
-  console.log("base cost: " + baseCost);
-  const txnCount = await web3.eth.getTransactionCount(buyer);
-  console.log("txn count: " + txnCount);
+  const txnCount = await web3.eth.getTransactionCount(account);
   const nonce = await ethers.utils.hexlify(txnCount);
-  console.log("nonce: " + nonce);
 
   const createTransaction = await web3.eth.accounts.signTransaction(
     {
-      from: buyer,
+      from: account,
       nonce: nonce,
       to: contract._address,
       value: baseCost,
       gas: 300000,
       gasPrice: 2500000,
-      data: contract.methods._transferFrom(seller, buyer, tokenId).encodeABI(),
+      data: contract.methods.approveSale(ticketURI).encodeABI(),
     },
     privateKey
   );
@@ -43,7 +35,6 @@ export const transferTicket = async (buyer: string, tokenId: number) => {
     .sendSignedTransaction(createTransaction.rawTransaction)
     .once("sending", () => {
       console.log("sending...");
-      console.log(createTransaction);
       // setLoading(true);
       // setOpen(true);
     })
@@ -52,6 +43,7 @@ export const transferTicket = async (buyer: string, tokenId: number) => {
     })
     .on("confirmation", (confNumber: any, receipt: any, latestBlockHash: any) => {
       console.log(confNumber, receipt, latestBlockHash);
+      // setLoading(false);
     })
     .on("error", (error: any) => {
       console.log(error);
@@ -59,9 +51,6 @@ export const transferTicket = async (buyer: string, tokenId: number) => {
 
   console.log(`Transaction successful with hash: ${createReceipt.transactionHash}`);
 
-  const newOwner = await contract.methods.checkOwner(tokenId).call();
-
-  console.log("new owner: " + newOwner);
-
-  return createReceipt;
+  const tokenId = Web3.utils.hexToNumber(createReceipt.logs[0].topics[3]);
+  return tokenId;
 };

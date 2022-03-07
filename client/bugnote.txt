@@ -4,7 +4,7 @@
 
 - reason could not pin file to ipfs: Was using axios in backend XD. Axios is a client side method. 
 
--
+- ticket tokenID, cid not sent to DB => ticket data was sent before state was updated => wait for state to update and send POST request (useEffect)
 
 
 

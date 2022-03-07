@@ -74,7 +74,11 @@ const EventPage = ({ event, ticket }: any) => {
           </Typography>
           {/* <Transaction event={event} /> */}
         </CardContent>
-        <CardActions sx={{ margin: 1 }}>
+
+        <CardActions sx={{ margin: 1, display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
+          <Button onClick={() => {}} variant="contained" sx={{ marginLeft: 3, marginBottom: 1 }}>
+            Put on sale
+          </Button>
           <BuyTicket ticket={ticket} />
         </CardActions>
       </Card>

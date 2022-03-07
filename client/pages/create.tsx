@@ -55,13 +55,18 @@ const CreateEvent = () => {
       console.log(event, ticket);
 
       //1. Pin file and metadata to pinata => then mint ticket using image/metadata URI from pinata.
+      // pinFileToIPFS(ticketFile, ticket).then((response: any) => {
+      //   //2. Mint on chain
+      //   mintTicket(metamaskAccount, ticket.name).then((tokenId) => {
+      //     console.log("ticket tokenID: " + tokenId);
+      //     const input = { cid: response.data.IpfsHash.replace(/\"/g, ""), tokenId: tokenId };
+      //     setTicket({ ...ticket, ...input });
+      //   });
+      // });
+
       pinFileToIPFS(ticketFile, ticket).then((response: any) => {
-        //2. Mint on chain
-        mintTicket(metamaskAccount, ticket.name).then((tokenId) => {
-          console.log("ticket tokenID: " + tokenId);
-          const input = { cid: response.data.IpfsHash.replace(/\"/g, ""), tokenId: tokenId };
-          setTicket({ ...ticket, ...input });
-        });
+        const input = { cid: response.data.IpfsHash.replace(/\"/g, "") };
+        setTicket({ ...ticket, ...input });
       });
 
       //3. POST to MySQL DB:
@@ -106,6 +111,7 @@ const CreateEvent = () => {
           eventFile={eventFile}
           ticket={ticket}
           ticketFile={ticketFile}
+          page={(_page) => setPage(_page)}
           completion={() => submit()}
         />
       );

@@ -8,6 +8,7 @@ interface Props {
   eventFile: File;
   ticket: TicketInput;
   ticketFile: File;
+  page: (page: number) => void;
 
   completion: () => Boolean;
 }
@@ -15,6 +16,10 @@ interface Props {
 const ConfirmEvent: React.FC<Props> = (props) => {
   const completion = () => {
     props.completion();
+  };
+
+  const editTicket = () => {
+    props.page(2);
   };
 
   return (
@@ -35,6 +40,11 @@ const ConfirmEvent: React.FC<Props> = (props) => {
       <Typography variant="h6" sx={{ marginBottom: "2%" }}>
         Ticket Details
       </Typography>
+
+      <Button sx={{ marginTop: "2%" }} onClick={() => editTicket()}>
+        Edit Ticket
+      </Button>
+
       <Button variant="contained" onClick={() => completion()}>
         STEP 3: Create Event
       </Button>

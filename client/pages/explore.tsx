@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { client } from "../apollo";
 import VerticalEventList from "../components/Event/VerticalEventList";
 import TicketList from "../components/Ticket/TicketList";
-import { Button, Box, Container, Typography } from "@mui/material";
+import Filter from "../components/Event/Filters";
+import { Button, Box, Container, Typography, TextField } from "@mui/material";
 import { GET_EVENTS, GET_TICKETS } from "../gql/queries";
 
 const Explore: React.FC<any> = ({ _events, _tickets }: any) => {
@@ -13,23 +14,40 @@ const Explore: React.FC<any> = ({ _events, _tickets }: any) => {
   return (
     <Container sx={{ margin: "10%", display: "flex", flexDirection: "column", justifyContent: "center" }}>
       <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
-        <Typography sx={{ textAlign: "center", marginBottom: "3%" }} variant="h2">
+        <Typography sx={{ textAlign: "center", marginBottom: "4%" }} variant="h2">
           Explore
         </Typography>
 
-        <Button
-          variant="contained"
-          sx={{ width: "10%", justifyContent: "center" }}
-          onClick={() => {
-            if (display == false) {
-              setDisplay(true);
-            }
-            if (display == true) {
-              setDisplay(false);
-            }
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "flex-start",
+            alignItems: "flex-start",
+            marginBottom: "4%",
           }}>
-          {display ? "Events" : "Tickets"}
-        </Button>
+          <TextField
+            sx={{ height: 50, marginBottom: "1%", marginRight: "5%", width: "40%" }}
+            id="filled-basic"
+            label="Filled"
+            variant="filled"
+          />
+          {/* <Button
+            variant="contained"
+            sx={{ width: "10%", justifyContent: "center" }}
+            onClick={() => {
+              if (display == false) {
+                setDisplay(true);
+              }
+              if (display == true) {
+                setDisplay(false);
+              }
+            }}>
+            {display ? "Events" : "Tickets"}
+          </Button> */}
+
+          <Filter />
+        </Box>
 
         {display ? (
           <Box

@@ -1,19 +1,19 @@
-{   
-    "type": "mysql", 
-    "host": "127.0.0.1",
-    "port": 3306, 
-    "username": "root", 
-    "password": "root3486",
-    "database": "project", 
+{
+  "type": "mysql",
+  "host": "127.0.0.1",
+  "port": 3306,
+  "username": "root",
+  "password": "root3486",
+  "database": "project",
 
-    "synchronize": true,
-    "logging": false,
-    "entities": ["entities/**/*.ts"],
-    "migrations": ["migration/**/*.ts"],
-    "subscribers": ["subscriber/**/*.ts"],
-    "cli": {
-      "entitiesDir": "entity",
-      "migrationsDir": "migration",
-      "subscribersDir": "subscriber"
-    }
+  "synchronize": true,
+  "logging": false,
+  "entities": ["entities/**/*.ts"],
+  "migrations": ["migration/**/*.ts"],
+  "subscribers": ["subscriber/**/*.ts"],
+  "cli": {
+    "entitiesDir": "entity",
+    "migrationsDir": "migration",
+    "subscribersDir": "subscriber"
   }
+}

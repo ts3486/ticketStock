@@ -31,8 +31,12 @@ export class Ticket extends BaseEntity {
   price: number;
 
   @Column(() => Date)
-  @Field()
+  @Field({ nullable: true })
   date: Date;
+
+  // @Column({ type: "int" })
+  // @Field(() => Int)
+  // eventId: number;
 
   @ManyToOne(() => User, (user) => user.tickets)
   @JoinColumn()

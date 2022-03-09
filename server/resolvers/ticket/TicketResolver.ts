@@ -18,7 +18,7 @@ const pinataHash = process.env.PINATA_HASH;
 @Resolver()
 export class TicketResolver {
   @Query(() => [Ticket])
-  allTickets() {
+  getTickets() {
     return Ticket.find();
   }
 

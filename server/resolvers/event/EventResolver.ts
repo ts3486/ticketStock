@@ -21,7 +21,7 @@ export class EventResolver {
   }
 
   @Query(() => [Event])
-  allEvents() {
+  getEvents() {
     return Event.find();
   }
 

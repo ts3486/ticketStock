@@ -67,13 +67,14 @@ export const getStaticProps = async () => {
     errorPolicy: "all",
   });
 
-  const events: Event[] = eventData.allEvents;
+  const events: Event[] = eventData.getEvents;
+
   const { error: ticketError, data: ticketData } = await client.query({
     query: GET_TICKETS,
     errorPolicy: "all",
   });
 
-  const tickets = ticketData.allTickets;
+  const tickets = ticketData.getTickets;
 
   return {
     props: {

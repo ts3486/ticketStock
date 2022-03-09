@@ -92,6 +92,7 @@ function ElevationScroll(props: any) {
 const NavComponent = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [loggedin, setLoggedin] = useState(false);
+  const [search, setSearch] = useState("");
   const [logout] = useLogoutMutation();
 
   const isMenuOpen = Boolean(anchorEl);
@@ -177,7 +178,17 @@ const NavComponent = () => {
               <SearchIconWrapper>
                 <SearchIcon />
               </SearchIconWrapper>
-              <StyledInputBase placeholder="Search…" inputProps={{ "aria-label": "search" }} />
+              <StyledInputBase
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Search…"
+                inputProps={{ "aria-label": "search" }}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    window.location.href = "/explore";
+                  }
+                }}
+              />
             </Search>
             <Box sx={{ flexGrow: 1 }} />
             <Box sx={{ display: { xs: "none", md: "flex", diplay: "flex", alignItems: "center" } }}>

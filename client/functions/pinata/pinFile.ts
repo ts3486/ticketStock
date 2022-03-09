@@ -14,6 +14,7 @@ export const pinFileToIPFS = (file: any, ticket: any) => {
   const metadata = JSON.stringify({
     name: ticket.name,
     keyvalues: {
+      ticketId: ticket.id,
       ticketName: ticket.name,
       image: ticket.image,
       price: ticket.price,

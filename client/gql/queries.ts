@@ -24,7 +24,7 @@ export const GET_USER = gql`
 //EVENTS
 export const GET_EVENTS = gql`
   {
-    allEvents {
+    getEvents {
       id
       name
       image
@@ -47,7 +47,7 @@ export const GET_EVENT = gql`
 //TICKETS
 export const GET_TICKETS = gql`
   {
-    allTickets {
+    getTickets {
       id
       name
       cid

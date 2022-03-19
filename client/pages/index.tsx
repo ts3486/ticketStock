@@ -25,6 +25,7 @@ const Index: React.FC<Props> = ({ _events }) => {
           <Filters />
           <Box
             sx={{
+              width: "100%",
               maxHeight: 700,
               overflow: "hidden",
               flexWrap: "nowrap",
@@ -35,7 +36,7 @@ const Index: React.FC<Props> = ({ _events }) => {
           </Box>
           <Button
             onClick={() => (window.location.href = "/explore")}
-            sx={{ width: "10%", borderRadius: 30, backgroundColor: "primary" }}
+            sx={{ marginTop: "2%", width: "10%", borderRadius: 30, backgroundColor: "primary" }}
             variant="contained">
             See More
           </Button>
@@ -69,7 +70,7 @@ export const getStaticProps = async () => {
     errorPolicy: "all",
   });
 
-  const events: Event[] = eventData.allEvents;
+  const events: Event[] = eventData.getEvents;
 
   return {
     props: {

@@ -10,6 +10,7 @@ export class Ticket extends BaseEntity {
   @Field(() => Int)
   @PrimaryGeneratedColumn()
   id: number;
+
   @Column("text")
   @Field()
   name: string;
@@ -40,7 +41,6 @@ export class Ticket extends BaseEntity {
 
   @ManyToOne(() => User, (user) => user.tickets)
   @JoinColumn()
-  // @Field(() => User)
   user: User;
 
   @Column({ type: "int" })

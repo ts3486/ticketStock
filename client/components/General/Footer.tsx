@@ -17,7 +17,7 @@ const Footer: React.FC = () => {
         marginBottom: 0,
         height: 200,
         width: "100%",
-        backgroundColor: "rgb(40, 40, 43)",
+        backgroundColor: "rgb(0,0,0,1.3)",
       }}></BottomNavigation>
   );
 };

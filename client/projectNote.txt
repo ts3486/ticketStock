@@ -2,3 +2,12 @@ tickets need not be transfered within platform?
 Because erc721 transfer method is unique in a way that disallows direct transfers, it uses an auction system to trade. 
 However, auctions systems are unviable in a ticketing system. Which leads to letting the ticket buyer "mint", instead of buying (or transfering)
 the ticket NFT the event creator minted. 
+
+
+
+
+//bugs
+
+Invalid Hook Call
+Outside of 1,2,3 error probably 3 => React MUI was causing version mismatch? or type error
+solution: https://stackoverflow.com/questions/70257703/create-react-app-materialui-error-invalid-hook-call

@@ -60,6 +60,9 @@ const Login = () => {
         <Button variant="contained" onClick={onSubmit}>
           Login
         </Button>
+        <Button sx={{ marginTop: "1%" }} onClick={() => (window.location.href = "/register")}>
+          Create an account
+        </Button>
       </Card>
     </div>
   );

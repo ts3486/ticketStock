@@ -69,6 +69,9 @@ const Register = () => {
         <Button variant="contained" onClick={onSubmit}>
           Register
         </Button>
+        <Button sx={{ marginTop: "1%" }} onClick={() => (window.location.href = "/register")}>
+          Already have an account
+        </Button>
       </Card>
     </div>
   );

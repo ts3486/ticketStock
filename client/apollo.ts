@@ -1,5 +1,5 @@
 import { ApolloClient, InMemoryCache, ApolloProvider, HttpLink, from, ApolloLink, Observable } from "@apollo/client";
-import { createUploadLink } from 'apollo-upload-client'
+import { createUploadLink } from "apollo-upload-client";
 import { onError } from "@apollo/client/link/error";
 import { getAccessToken, setAccessToken } from "./accessTokens";
 import { TokenRefreshLink } from "apollo-link-token-refresh";
@@ -94,15 +94,15 @@ const tRLink = new TokenRefreshLink({
 });
 
 const httpLink = createUploadLink({
-  uri: "http://localhost:5000/graphql", 
+  uri: "http://localhost:5000/graphql",
   credentials: "include",
-})
+});
 
 const link = from([
   errorLink,
   requestLink,
   tRLink,
-  httpLink
+  httpLink,
   // new HttpLink({ uri: "http://localhost:5000/graphql", credentials: "include" }),
   //credentials: "include" important
 ]);

@@ -26,12 +26,12 @@ export class User extends BaseEntity {
   tokenVersion: number;
 
   @OneToMany(() => Event, (event) => event.user)
-  // @Field(() => [Event])
+  @Field(() => [Event])
   @JoinColumn()
   events: Event[];
 
   @OneToMany(() => Ticket, (ticket) => ticket.user, { eager: true })
-  // @Field(() => [Ticket])
+  @Field(() => [Ticket])
   @JoinColumn()
   tickets: Ticket[];
 }

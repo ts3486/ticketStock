@@ -8,3 +8,8 @@ VM exception revert:
 
 
 Owner query for nonexistent token: 
+
+
+typeorm uml- 
+
+typeorm could not read ts files. => us ts-node in script to read and compile ts files to js

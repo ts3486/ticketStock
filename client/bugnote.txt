@@ -6,7 +6,7 @@
 
 - ticket tokenID, cid not sent to DB => ticket data was sent before state was updated => wait for state to update and send POST request (useEffect)
 
-
+- coulen't join tables and get related entity data. (e.g user's tickets);
 
 //Notes
 

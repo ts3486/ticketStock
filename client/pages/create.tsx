@@ -78,6 +78,7 @@ const CreateEvent = () => {
       setUpdate(true);
       setOpen(true);
 
+      // window.location.href = "/";
       return true;
     } else {
       console.log("no metamask account. Creation failed");

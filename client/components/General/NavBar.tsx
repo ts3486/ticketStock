@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import { getAccessToken } from "../../accessTokens";
 import { useLogoutMutation } from "../../generated/graphql";
 import { styled, alpha } from "@mui/material/styles";
@@ -34,6 +35,7 @@ const Search = styled("div")(({ theme }) => ({
   },
   marginRight: theme.spacing(2),
   marginLeft: 0,
+  maxWidth: 500,
   width: "100%",
   [theme.breakpoints.up("sm")]: {
     marginLeft: theme.spacing(3),
@@ -67,7 +69,8 @@ const SearchInputBase = styled(InputBase)(({ theme }) => ({
 
     borderRight: "1px solid gray",
     transition: theme.transitions.create("width"),
-    width: "0%",
+    marginLeft: "10%",
+    width: "100%",
     [theme.breakpoints.up("md")]: {
       width: "20ch",
     },
@@ -79,8 +82,9 @@ const LocationInputBase = styled(InputBase)(({ theme }) => ({
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
     // vertical padding + font size from searchIcon
+    marginLeft: "10%",
     transition: theme.transitions.create("width"),
-    width: "30%",
+    width: "100%",
     [theme.breakpoints.up("md")]: {
       width: "20ch",
     },
@@ -115,6 +119,7 @@ function ElevationScroll(props: any) {
 }
 
 const NavComponent = () => {
+  const router = useRouter();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [loggedin, setLoggedin] = useState(false);
   const [keyword, setKeyword] = useState("");
@@ -140,8 +145,12 @@ const NavComponent = () => {
   };
 
   const search = () => {
+    router.push({
+      pathname: "/explore", //URL
+      query: { keyword: keyword, location: location }, //検索クエリ
+    });
+
     window.location.href = "/explore";
-    // window.location.href = `/explore/${keyword}/${location}`;
   };
 
   const menuId = "primary-search-account-menu";
@@ -202,9 +211,6 @@ const NavComponent = () => {
             </Button>
 
             <Search>
-              <SearchIconWrapper>
-                <SearchIcon />
-              </SearchIconWrapper>
               <SearchInputBase
                 value={keyword}
                 onChange={(e) => setKeyword(e.target.value)}
@@ -216,9 +222,6 @@ const NavComponent = () => {
                 }}
               />
 
-              <LocationIconWrapper>
-                <LocationOnIcon />
-              </LocationIconWrapper>
               <LocationInputBase
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
@@ -229,6 +232,18 @@ const NavComponent = () => {
                   }
                 }}
               />
+              <Button
+                variant="contained"
+                color="primary"
+                sx={{
+                  height: "100%",
+                  width: "5%",
+                  position: "absolute",
+                  right: "-20px",
+                  borderRadius: "0% 15% 15%  0%",
+                }}>
+                <SearchIcon />
+              </Button>
             </Search>
             <Box sx={{ flexGrow: 1 }} />
             <Box sx={{ display: { xs: "none", md: "flex", diplay: "flex", alignItems: "center" } }}>

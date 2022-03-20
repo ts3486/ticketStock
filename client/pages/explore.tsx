@@ -5,7 +5,6 @@ import TicketList from "../components/Ticket/TicketList";
 import Filter from "../components/Event/Filters";
 import { Button, Box, Container, Typography, TextField } from "@mui/material";
 import { GET_EVENTS, GET_TICKETS } from "../gql/queries";
-import { KeyboardArrowRightRounded } from "@material-ui/icons";
 
 const Explore: React.FC<any> = ({ _events, _tickets }: any) => {
   const [display, setDisplay] = useState(false);
@@ -57,7 +56,12 @@ const Explore: React.FC<any> = ({ _events, _tickets }: any) => {
 
 export default Explore;
 
-export const getServerSideProps = async ({ query }: any) => {
+export const getServerSideProps = async (context: any) => {
+  const keyword = context.query.keyword;
+  const location = context.query.location;
+
+  console.log(keyword, location);
+
   const { error: eventError, data: eventData } = await client.query({
     query: GET_EVENTS,
     errorPolicy: "all",

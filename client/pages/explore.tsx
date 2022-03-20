@@ -5,6 +5,7 @@ import TicketList from "../components/Ticket/TicketList";
 import Filter from "../components/Event/Filters";
 import { Button, Box, Container, Typography, TextField } from "@mui/material";
 import { GET_EVENTS, GET_TICKETS } from "../gql/queries";
+import { KeyboardArrowRightRounded } from "@material-ui/icons";
 
 const Explore: React.FC<any> = ({ _events, _tickets }: any) => {
   const [display, setDisplay] = useState(false);
@@ -14,39 +15,16 @@ const Explore: React.FC<any> = ({ _events, _tickets }: any) => {
   return (
     <Container sx={{ margin: "10%", display: "flex", flexDirection: "column", justifyContent: "center" }}>
       <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
-        <Typography sx={{ textAlign: "center", marginBottom: "4%" }} variant="h2">
-          Explore
-        </Typography>
-
         <Box
           sx={{
             display: "flex",
             flexDirection: "column",
             justifyContent: "flex-start",
             alignItems: "flex-start",
-            marginBottom: "4%",
+            marginBottom: "1%",
           }}>
-          <TextField
-            sx={{ height: 50, marginBottom: "1%", marginRight: "5%", width: "40%" }}
-            id="filled-basic"
-            label="Filled"
-            variant="filled"
-          />
-          {/* <Button
-            variant="contained"
-            sx={{ width: "10%", justifyContent: "center" }}
-            onClick={() => {
-              if (display == false) {
-                setDisplay(true);
-              }
-              if (display == true) {
-                setDisplay(false);
-              }
-            }}>
-            {display ? "Events" : "Tickets"}
-          </Button> */}
-
           <Filter />
+          <Button onClick={() => (window.location.href = "/tickets")}>Want to see tickets only? </Button>
         </Box>
 
         {display ? (
@@ -79,7 +57,7 @@ const Explore: React.FC<any> = ({ _events, _tickets }: any) => {
 
 export default Explore;
 
-export const getStaticProps = async () => {
+export const getServerSideProps = async ({ query }: any) => {
   const { error: eventError, data: eventData } = await client.query({
     query: GET_EVENTS,
     errorPolicy: "all",

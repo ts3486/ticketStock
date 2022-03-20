@@ -1,16 +1,6 @@
 import React, { useState } from "react";
 import { styled, alpha } from "@mui/material/styles";
-import {
-  AppBar,
-  Box,
-  Toolbar,
-  Typography,
-  InputBase,
-  InputLabel,
-  MenuItem,
-  FormControl,
-  Container,
-} from "@mui/material";
+import { Box, InputLabel, MenuItem, FormControl, Container } from "@mui/material";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import SearchIcon from "@mui/icons-material/Search";
 import { useTheme } from "@mui/material";
@@ -28,27 +18,10 @@ const Filter = () => {
     <Box
       sx={{
         width: "100%",
-        marginTop: 5,
-        marginBottom: 3,
         padding: "0% !important",
         display: "flex",
       }}>
       <Container sx={{ width: "100%", display: "flex", justifyContent: "flex-start", padding: "0% !important" }}>
-        <FormControl
-          sx={{
-            width: "12%",
-            marginRight: "1%",
-            backgroundColor: "rgb(232,232,232)",
-            borderRadius: 20,
-            "& .MuiOutlinedInput-notchedOutline": { border: "0px solid white !important" },
-          }}>
-          <InputLabel>Any Location</InputLabel>
-          <Select sx={{ borderRadius: 20 }} value={age} label="Age" onChange={handleChange}>
-            <MenuItem value={10}>Tokyo</MenuItem>
-            <MenuItem value={20}>Manhattan</MenuItem>
-            <MenuItem value={30}>Berlin</MenuItem>
-          </Select>
-        </FormControl>
         <FormControl
           sx={{
             width: "9%",

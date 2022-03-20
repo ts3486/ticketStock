@@ -14,16 +14,19 @@ import {
   MenuItem,
   Menu,
   useScrollTrigger,
-  ClickAwayListener,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 
 const Search = styled("div")(({ theme }) => ({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
   position: "relative",
-  borderRadius: 20,
+  borderRadius: 5,
   border: "1px solid rgb(0,0,0,0.3)",
   backgroundColor: alpha(theme.palette.common.white, 0.15),
   "&:hover": {
@@ -41,21 +44,43 @@ const Search = styled("div")(({ theme }) => ({
 const SearchIconWrapper = styled("div")(({ theme }) => ({
   padding: theme.spacing(0, 2),
   height: "100%",
-  position: "absolute",
   pointerEvents: "none",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
 }));
 
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
+const LocationIconWrapper = styled("div")(({ theme }) => ({
+  padding: theme.spacing(0, 2),
+  height: "100%",
+  pointerEvents: "none",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+}));
+
+const SearchInputBase = styled(InputBase)(({ theme }) => ({
   color: "inherit",
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
     // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+
+    borderRight: "1px solid gray",
     transition: theme.transitions.create("width"),
-    width: "100%",
+    width: "0%",
+    [theme.breakpoints.up("md")]: {
+      width: "20ch",
+    },
+  },
+}));
+
+const LocationInputBase = styled(InputBase)(({ theme }) => ({
+  color: "inherit",
+  "& .MuiInputBase-input": {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    transition: theme.transitions.create("width"),
+    width: "30%",
     [theme.breakpoints.up("md")]: {
       width: "20ch",
     },
@@ -92,7 +117,8 @@ function ElevationScroll(props: any) {
 const NavComponent = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [loggedin, setLoggedin] = useState(false);
-  const [search, setSearch] = useState("");
+  const [keyword, setKeyword] = useState("");
+  const [location, setLocation] = useState("");
   const [logout] = useLogoutMutation();
 
   const isMenuOpen = Boolean(anchorEl);
@@ -113,8 +139,9 @@ const NavComponent = () => {
     setAnchorEl(null);
   };
 
-  const handleClickAway = () => {
-    setAnchorEl(null);
+  const search = () => {
+    window.location.href = "/explore";
+    // window.location.href = `/explore/${keyword}/${location}`;
   };
 
   const menuId = "primary-search-account-menu";
@@ -178,14 +205,27 @@ const NavComponent = () => {
               <SearchIconWrapper>
                 <SearchIcon />
               </SearchIconWrapper>
-              <StyledInputBase
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search…"
-                inputProps={{ "aria-label": "search" }}
-                onKeyDown={(e) => {
+              <SearchInputBase
+                value={keyword}
+                onChange={(e) => setKeyword(e.target.value)}
+                placeholder="Search for keywords"
+                onKeyDown={(e: any) => {
                   if (e.key === "Enter") {
-                    window.location.href = "/explore";
+                    search();
+                  }
+                }}
+              />
+
+              <LocationIconWrapper>
+                <LocationOnIcon />
+              </LocationIconWrapper>
+              <LocationInputBase
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
+                placeholder="Enter location"
+                onKeyDown={(e: any) => {
+                  if (e.key === "Enter") {
+                    search();
                   }
                 }}
               />

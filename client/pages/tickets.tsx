@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
 import { client } from "../apollo";
 import TicketItem from "../components/Ticket/TicketItem";
-import { Box, Container, Typography } from "@mui/material";
+import { Button, Box, Container } from "@mui/material";
 import { GET_TICKETS } from "../gql/queries";
+import Filter from "../components/Event/Filters";
 
 const Tickets: React.FC<any> = ({ _tickets }: any) => {
   //   const [array, setArray] = useState([]);
@@ -12,9 +13,17 @@ const Tickets: React.FC<any> = ({ _tickets }: any) => {
   return (
     <Container sx={{ margin: "10%", display: "flex", flexDirection: "column", justifyContent: "center" }}>
       <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
-        <Typography sx={{ textAlign: "center" }} variant="h2">
-          TICKET MARKET
-        </Typography>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "flex-start",
+            alignItems: "flex-start",
+            marginBottom: "1%",
+          }}>
+          <Filter />
+          <Button onClick={() => (window.location.href = "/explore")}>Want to see tickets only? </Button>
+        </Box>
         <Box
           sx={{
             display: "flex",
@@ -37,7 +46,7 @@ export const getStaticProps = async () => {
     errorPolicy: "all",
   });
 
-  const tickets = ticketData.allTickets;
+  const tickets = ticketData.getTickets;
 
   return {
     props: {

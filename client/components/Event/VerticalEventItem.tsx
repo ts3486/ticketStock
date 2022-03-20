@@ -8,9 +8,9 @@ interface Props {
 
 const VerticalEventCard: React.FC<Props> = (props: Props) => {
   return (
-    <Card sx={{ borderRadius: 2, height: 310, width: "80%", margin: 2 }}>
+    <Card sx={{ borderRadius: 2, height: 200, width: "60%", margin: 2 }}>
       <CardActionArea sx={{ display: "flex", flexDirection: "row-reverse" }} href={`/event/${props.event.id}`}>
-        <CardMedia sx={{ height: 310, width: "35%" }} image="/event.jpg" />
+        <CardMedia sx={{ height: 200, width: "35%" }} image="/event.jpg" />
         <CardContent sx={{ width: "65%", padding: "5%" }}>
           <Typography sx={{ color: "purple" }} variant="body2" component="h2">
             Date

@@ -4,7 +4,8 @@ import { Event, EventInput } from "../../entities/Event";
 import { User } from "../../entities/User";
 import { Ticket, TicketInput } from "../../entities/Ticket";
 import { MyContext } from "../user/MyContext";
-import { getRepository, getConnection } from "typeorm";
+import { getRepository, Like } from "typeorm";
+
 import { isAuth } from "../user/isAuth";
 
 @Resolver()
@@ -39,6 +40,14 @@ export class EventResolver {
         return uevents;
       }
     }
+  }
+
+  @Query(() => [Event])
+  async getSearchResults(@Arg("keyword") keyword: string, @Arg("location") location: string) {
+    return Event.find({
+      select: ["id", "name", `desc`, `category`],
+      where: { desc: Like(`%${keyword}%`), location: location },
+    });
   }
 
   // async getUtickets(@Arg("username") username: string) {

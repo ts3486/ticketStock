@@ -3,7 +3,7 @@ import { client } from "../apollo";
 import VerticalEventList from "../components/Event/VerticalEventList";
 import TicketList from "../components/Ticket/TicketList";
 import Filter from "../components/Event/Filters";
-import { Button, Box, Container, Typography, TextField } from "@mui/material";
+import { Button, Box, Container } from "@mui/material";
 import { GET_EVENTS, GET_TICKETS } from "../gql/queries";
 
 const Explore: React.FC<any> = ({ _events, _tickets }: any) => {

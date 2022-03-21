@@ -12,6 +12,7 @@ import {
   MenuItem,
 } from "@mui/material";
 import { EventInput } from "../../types/types";
+const CoordinateInput = require("react-coordinate-input");
 
 interface Props {
   eventData: (event: EventInput) => void;
@@ -22,6 +23,7 @@ interface Props {
 const EventDetailsForm: React.FC<Props> = (props) => {
   const [name, setName] = useState("");
   const [category, setCategory] = useState("");
+  const [coordinate, setCoordinate] = useState("");
   const [image, setImage] = useState("");
   const [desc, setDesc] = useState("");
   const [date, setDate] = useState<Date>(new Date("2021-11-18T21:11:54"));
@@ -69,6 +71,14 @@ const EventDetailsForm: React.FC<Props> = (props) => {
             <MenuItem value={"tech"}>Tech</MenuItem>
             <MenuItem value={"performance"}>Performance</MenuItem>
           </Select>
+        </FormControl>
+
+        <FormControl>
+          <CoordinateInput
+            onChange={(value: any, { unmaskedValue, dd, dms }: any) => {
+              console.log(value, unmaskedValue, dd, dms);
+            }}
+          />
         </FormControl>
 
         <FormControl margin="normal">

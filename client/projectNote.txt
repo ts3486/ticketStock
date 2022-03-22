@@ -11,3 +11,11 @@ the ticket NFT the event creator minted.
 Invalid Hook Call
 Outside of 1,2,3 error probably 3 => React MUI was causing version mismatch? or type error
 solution: https://stackoverflow.com/questions/70257703/create-react-app-materialui-error-invalid-hook-call
+
+
+
+External Libraries:
+
+react-coordinate input type error. Typescript incompatibility
+
+GoogleMaps API x typescript. 

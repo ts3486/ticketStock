@@ -72,14 +72,11 @@ const EventDetailsForm: React.FC<Props> = (props) => {
             <MenuItem value={"performance"}>Performance</MenuItem>
           </Select>
         </FormControl>
+        {/* 位置情報入力を入れたいが、
 
         <FormControl>
-          <CoordinateInput
-            onChange={(value: any, { unmaskedValue, dd, dms }: any) => {
-              console.log(value, unmaskedValue, dd, dms);
-            }}
-          />
-        </FormControl>
+       
+        </FormControl> */}
 
         <FormControl margin="normal">
           {/* <InputLabel htmlFor="file">File</InputLabel> */}

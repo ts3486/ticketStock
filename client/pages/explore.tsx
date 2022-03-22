@@ -3,6 +3,7 @@ import { client } from "../apollo";
 import VerticalEventList from "../components/Event/VerticalEventList";
 import TicketList from "../components/Ticket/TicketList";
 import Filter from "../components/Event/Filters";
+import Maps from "../components/externalAPI/googleMaps/maps";
 import { Button, Box, Container } from "@mui/material";
 import { GET_EVENTS, GET_TICKETS } from "../gql/queries";
 
@@ -26,29 +27,17 @@ const Explore: React.FC<any> = ({ _events, _tickets }: any) => {
           <Button onClick={() => (window.location.href = "/tickets")}>Want to see tickets only? </Button>
         </Box>
 
-        {display ? (
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              flexWrap: "wrap",
-              maxHeight: 1020,
-              overflow: "hidden",
-            }}>
-            <TicketList tickets={_tickets} />
-          </Box>
-        ) : (
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              maxHeight: 1020,
-              overflow: "hidden",
-            }}>
-            <VerticalEventList events={_events} />
-          </Box>
-        )}
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            maxHeight: 1020,
+            overflow: "hidden",
+          }}>
+          <VerticalEventList events={_events} />
+        </Box>
+        <Maps />
       </Box>
     </Container>
   );

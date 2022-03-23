@@ -1,23 +1,13 @@
 import React, { useState } from "react";
 import app from "../../../firebase";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
-import {
-  Container,
-  Card,
-  CardActionArea,
-  CardActions,
-  CardContent,
-  CardMedia,
-  Button,
-  Typography,
-  Box,
-} from "@mui/material";
+import { Container, Card, CardActions, CardContent, CardMedia, Button, Typography, Box } from "@mui/material";
 import { GET_EVENTS } from "../../../gql/queries";
 import { client } from "../../../apollo";
 import { gql } from "@apollo/client";
 import BuyTicket from "../../../components/Transaction/BuyTicket";
+import Map from "../../../components/externalAPI/googleMaps/maps";
 import { Event } from "../../../types/types";
-import eventStyles from "../../../styles/event.module.css";
 
 const EventPage = ({ event, ticket }: any) => {
   const [imageURL, setURL] = useState("");
@@ -55,16 +45,21 @@ const EventPage = ({ event, ticket }: any) => {
 
   return (
     <Container sx={{ margin: "10%" }}>
-      <Card sx={{ display: "flex", flexDirection: "column", marginBottom: 5 }}>
-        {/* <CardMedia image={event[3]} title="Contemplative Reptile" /> */}
-        <CardMedia image="/event.jpg" title="Contemplative Reptile" sx={{ height: 500, width: "100%" }} />
+      <Box sx={{ display: "flex", flexDirection: "column", marginBottom: 5 }}>
+        <Typography variant="h2">Event Title</Typography>
+
+        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "1%" }}>
+          <CardMedia image="/event.jpg" title="Contemplative Reptile" sx={{ height: 400, width: "60%" }} />
+          <Box sx={{ height: 400, width: "35%" }}>
+            <Map />
+          </Box>
+        </Box>
         <CardContent sx={{ margin: 1 }}>
           <Typography gutterBottom variant="h5" component="h2">
             {event[2]}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents
-            except Antarctica
+            Event Description
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
             Date:
@@ -76,12 +71,9 @@ const EventPage = ({ event, ticket }: any) => {
         </CardContent>
 
         <CardActions sx={{ margin: 1, display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-          <Button onClick={() => {}} variant="contained" sx={{ marginLeft: 3, marginBottom: 1 }}>
-            Put on sale
-          </Button>
           <BuyTicket ticket={ticket} />
         </CardActions>
-      </Card>
+      </Box>
       <Box>
         <Typography gutterBottom variant="h5" component="h2">
           About this event:
@@ -103,7 +95,7 @@ export const getStaticPaths = async () => {
     errorPolicy: "all",
   });
 
-  const events = data.allEvents;
+  const events = data.getEvents;
 
   const paths = events.map((event: Event) => ({
     params: { id: event.id.toString() },

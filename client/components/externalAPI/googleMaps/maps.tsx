@@ -12,8 +12,8 @@ interface MapProps {
 
 const initialMapProps: MapProps = {
   center: {
-    lat: 35.39,
-    lng: 139.44,
+    lat: 35.6762,
+    lng: 139.6503,
   },
   zoom: 18,
 };
@@ -21,7 +21,7 @@ const initialMapProps: MapProps = {
 const Map = () => {
   const [mapProps, setMapProps] = useState<MapProps>(initialMapProps);
   return (
-    <div style={{ width: "100vw", height: "100vh" }}>
+    <div style={{ width: "100%", height: "100%" }}>
       <GoogleMapReact bootstrapURLKeys={{ key: googleMapsApiKey }} center={mapProps.center} zoom={mapProps.zoom} />
     </div>
   );

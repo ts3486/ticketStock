@@ -11,7 +11,15 @@ const VerticalEventList: React.FC<Props> = ({ events }) => {
   useEffect(() => {});
 
   return (
-    <Box sx={{ width: "100%", display: "flex", flexDirection: "column", justifyContent: "start", alignItems: "start" }}>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        maxHeight: 1020,
+        overflow: "hidden",
+        width: "100%",
+      }}>
       {events && events.map((event: Event) => <VerticalEventCard event={event} key={event.id} />)}
     </Box>
   );

@@ -27,17 +27,14 @@ const Explore: React.FC<any> = ({ _events, _tickets }: any) => {
           <Button onClick={() => (window.location.href = "/tickets")}>Want to see tickets only? </Button>
         </Box>
 
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            maxHeight: 1020,
-            overflow: "hidden",
-          }}>
-          <VerticalEventList events={_events} />
+        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <Box sx={{ width: "55%" }}>
+            <VerticalEventList events={_events} />
+          </Box>
+          <Box sx={{ height: 700, width: "40%" }}>
+            <Maps />
+          </Box>
         </Box>
-        <Maps />
       </Box>
     </Container>
   );

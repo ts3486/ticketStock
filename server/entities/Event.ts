@@ -1,7 +1,5 @@
 import { ObjectType, Field, Int, InputType } from "type-graphql";
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, ManyToOne, OneToOne } from "typeorm";
-import { GeometryTransformer } from "./utility/transformer";
-import { Geometry } from "geojson";
 import { Ticket } from "./Ticket";
 import { User } from "./User";
 
@@ -34,7 +32,7 @@ export class Event extends BaseEntity {
 
   @Column({ nullable: true })
   @Field({ nullable: true })
-  location: string;
+  location: Location;
 
   @Field(() => User)
   @ManyToOne(() => User, (user) => user.events)

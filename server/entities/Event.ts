@@ -32,7 +32,11 @@ export class Event extends BaseEntity {
 
   @Column({ nullable: true })
   @Field({ nullable: true })
-  location: Location;
+  longtitude: number;
+
+  @Column({ nullable: true })
+  @Field({ nullable: true })
+  latitude: number;
 
   @Field(() => User)
   @ManyToOne(() => User, (user) => user.events)

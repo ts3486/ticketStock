@@ -12,7 +12,8 @@ import {
   MenuItem,
 } from "@mui/material";
 import { EventInput } from "../../types/types";
-const CoordinateInput = require("react-coordinate-input");
+import GooglePlacesAutocomplete from "react-google-places-autocomplete";
+const { googleMapsApiKey } = require("../../secret.json");
 
 interface Props {
   eventData: (event: EventInput) => void;
@@ -72,11 +73,10 @@ const EventDetailsForm: React.FC<Props> = (props) => {
             <MenuItem value={"performance"}>Performance</MenuItem>
           </Select>
         </FormControl>
-        {/* 位置情報入力を入れたいが、
 
         <FormControl>
-       
-        </FormControl> */}
+          <GooglePlacesAutocomplete apiKey={googleMapsApiKey} />
+        </FormControl>
 
         <FormControl margin="normal">
           {/* <InputLabel htmlFor="file">File</InputLabel> */}
@@ -89,6 +89,7 @@ const EventDetailsForm: React.FC<Props> = (props) => {
             }}
           />
         </FormControl>
+
         <FormControl margin="normal">
           <InputLabel htmlFor="desc">Description</InputLabel>
           <Input id="desc" aria-describedby="desc" onChange={(e) => setDesc(e.target.value)} />

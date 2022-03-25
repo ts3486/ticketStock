@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import { EventInput } from "../../types/types";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
+const Geocode = require("react-geocode");
 const { googleMapsApiKey } = require("../../secret.json");
 
 interface Props {
@@ -29,9 +30,24 @@ const EventDetailsForm: React.FC<Props> = (props) => {
   const [desc, setDesc] = useState("");
   const [date, setDate] = useState<Date>(new Date("2021-11-18T21:11:54"));
   const [file, setFile] = useState<File>({} as File);
+  const [address, setAddress] = useState("");
+  const [longtitude, setLongtitude] = useState(0);
+  const [latitude, setLatitude] = useState(0);
+
+  Geocode.setApiKey(googleMapsApiKey);
+
+  Geocode.fromAddress("Eiffel Tower").then(
+    (response: any) => {
+      const { lat, lng } = response.results[0].geometry.location;
+      console.log(lat, lng);
+    },
+    (error: any) => {
+      console.error(error);
+    }
+  );
 
   const onSet = (e: any) => {
-    const event = { name, category, image, desc, date };
+    const event = { name, category, image, desc, date, longtitude, latitude };
 
     props.eventData(event);
     props.eventFile(file);
@@ -75,7 +91,24 @@ const EventDetailsForm: React.FC<Props> = (props) => {
         </FormControl>
 
         <FormControl>
-          <GooglePlacesAutocomplete apiKey={googleMapsApiKey} />
+          <GooglePlacesAutocomplete
+            apiKey={googleMapsApiKey}
+            apiOptions={{ language: "jp", region: "jp" }}
+            autocompletionRequest={{
+              // bounds: [
+              //   { lat: 50, lng: 50 },
+              //   { lat: 100, lng: 100 },
+              // ],
+              componentRestrictions: {
+                country: ["us", "jp"],
+              },
+              // types: ["country", "locality", "sublocality", "postal_code"],
+            }}
+            selectProps={{
+              address,
+              onChange: setAddress,
+            }}
+          />
         </FormControl>
 
         <FormControl margin="normal">

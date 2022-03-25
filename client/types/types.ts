@@ -5,6 +5,8 @@ export interface Event {
   image: string;
   desc: string;
   ticketId?: number;
+  longtitude?: number;
+  latitdue?: number;
 }
 
 export interface EventInput {
@@ -13,6 +15,8 @@ export interface EventInput {
   image: string;
   desc: string;
   date: Date;
+  longtitude?: number;
+  latitdue?: number;
 }
 
 export interface Ticket {

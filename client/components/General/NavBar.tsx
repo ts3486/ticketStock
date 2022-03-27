@@ -235,6 +235,7 @@ const NavComponent = () => {
               <Button
                 variant="contained"
                 color="primary"
+                onClick={() => search()}
                 sx={{
                   height: "100%",
                   width: "5%",

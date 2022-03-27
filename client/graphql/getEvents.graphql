@@ -1,5 +1,5 @@
-query AllEvents {
-  allEvents {
+query getEvents {
+  getEvents {
     id
     name
     image

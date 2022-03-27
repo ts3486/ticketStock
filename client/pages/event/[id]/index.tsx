@@ -9,9 +9,27 @@ import BuyTicket from "../../../components/Transaction/BuyTicket";
 import Map from "../../../components/externalAPI/googleMaps/maps";
 import { Event } from "../../../types/types";
 
+interface MapProps {
+  center?: {
+    lat: number;
+    lng: number;
+  };
+  zoom?: number;
+}
+
 const EventPage = ({ event, ticket }: any) => {
+  console.log(event);
+
   const [imageURL, setURL] = useState("");
   const [open, setOpen] = useState(false);
+
+  const MapProps: MapProps = {
+    center: {
+      lat: event.latitude,
+      lng: event.longtitude,
+    },
+    zoom: 16,
+  };
 
   // const storage = getStorage(app);
 
@@ -46,25 +64,29 @@ const EventPage = ({ event, ticket }: any) => {
   return (
     <Container sx={{ margin: "10%" }}>
       <Box sx={{ display: "flex", flexDirection: "column", marginBottom: 5 }}>
-        <Typography variant="h2">Event Title</Typography>
+        <Typography variant="h2">{event.name}</Typography>
 
         <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "1%" }}>
           <CardMedia image="/event.jpg" title="Contemplative Reptile" sx={{ height: 400, width: "60%" }} />
-          <Box sx={{ height: 400, width: "35%" }}>
-            <Map />
-          </Box>
+          <Card sx={{ height: 400, width: "35%" }}>
+            <Typography>Date: {event.date} </Typography>
+            <Typography>Location: {}</Typography>
+            <Map mapProps={MapProps} />
+          </Card>
         </Box>
         <CardContent sx={{ margin: 1 }}>
-          <Typography gutterBottom variant="h5" component="h2">
-            {event[2]}
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
+          <Typography>Ticket</Typography>
+          <CardMedia
+            sx={{ marginTop: "3%", marginBottom: "3%", height: 300, width: "30%" }}
+            image={`https://gateway.pinata.cloud/ipfs/${ticket.cid}`}
+          />
+          <Typography variant="h5" color="textSecondary" component="p">
             Event Description
           </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
+          <Typography variant="h5" color="textSecondary" component="p">
             Date:
           </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
+          <Typography variant="h5" color="textSecondary" component="p">
             Price:
           </Typography>
           {/* <Transaction event={event} /> */}
@@ -73,17 +95,6 @@ const EventPage = ({ event, ticket }: any) => {
         <CardActions sx={{ margin: 1, display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
           <BuyTicket ticket={ticket} />
         </CardActions>
-      </Box>
-      <Box>
-        <Typography gutterBottom variant="h5" component="h2">
-          About this event:
-        </Typography>
-        <Typography gutterBottom variant="h5" component="h2">
-          Links:
-        </Typography>
-        <Typography gutterBottom variant="h5" component="h2">
-          Socials:
-        </Typography>
       </Box>
     </Container>
   );
@@ -116,7 +127,10 @@ export const getStaticProps = async ({ params }: any) => {
         name,
         image,
         desc,
-        ticketId
+        date,
+        ticketId,
+        longtitude,
+        latitude
       }
     }
   `,

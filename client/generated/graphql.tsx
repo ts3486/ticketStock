@@ -25,6 +25,8 @@ export type Event = {
   image: Scalars['String'];
   desc: Scalars['String'];
   date?: Maybe<Scalars['DateTime']>;
+  latitude?: Maybe<Scalars['Float']>;
+  longtitude?: Maybe<Scalars['Float']>;
   user: User;
   userId: Scalars['Float'];
   ticket: Ticket;
@@ -91,9 +93,10 @@ export type Query = {
   getUser: User;
   me: User;
   getEvent: Event;
-  allEvents: Array<Event>;
+  getEvents: Array<Event>;
   getUevents: Array<Event>;
-  allTickets: Array<Ticket>;
+  getSearchResults: Array<Event>;
+  getTickets: Array<Ticket>;
   getTicket: Ticket;
   getUtickets: Array<Ticket>;
 };
@@ -114,6 +117,12 @@ export type QueryGetUeventsArgs = {
 };
 
 
+export type QueryGetSearchResultsArgs = {
+  location: Scalars['String'];
+  keyword: Scalars['String'];
+};
+
+
 export type QueryGetTicketArgs = {
   id: Scalars['Float'];
 };
@@ -127,8 +136,8 @@ export type Ticket = {
   __typename?: 'Ticket';
   id: Scalars['Int'];
   name: Scalars['String'];
-  cid?: Maybe<Scalars['String']>;
-  tokenId?: Maybe<Scalars['Float']>;
+  cid: Scalars['String'];
+  tokenId: Scalars['Float'];
   price: Scalars['Int'];
   date?: Maybe<Scalars['DateTime']>;
   userId: Scalars['Int'];
@@ -137,9 +146,9 @@ export type Ticket = {
 export type TicketInput = {
   name: Scalars['String'];
   cid: Scalars['String'];
-  tokenId?: InputMaybe<Scalars['Float']>;
+  tokenId: Scalars['Float'];
   price: Scalars['Int'];
-  date?: InputMaybe<Scalars['DateTime']>;
+  date: Scalars['DateTime'];
 };
 
 export type User = {
@@ -148,6 +157,8 @@ export type User = {
   email: Scalars['String'];
   username: Scalars['String'];
   password: Scalars['String'];
+  events: Array<Event>;
+  tickets: Array<Ticket>;
 };
 
 export type AddEventMutationVariables = Exact<{
@@ -157,11 +168,6 @@ export type AddEventMutationVariables = Exact<{
 
 
 export type AddEventMutation = { __typename?: 'Mutation', addEvent?: boolean | null | undefined };
-
-export type AllEventsQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type AllEventsQuery = { __typename?: 'Query', allEvents: Array<{ __typename?: 'Event', id: number, name: string, image: string, desc: string }> };
 
 export type AuthRedirectMutationVariables = Exact<{ [key: string]: never; }>;
 
@@ -174,6 +180,11 @@ export type GetEventQueryVariables = Exact<{
 
 
 export type GetEventQuery = { __typename?: 'Query', getEvent: { __typename?: 'Event', id: number, name: string, image: string, desc: string } };
+
+export type GetEventsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetEventsQuery = { __typename?: 'Query', getEvents: Array<{ __typename?: 'Event', id: number, name: string, image: string, desc: string }> };
 
 export type GetUserQueryVariables = Exact<{
   username: Scalars['String'];
@@ -249,43 +260,6 @@ export function useAddEventMutation(baseOptions?: Apollo.MutationHookOptions<Add
 export type AddEventMutationHookResult = ReturnType<typeof useAddEventMutation>;
 export type AddEventMutationResult = Apollo.MutationResult<AddEventMutation>;
 export type AddEventMutationOptions = Apollo.BaseMutationOptions<AddEventMutation, AddEventMutationVariables>;
-export const AllEventsDocument = gql`
-    query AllEvents {
-  allEvents {
-    id
-    name
-    image
-    desc
-  }
-}
-    `;
-
-/**
- * __useAllEventsQuery__
- *
- * To run a query within a React component, call `useAllEventsQuery` and pass it any options that fit your needs.
- * When your component renders, `useAllEventsQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useAllEventsQuery({
- *   variables: {
- *   },
- * });
- */
-export function useAllEventsQuery(baseOptions?: Apollo.QueryHookOptions<AllEventsQuery, AllEventsQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<AllEventsQuery, AllEventsQueryVariables>(AllEventsDocument, options);
-      }
-export function useAllEventsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AllEventsQuery, AllEventsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<AllEventsQuery, AllEventsQueryVariables>(AllEventsDocument, options);
-        }
-export type AllEventsQueryHookResult = ReturnType<typeof useAllEventsQuery>;
-export type AllEventsLazyQueryHookResult = ReturnType<typeof useAllEventsLazyQuery>;
-export type AllEventsQueryResult = Apollo.QueryResult<AllEventsQuery, AllEventsQueryVariables>;
 export const AuthRedirectDocument = gql`
     mutation authRedirect {
   authRedirect
@@ -354,6 +328,43 @@ export function useGetEventLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<G
 export type GetEventQueryHookResult = ReturnType<typeof useGetEventQuery>;
 export type GetEventLazyQueryHookResult = ReturnType<typeof useGetEventLazyQuery>;
 export type GetEventQueryResult = Apollo.QueryResult<GetEventQuery, GetEventQueryVariables>;
+export const GetEventsDocument = gql`
+    query getEvents {
+  getEvents {
+    id
+    name
+    image
+    desc
+  }
+}
+    `;
+
+/**
+ * __useGetEventsQuery__
+ *
+ * To run a query within a React component, call `useGetEventsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetEventsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetEventsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetEventsQuery(baseOptions?: Apollo.QueryHookOptions<GetEventsQuery, GetEventsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetEventsQuery, GetEventsQueryVariables>(GetEventsDocument, options);
+      }
+export function useGetEventsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetEventsQuery, GetEventsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetEventsQuery, GetEventsQueryVariables>(GetEventsDocument, options);
+        }
+export type GetEventsQueryHookResult = ReturnType<typeof useGetEventsQuery>;
+export type GetEventsLazyQueryHookResult = ReturnType<typeof useGetEventsLazyQuery>;
+export type GetEventsQueryResult = Apollo.QueryResult<GetEventsQuery, GetEventsQueryVariables>;
 export const GetUserDocument = gql`
     query getUser($username: String!) {
   getUser(username: $username) {

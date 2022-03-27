@@ -2,12 +2,20 @@ import React, { useEffect, useState } from "react";
 import GoogleMapReact from "google-map-react";
 const { googleMapsApiKey } = require("../../../secret.json");
 
+interface Props {
+  mapProps: MapProps;
+}
+
 interface MapProps {
-  center: {
+  center?: {
     lat: number;
     lng: number;
   };
-  zoom: number;
+  zoom?: number;
+}
+
+interface Props {
+  mapProps: MapProps;
 }
 
 const initialMapProps: MapProps = {
@@ -18,8 +26,11 @@ const initialMapProps: MapProps = {
   zoom: 18,
 };
 
-const Map = () => {
-  const [mapProps, setMapProps] = useState<MapProps>(initialMapProps);
+const Map: React.FC<Props> = (props) => {
+  console.log(props);
+
+  const mapProps = props.mapProps ?? initialMapProps;
+
   return (
     <div style={{ width: "100%", height: "100%" }}>
       <GoogleMapReact bootstrapURLKeys={{ key: googleMapsApiKey }} center={mapProps.center} zoom={mapProps.zoom} />

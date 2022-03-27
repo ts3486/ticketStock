@@ -32,11 +32,11 @@ export class Event extends BaseEntity {
 
   @Column({ nullable: true })
   @Field({ nullable: true })
-  longtitude: number;
+  latitude: number;
 
   @Column({ nullable: true })
   @Field({ nullable: true })
-  latitude: number;
+  longtitude: number;
 
   @Field(() => User)
   @ManyToOne(() => User, (user) => user.events)
@@ -71,4 +71,10 @@ export class EventInput implements Partial<Event> {
 
   @Field({ nullable: true })
   date: Date;
+
+  @Field()
+  latitude?: number;
+
+  @Field()
+  longtitude?: number;
 }

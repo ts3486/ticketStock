@@ -13,8 +13,8 @@ import {
 } from "@mui/material";
 import { EventInput } from "../../types/types";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
-const Geocode = require("react-geocode");
 const { googleMapsApiKey } = require("../../secret.json");
+let geocoder = require("google-geocoder");
 
 interface Props {
   eventData: (event: EventInput) => void;
@@ -22,34 +22,38 @@ interface Props {
   page: (page: number) => void;
 }
 
+interface Address {
+  label: string;
+  value: any;
+}
+
+let geo = geocoder({
+  key: googleMapsApiKey,
+});
+
 const EventDetailsForm: React.FC<Props> = (props) => {
   const [name, setName] = useState("");
   const [category, setCategory] = useState("");
-  const [coordinate, setCoordinate] = useState("");
   const [image, setImage] = useState("");
   const [desc, setDesc] = useState("");
   const [date, setDate] = useState<Date>(new Date("2021-11-18T21:11:54"));
   const [file, setFile] = useState<File>({} as File);
-  const [address, setAddress] = useState("");
-  const [longtitude, setLongtitude] = useState(0);
-  const [latitude, setLatitude] = useState(0);
+  const [address, setAddress] = useState({} as Address);
+  // const [latitude, setLtd] = useState(0);
+  // const [longtitude, setLng] = useState(0);
 
-  Geocode.setApiKey(googleMapsApiKey);
+  const onSet = async (e: any) => {
+    await geo.find(address.label, (err: any, res: any) => {
+      console.log(err, res);
 
-  Geocode.fromAddress("Eiffel Tower").then(
-    (response: any) => {
-      const { lat, lng } = response.results[0].geometry.location;
-      console.log(lat, lng);
-    },
-    (error: any) => {
-      console.error(error);
-    }
-  );
+      const latitude: number = res[0].location.lat;
+      const longtitude: number = res[0].location.lng;
 
-  const onSet = (e: any) => {
-    const event = { name, category, image, desc, date, longtitude, latitude };
+      const event = { name, category, image, desc, date, latitude, longtitude };
+      console.log(event);
+      props.eventData(event);
+    });
 
-    props.eventData(event);
     props.eventFile(file);
     props.page(2);
     e.preventDefault();
@@ -100,7 +104,7 @@ const EventDetailsForm: React.FC<Props> = (props) => {
               //   { lat: 100, lng: 100 },
               // ],
               componentRestrictions: {
-                country: ["us", "jp"],
+                country: ["jp"],
               },
               // types: ["country", "locality", "sublocality", "postal_code"],
             }}

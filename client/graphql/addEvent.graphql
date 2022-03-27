@@ -4,6 +4,8 @@ input EventInput {
   image: string
   desc: string
   date: DateTime
+  latitude: number
+  longtitude: number
 }
 
 input TicketInput {

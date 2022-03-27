@@ -84,6 +84,8 @@ export class EventResolver {
         category: event.category,
         image: event.image,
         desc: event.desc,
+        latitude: event.latitude,
+        longtitude: event.longtitude,
         userId: parseInt(payload!.userId),
         ticketId: newTicket.identifiers[0].id,
       });
